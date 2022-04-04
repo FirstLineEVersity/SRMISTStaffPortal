@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.srmuh.staffportal">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--        android:roundIcon="@mipmap/ic_launcher_round"-->
+<!--    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />-->
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/slogo5"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoActionBar.NoActionBar"
+        android:usesCleartextTraffic="true">
+        <activity android:name="com.srmuh.staffportal.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.srmuh.staffportal.HomeScreen" />
+        <activity android:name="com.srmuh.staffportal.HomePageGridViewLayout" />
+        <activity android:name="com.srmuh.staffportal.HomeScreenCategory" />
+        <activity android:name="com.srmuh.staffportal.PersonalDetails" />
+        <activity android:name="com.srmuh.staffportal.ProfileEdit"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.srmuh.staffportal.LeaveStatus" />
+        <activity android:name="com.srmuh.staffportal.LeaveEntry"/>
+        <activity android:name="com.srmuh.staffportal.PermissionEntry"/>
+        <activity android:name="com.srmuh.staffportal.LeaveAvailability"/>
+        <activity android:name="com.srmuh.staffportal.LeaveApproval" />
+        <activity android:name="com.srmuh.staffportal.InternalMarkEntryMain" />
+        <activity android:name="com.srmuh.staffportal.InternalBreakUp" />
+        <activity android:name="com.srmuh.staffportal.InternalMarkEntryStudentList" />
+        <activity android:name="com.srmuh.staffportal.InternalMarkEntriedList" />
+        <activity android:name="com.srmuh.staffportal.StudentAttendanceTemplate" />
+        <activity android:name="com.srmuh.staffportal.StudentAttendanceHourCourses" />
+        <activity android:name="com.srmuh.staffportal.StudentAttendanceStudentList" />
+        <activity android:name="com.srmuh.staffportal.AttendanceMarkedStudentList" />
+        <activity android:name="com.srmuh.staffportal.StaffBiometricLog"/>
+        <activity android:name="com.srmuh.staffportal.StaffTimeTable"/>
+        <activity android:name="com.srmuh.staffportal.ViewPaySlipPayPeriod"/>
+        <activity android:name="com.srmuh.staffportal.ViewPaySlip"/>
+        <activity android:name="com.srmuh.staffportal.CanteenSelection"/>
+        <activity android:name="com.srmuh.staffportal.MenuOrderPlacing"/>
+        <activity android:name="com.srmuh.staffportal.NotificationForStudentsSubjectList"/>
+        <activity android:name="com.srmuh.staffportal.NotificationForStudentsSectionList"/>
+        <activity android:name="com.srmuh.staffportal.NotificationStudentList"/>
+        <activity android:name="com.srmuh.staffportal.NotificationStaffCategory"/>
+        <activity android:name="com.srmuh.staffportal.NotificationForStaffList"/>
+        <activity android:name="com.srmuh.staffportal.NotificationList"/>
+        <activity android:name="com.srmuh.staffportal.NotificationView"/>
+        <activity android:name="com.srmuh.staffportal.ManagementDashboard" />
+        <activity android:name="com.srmuh.staffportal.AdmissionCurrentYearBarChart" />
+        <activity android:name="com.srmuh.staffportal.DeptWiseAdmissionBarChart" />
+        <activity android:name="com.srmuh.staffportal.FacultyDashboard" />
+        <activity android:name="com.srmuh.staffportal.VenueBooking" />
+        <activity android:name="com.srmuh.staffportal.ENoticeView" />
+        <activity android:name="com.srmuh.staffportal.LMSIndex" />
+        <activity android:name="com.srmuh.staffportal.UploadFiles" />
+        <activity android:name="com.srmuh.staffportal.tabbedmanagementdashboard" />
+        <activity android:name="com.srmuh.staffportal.tabbedfacultydashboard" />
+        <activity android:name="com.srmuh.staffportal.TestingActivity" />
+    </application>
+</manifest>
+
+<!--server key for Shasun staff portal-->
+<!--    AAAAWdrl01g:APA91bHN8ZcB_t_xrzaUuymm-76JDKnwny16qQSUxiGYvvMVfEkgHoomslS1iso1jKvm4M9YmbJ1dYEE4t16izYRv5JoD1W2U5WRmXSTbNrsZLbBLYsZ5F5SEctStsdpftkaIC6_uS5o-->

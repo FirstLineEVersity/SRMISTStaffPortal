@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical">
+        <include layout="@layout/pageheaderwithoutrefresh"/>
+        <GridLayout
+            android:id="@+id/gridViewmenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:alignmentMode="alignMargins"
+            android:columnCount="3"
+            android:columnOrderPreserved="false"
+            android:background="@color/colorWhite"
+            android:padding="10dp"
+            android:rowCount="5">
+            <!-- ROW 1  -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fdbstaffleave"
+                style="@style/StyleHomeGridCardView"
+
+                >
+
+                <LinearLayout
+                    style="@style/StyleHomeGridLayout"
+                    >
+
+                    <ImageView
+                        style="@style/StyleHomeGridImage"
+                        android:src="@drawable/icondb_staffleave" />
+
+                    <TextView
+                        style="@style/StyleHomeGridText"
+                        android:text="Staff Leave"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fdblibrarytransactions"
+                style="@style/StyleHomeGridCardView"
+
+                >
+
+                <LinearLayout
+                    style="@style/StyleHomeGridLayout"
+                    >
+
+                    <ImageView
+                        style="@style/StyleHomeGridImage"
+                        android:src="@drawable/icondb_librarytransaction" />
+
+                    <TextView
+                        style="@style/StyleHomeGridText"
+                        android:text="Library Transaction"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fdbabsenteecount"
+                style="@style/StyleHomeGridCardView"
+
+                >
+
+                <LinearLayout
+                    style="@style/StyleHomeGridLayout"
+                    >
+
+                    <ImageView
+                        style="@style/StyleHomeGridImage"
+                        android:src="@drawable/icondb_absenteecount" />
+
+                    <TextView
+                        style="@style/StyleHomeGridText"
+                        android:text="Absentee Count"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/fdbtodaysabsentee"
+                style="@style/StyleHomeGridCardView"
+
+                >
+
+                <LinearLayout
+                    style="@style/StyleHomeGridLayout"
+                    >
+
+                    <ImageView
+                        style="@style/StyleHomeGridImage"
+                        android:src="@drawable/icondb_todayabsentee" />
+
+                    <TextView
+                        style="@style/StyleHomeGridText"
+                        android:text="Todays Absentee"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/fdbprojecttracker"-->
+<!--                style="@style/StyleHomeGridCardView"-->
+
+<!--                >-->
+
+<!--                <LinearLayout-->
+<!--                    style="@style/StyleHomeGridLayout"-->
+<!--                    >-->
+
+<!--                    <ImageView-->
+<!--                        style="@style/StyleHomeGridImage"-->
+<!--                        android:src="@drawable/icondb_projecttracker" />-->
+
+<!--                    <TextView-->
+<!--                        style="@style/StyleHomeGridText"-->
+<!--                        android:text="Project Tracker"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>  -->
+            <androidx.cardview.widget.CardView
+            android:id="@+id/fdbstaffbirthday"
+            style="@style/StyleHomeGridCardView"
+
+            >
+
+            <LinearLayout
+                style="@style/StyleHomeGridLayout"
+                >
+
+                <ImageView
+                    style="@style/StyleHomeGridImage"
+                    android:src="@drawable/icondb_staffbirthday" />
+
+                <TextView
+                    style="@style/StyleHomeGridText"
+                    android:text="Staff Birthday"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/fdbUpcomingEvents"-->
+<!--                style="@style/StyleHomeGridCardView"-->
+
+<!--                >-->
+
+<!--                <LinearLayout-->
+<!--                    style="@style/StyleHomeGridLayout"-->
+<!--                    >-->
+
+<!--                    <ImageView-->
+<!--                        style="@style/StyleHomeGridImage"-->
+<!--                        android:src="@drawable/icondb_upcomingevents" />-->
+
+<!--                    <TextView-->
+<!--                        style="@style/StyleHomeGridText"-->
+<!--                        android:text="Upcoming Events"-->
+<!--                        />-->
+<!--                </LinearLayout>-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+        </GridLayout>
+    </LinearLayout>
+
+</TableLayout>

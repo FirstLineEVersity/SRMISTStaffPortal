@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "651324638993",
+    "project_id": "srmharyanastaffportal",
+    "storage_bucket": "srmharyanastaffportal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651324638993:android:508ce46e5c364944e5eeb0",
+        "android_client_info": {
+          "package_name": "com.srmuh.staffportal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651324638993-l503u7v0go23t04m2h688d0q45lftpgt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw14DgqaNH60Aon0W24HYSw8AFUO9GGbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651324638993-l503u7v0go23t04m2h688d0q45lftpgt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

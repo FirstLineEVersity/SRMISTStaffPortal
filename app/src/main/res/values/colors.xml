@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="appBackGroundWhite">#FFFFFF</color>
+    <color name="colorGreen">#00574a</color>
+
+    <color name="appColor">#0268B1</color>
+    <color name="appColorButton">#0268B1</color>
+    <color name="appColorText">#000000</color>
+    <color name="colorAccentIcon">#0268B1</color>
+    <color name="colorAccent">#0268B1</color>
+    <color name="colorblue">#0268B1</color>
+    <color name="btnCornerColor">#0268B1</color>
+
+    <color name="colornormal">#F6F7F9</color>
+    <color name="colorhower">#c3cddd</color>
+    <color name="purple_500">#4287f5</color>
+
+    <!--    <color name="colorblue">#1589FF</color>-->
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorGrey">#efefef</color>
+    <color name="colorGreyLogin">#fcf0f5</color>
+    <color name="colorGreyLoginOld">#E8F7F7</color>
+    <color name="colorRed">#FF0000</color>
+
+    <!-- radha code -->
+    <color name="btnHoverOld">#e8dfdf</color>
+    <color name="btnHover">#eeeeee</color>
+    <color name="btnHoverGreen">#567845</color>
+
+    <color name="cardColor">#dddddd</color>
+    <color name="cardColorg">#eeeeee</color>
+    <color name="cardColorp">#CED7FF</color>
+    <color name="cardColoro">#329FFF</color>
+    <color name="cardColorOld">#c3cddd</color>
+</resources>
