@@ -45,7 +45,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
     private static String strParameters[];
     private static String ResultString1 = "";
     private long lngEmpId=0, lngApprovalOfficerId=0;
-    private int intOfficeId = 0;
+    private long lngOfficeId = 0;
     private TextView  hdnFromDate, hdnToDate, txtLeavePeriodId, txtLeaveTypeId, txtFromSessionId, txtToSessionId, txtApprovalOfficer, txtLeaveAvailability, hdnApprovalOfficerId;
     private TextView txtLeaveAvailabilityHyperLink;
     private int intLeaveTypeId, intLeavePeriodId, intFromSessId, intToSessId;
@@ -73,7 +73,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         intFlag=getIntent().getIntExtra("Flag",1);
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
         lngEmpId = loginsession.getLong("userid", 1);
-        intOfficeId = loginsession.getInt("officeid", 1);
+        lngOfficeId = loginsession.getLong("officeid", 1);
         Button butLeaveAvailability = (Button) findViewById(R.id.btn_LeaveAvailability);
         butLeaveAvailability.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -94,15 +94,15 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View view)
             {
-            Intent intent;
-            if (intFlag == 1){
-                intent = new Intent(LeaveEntry.this, HomeScreenCategory.class);
-                startActivity(intent);
-            }
-            if (intFlag == 2){
-                intent = new Intent(LeaveEntry.this, HomePageGridViewLayout.class);
-                startActivity(intent);
-            }
+                Intent intent;
+                if (intFlag == 1){
+                    intent = new Intent(LeaveEntry.this, HomeScreenCategory.class);
+                    startActivity(intent);
+                }
+                if (intFlag == 2){
+                    intent = new Intent(LeaveEntry.this, HomePageGridViewLayout.class);
+                    startActivity(intent);
+                }
             }
         });
         FromSession_data.put("2","Full Day");
@@ -129,25 +129,24 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtEditLeavePeriod.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus){
-            if (hasFocus){
+                if (hasFocus){
+                    txtEditLeavePeriod.setText("");
+                    txtLeavePeriodId.setText("");
+                    txtEditLeaveType.setText("");
+                    txtLeaveTypeId.setText("");
+                    txtLeaveAvailability.setText("");
 
-                txtEditLeavePeriod.setText("");
-                txtLeavePeriodId.setText("");
-                txtEditLeaveType.setText("");
-                txtLeaveTypeId.setText("");
-                txtLeaveAvailability.setText("");
+                    txtFromDate.setText("");
+                    hdnFromDate.setText("");
+                    txtToDate.setText("");
+                    hdnToDate.setText("");
 
-                txtFromDate.setText("");
-                hdnFromDate.setText("");
-                txtToDate.setText("");
-                hdnToDate.setText("");
-
-                txtEditFromSession.setText("");
-                txtFromSessionId.setText("");
-                txtEditToSession.setText("");
-                txtToSessionId.setText("");
-            }
-            if (!hasFocus){
+                    txtEditFromSession.setText("");
+                    txtFromSessionId.setText("");
+                    txtEditToSession.setText("");
+                    txtToSessionId.setText("");
+                }
+                if (!hasFocus){
 //                    String val = txtEditLeavePeriod.getText().toString(); // + "##" + txtLeavePeriodId.getText();
 //                    if (leaveperiod_data.containsValue(val)){
 //                        //if (Arrays.asList(leaveperiod_list).contains(val)){
@@ -156,28 +155,28 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 //                    } else {
 //                       // txtEditLeavePeriod.setError("Invalid Input");
 //                    }
-            }
+                }
             }
         });
 
         txtEditLeavePeriod.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3){
-            hideKeyboard(LeaveEntry.this);
-            String id = (new ArrayList<String>(leaveperiod_data.keySet())).get(position).toString();
-            String name = (new ArrayList<String>(leaveperiod_data.values())).get(position).toString();
-            java.util.StringTokenizer st = new java.util.StringTokenizer(id,"##");
-            txtEditLeavePeriod.setText(name);
-            txtLeavePeriodId.setText(st.nextToken().trim());
-            strSetCalendarDate = st.nextToken().trim();
-            strMinCalendarDate = st.nextToken().trim();
-            strMaxCalendarDate = st.nextToken().trim();
-            intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
-            strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId), "int", "leaveperiodid", String.valueOf(intLeavePeriodId)};
-            WebService.strParameters = strParameters;
-            WebService.METHOD_NAME = "listLeaveTypeJson";
-            AsyncCallWS task2 = new AsyncCallWS();
-            task2.execute();
+                hideKeyboard(LeaveEntry.this);
+                String id = (new ArrayList<String>(leaveperiod_data.keySet())).get(position).toString();
+                String name = (new ArrayList<String>(leaveperiod_data.values())).get(position).toString();
+                java.util.StringTokenizer st = new java.util.StringTokenizer(id,"##");
+                txtEditLeavePeriod.setText(name);
+                txtLeavePeriodId.setText(st.nextToken().trim());
+                strSetCalendarDate = st.nextToken().trim();
+                strMinCalendarDate = st.nextToken().trim();
+                strMaxCalendarDate = st.nextToken().trim();
+                intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
+                strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId), "int", "leaveperiodid", String.valueOf(intLeavePeriodId)};
+                WebService.strParameters = strParameters;
+                WebService.METHOD_NAME = "listLeaveTypeJson";
+                AsyncCallWS task2 = new AsyncCallWS();
+                task2.execute();
             }
         });
         txtLeaveTypeId = (TextView) findViewById(R.id.hdnLeaveTypeId);
@@ -185,61 +184,61 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtEditLeaveType.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-            // TODO Auto-generated method stub
-            txtEditLeaveType.showDropDown();
-            txtEditLeaveType.requestFocus();
-            return false;
+                // TODO Auto-generated method stub
+                txtEditLeaveType.showDropDown();
+                txtEditLeaveType.requestFocus();
+                return false;
             }
         });
         txtEditLeaveType.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3){
-            String id = (new ArrayList<String>(leavetype_data.keySet())).get(position);
-            String name = (new ArrayList<String>(leavetype_data.values())).get(position).toString();
-            java.util.StringTokenizer st = new java.util.StringTokenizer(name,"[");
-            txtEditLeaveType.setText(st.nextToken());
-            txtLeaveAvailability.setText("["+st.nextToken());
-            txtLeaveTypeId.setText(id);
+                String id = (new ArrayList<String>(leavetype_data.keySet())).get(position);
+                String name = (new ArrayList<String>(leavetype_data.values())).get(position).toString();
+                java.util.StringTokenizer st = new java.util.StringTokenizer(name,"[");
+                txtEditLeaveType.setText(st.nextToken());
+                txtLeaveAvailability.setText("["+st.nextToken());
+                txtLeaveTypeId.setText(id);
             }
         });
 
         txtEditLeaveType.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-            if (hasFocus){
-                txtEditLeaveType.setText("");
-                txtLeaveTypeId.setText("");
-                txtLeaveAvailability.setText("");
-                txtFromDate.setText("");
-                hdnFromDate.setText("");
-                txtToDate.setText("");
-                hdnToDate.setText("");
+                if (hasFocus){
+                    txtEditLeaveType.setText("");
+                    txtLeaveTypeId.setText("");
+                    txtLeaveAvailability.setText("");
+                    txtFromDate.setText("");
+                    hdnFromDate.setText("");
+                    txtToDate.setText("");
+                    hdnToDate.setText("");
 
-                txtEditFromSession.setText("");
-                txtFromSessionId.setText("");
-                txtEditToSession.setText("");
-                txtToSessionId.setText("");
-                if(txtLeavePeriodId.getText().toString().equalsIgnoreCase("")){
-                    Toast.makeText(LeaveEntry.this, "Please Select Leave Period, Before selecting Leave Type", Toast.LENGTH_LONG).show();
+                    txtEditFromSession.setText("");
+                    txtFromSessionId.setText("");
+                    txtEditToSession.setText("");
+                    txtToSessionId.setText("");
+                    if(txtLeavePeriodId.getText().toString().equalsIgnoreCase("")){
+                        Toast.makeText(LeaveEntry.this, "Please Select Leave Period, Before selecting Leave Type", Toast.LENGTH_LONG).show();
 
-                }else {
-                    intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
-                    strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId), "int", "leaveperiodid", String.valueOf(intLeavePeriodId)};
-                    WebService.strParameters = strParameters;
-                    WebService.METHOD_NAME = "listLeaveTypeJson";
-                    AsyncCallWS task2 = new AsyncCallWS();
-                    task2.execute();
+                    }else {
+                        intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
+                        strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId), "int", "leaveperiodid", String.valueOf(intLeavePeriodId)};
+                        WebService.strParameters = strParameters;
+                        WebService.METHOD_NAME = "listLeaveTypeJson";
+                        AsyncCallWS task2 = new AsyncCallWS();
+                        task2.execute();
+                    }
                 }
-            }
-            if (!hasFocus){
-                String val = txtEditLeaveType.getText().toString();  // + "##" + txtLeaveTypeId.getText()
-                if (leavetype_data.containsValue(val)){
-                    //                if (Arrays.asList(leavetype_list).contains(val)){
-                    //
-                } else {
-                    //txtEditLeaveType.setError("Invalid Input");
+                if (!hasFocus){
+                    String val = txtEditLeaveType.getText().toString();  // + "##" + txtLeaveTypeId.getText()
+                    if (leavetype_data.containsValue(val)){
+                        //                if (Arrays.asList(leavetype_list).contains(val)){
+                        //
+                    } else {
+                        //txtEditLeaveType.setError("Invalid Input");
+                    }
                 }
-            }
             }
         });
         txtFromDate = (AutoCompleteTextView) findViewById(R.id.FromDate);
@@ -250,58 +249,58 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtFromDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus){
-            if (hasFocus) {
-                hideKeyboard(LeaveEntry.this);
-            }
+                if (hasFocus) {
+                    hideKeyboard(LeaveEntry.this);
+                }
             }
         });
 
         txtFromDate.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-            int mYear=0,  mMonth=0, mDay=0;
-            // TODO Auto-generated method stub
-            //To show current date in the datepicker
-            java.util.StringTokenizer st = new java.util.StringTokenizer(strMinCalendarDate, "-");
-            mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
-            mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
-            mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
-            mMinDate.set(Calendar.YEAR, mYear);
-            mMinDate.set(Calendar.MONTH, mMonth-1);
-            mMinDate.set(Calendar.DAY_OF_MONTH, mDay);
+                int mYear=0,  mMonth=0, mDay=0;
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                java.util.StringTokenizer st = new java.util.StringTokenizer(strMinCalendarDate, "-");
+                mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
+                mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
+                mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                mMinDate.set(Calendar.YEAR, mYear);
+                mMinDate.set(Calendar.MONTH, mMonth-1);
+                mMinDate.set(Calendar.DAY_OF_MONTH, mDay);
 
-            st = new java.util.StringTokenizer(strMaxCalendarDate, "-");
-            mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
-            mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
-            mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                st = new java.util.StringTokenizer(strMaxCalendarDate, "-");
+                mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
+                mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
+                mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-            mMaxDate.set(Calendar.YEAR, mYear);
-            mMaxDate.set(Calendar.MONTH, mMonth-1);
-            mMaxDate.set(Calendar.DAY_OF_MONTH, mDay);
+                mMaxDate.set(Calendar.YEAR, mYear);
+                mMaxDate.set(Calendar.MONTH, mMonth-1);
+                mMaxDate.set(Calendar.DAY_OF_MONTH, mDay);
 
-            st = new java.util.StringTokenizer(strSetCalendarDate, "-");
-            mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
-            mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
-            mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
-            mCurrentDate.set(Calendar.YEAR, mYear);
-            mCurrentDate.set(Calendar.MONTH, mMonth-1);
-            mCurrentDate.set(Calendar.DAY_OF_MONTH, mDay);
+                st = new java.util.StringTokenizer(strSetCalendarDate, "-");
+                mYear = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.YEAR);
+                mMonth = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.MONTH);
+                mDay = Integer.parseInt(st.nextToken()); //mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                mCurrentDate.set(Calendar.YEAR, mYear);
+                mCurrentDate.set(Calendar.MONTH, mMonth-1);
+                mCurrentDate.set(Calendar.DAY_OF_MONTH, mDay);
 
-            DatePickerDialog mFromDatePicker=new DatePickerDialog(LeaveEntry.this, new DatePickerDialog.OnDateSetListener(){
-                public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay){
-                    // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
-                String year1 = String.valueOf(selectedYear);
-                String month1 = String.valueOf(selectedMonth + 1);
-                String day1 = String.valueOf(selectedDay);
-                txtFromDate.setText(day1 + "/" + month1 + "/" + year1);
-                hdnFromDate.setText(year1 + "-" + month1 + "-" + day1);
-                }
-            } , mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH), mCurrentDate.get(Calendar.DAY_OF_MONTH));
-            mFromDatePicker.setTitle("Select From date");
-            mFromDatePicker.getDatePicker().setMinDate(mMinDate.getTimeInMillis());
-            mFromDatePicker.getDatePicker().setMaxDate(mMaxDate.getTimeInMillis());
-            mFromDatePicker.show();
+                DatePickerDialog mFromDatePicker=new DatePickerDialog(LeaveEntry.this, new DatePickerDialog.OnDateSetListener(){
+                    public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay){
+                        // TODO Auto-generated method stub
+                        /*      Your code   to get date and time    */
+                        String year1 = String.valueOf(selectedYear);
+                        String month1 = String.valueOf(selectedMonth + 1);
+                        String day1 = String.valueOf(selectedDay);
+                        txtFromDate.setText(day1 + "/" + month1 + "/" + year1);
+                        hdnFromDate.setText(year1 + "-" + month1 + "-" + day1);
+                    }
+                } , mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH), mCurrentDate.get(Calendar.DAY_OF_MONTH));
+                mFromDatePicker.setTitle("Select From date");
+                mFromDatePicker.getDatePicker().setMinDate(mMinDate.getTimeInMillis());
+                mFromDatePicker.getDatePicker().setMaxDate(mMaxDate.getTimeInMillis());
+                mFromDatePicker.show();
             }
         });
         txtToDate = (AutoCompleteTextView) findViewById(R.id.ToDate);
@@ -310,21 +309,21 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v){
 //            // TODO Auto-generated method stub
-            DatePickerDialog mToDatePicker=new DatePickerDialog(LeaveEntry.this, new DatePickerDialog.OnDateSetListener(){
-                public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay){
-                    // TODO Auto-generated method stub
-                    /*      Your code   to get date and time    */
-                    String year1 = String.valueOf(selectedYear);
-                    String month1 = String.valueOf(selectedMonth + 1);
-                    String day1 = String.valueOf(selectedDay);
-                    txtToDate.setText(day1 + "/" + month1 + "/" + year1);
-                    hdnToDate.setText(year1 + "-" + month1 + "-" + day1);
-                }
-            }, mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH), mCurrentDate.get(Calendar.DAY_OF_MONTH));
-            mToDatePicker.setTitle("Select From date");
-            mToDatePicker.getDatePicker().setMinDate(mMinDate.getTimeInMillis());
-            mToDatePicker.getDatePicker().setMaxDate(mMaxDate.getTimeInMillis());
-            mToDatePicker.show();
+                DatePickerDialog mToDatePicker=new DatePickerDialog(LeaveEntry.this, new DatePickerDialog.OnDateSetListener(){
+                    public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay){
+                        // TODO Auto-generated method stub
+                        /*      Your code   to get date and time    */
+                        String year1 = String.valueOf(selectedYear);
+                        String month1 = String.valueOf(selectedMonth + 1);
+                        String day1 = String.valueOf(selectedDay);
+                        txtToDate.setText(day1 + "/" + month1 + "/" + year1);
+                        hdnToDate.setText(year1 + "-" + month1 + "-" + day1);
+                    }
+                }, mCurrentDate.get(Calendar.YEAR), mCurrentDate.get(Calendar.MONTH), mCurrentDate.get(Calendar.DAY_OF_MONTH));
+                mToDatePicker.setTitle("Select From date");
+                mToDatePicker.getDatePicker().setMinDate(mMinDate.getTimeInMillis());
+                mToDatePicker.getDatePicker().setMaxDate(mMaxDate.getTimeInMillis());
+                mToDatePicker.show();
             }
         });
         txtEditFromSession = (AutoCompleteTextView) findViewById(R.id.txtFromSession);
@@ -355,33 +354,33 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtEditFromSession.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-            // TODO Auto-generated method stub
-            txtEditFromSession.showDropDown();
-            txtEditFromSession.requestFocus();
-            return false;
+                // TODO Auto-generated method stub
+                txtEditFromSession.showDropDown();
+                txtEditFromSession.requestFocus();
+                return false;
             }
         });
         txtEditFromSession.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus){
-            if (!hasFocus){
-                String val = txtEditFromSession.getText().toString();  // + "##" + txtFromSessionId.getText();
-                if (FromSession_data.containsValue(val)){
-                    //if (Arrays.asList(FromSessionList).contains(val)){
+                if (!hasFocus){
+                    String val = txtEditFromSession.getText().toString();  // + "##" + txtFromSessionId.getText();
+                    if (FromSession_data.containsValue(val)){
+                        //if (Arrays.asList(FromSessionList).contains(val)){
 
-                } else {
-                    //txtEditFromSession.setError("Invalid Input");
+                    } else {
+                        //txtEditFromSession.setError("Invalid Input");
+                    }
                 }
-            }
             }
         });
         txtEditFromSession.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3){
-            String id = (new ArrayList<String>(FromSession_data.keySet())).get(position);
-            String name = (new ArrayList<String>(FromSession_data.values())).get(position).toString();
-            txtEditFromSession.setText(name);
-            txtFromSessionId.setText(id);
+                String id = (new ArrayList<String>(FromSession_data.keySet())).get(position);
+                String name = (new ArrayList<String>(FromSession_data.values())).get(position).toString();
+                txtEditFromSession.setText(name);
+                txtFromSessionId.setText(id);
                 //           Toast.makeText(LeaveEntry.this, "Selected Item:" + name + "," + id, Toast.LENGTH_LONG).show();
             }
         });
@@ -389,38 +388,38 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtEditToSession.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-            // TODO Auto-generated method stub
-            txtEditToSession.showDropDown();
-            txtEditToSession.requestFocus();
-            return false;
+                // TODO Auto-generated method stub
+                txtEditToSession.showDropDown();
+                txtEditToSession.requestFocus();
+                return false;
             }
         });
         txtEditToSession.setOnFocusChangeListener(new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View view, boolean hasFocus){
-            if (!hasFocus){
-                String val = txtEditToSession.getText().toString();  // + "##" + txtToSessionId.getText();
-                if (ToSession_data.containsValue(val)){
-                    //if (Arrays.asList(ToSessionList).contains(val)){
+                if (!hasFocus){
+                    String val = txtEditToSession.getText().toString();  // + "##" + txtToSessionId.getText();
+                    if (ToSession_data.containsValue(val)){
+                        //if (Arrays.asList(ToSessionList).contains(val)){
 
-                } else {
-                    //txtEditToSession.setError("Invalid Input");
+                    } else {
+                        //txtEditToSession.setError("Invalid Input");
+                    }
                 }
-            }
             }
         });
         txtEditToSession.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int position, long arg3){
-            String id = (new ArrayList<String>(ToSession_data.keySet())).get(position);
-            String name = (new ArrayList<String>(ToSession_data.values())).get(position).toString();
-            txtEditToSession.setText(name);
-            txtToSessionId.setText(id);
+                String id = (new ArrayList<String>(ToSession_data.keySet())).get(position);
+                String name = (new ArrayList<String>(ToSession_data.values())).get(position).toString();
+                txtEditToSession.setText(name);
+                txtToSessionId.setText(id);
                 //           Toast.makeText(LeaveEntry.this, "Selected Item:" +  name + "," + id, Toast.LENGTH_LONG).show();
             }
         });
         strParameters = new String[] { "Long","employeeid", String.valueOf(lngEmpId),
-                "int","officeid", String.valueOf(intOfficeId)};
+                "int","officeid", String.valueOf(lngOfficeId)};
         WebService.strParameters = strParameters;
         WebService.METHOD_NAME = "listLeavePeriodJson";
         AsyncCallWS task2 = new AsyncCallWS();
@@ -576,7 +575,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
                 }catch (Exception e){}
                 strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId),
                         "Long","approvalempid", String.valueOf(lngApprovalOfficerId),
-                        "int","officeid", String.valueOf(intOfficeId),
+                        "int","officeid", String.valueOf(lngOfficeId),
                         "int", "leaveperiodid", String.valueOf(intLeavePeriodId),
                         "int", "leavetypeid", String.valueOf(intLeaveTypeId),
                         "String", "fromdate", String.valueOf(d1),
