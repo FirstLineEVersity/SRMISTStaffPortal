@@ -101,8 +101,11 @@ public class WebService {
     public static String invokeWS(){
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
         String strBody="";
-        for (int i=0; i<=strParameters.length-1; i=i+3){
-            strBody += "<"+strParameters[i+1] + ">" + strParameters[i+2] + "</" + strParameters[i+1] + ">";
+        if(strParameters != null) {
+
+            for (int i = 0; i <= strParameters.length - 1; i = i + 3) {
+                strBody += "<" + strParameters[i + 1] + ">" + strParameters[i + 2] + "</" + strParameters[i + 1] + ">";
+            }
         }
         EncryptDecrypt ED = new EncryptDecrypt();
         String strEncryptedData =  ED.getEncryptedData(strBody);

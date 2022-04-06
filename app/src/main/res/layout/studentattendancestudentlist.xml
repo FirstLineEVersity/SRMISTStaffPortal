@@ -71,9 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tblAttendanceStudentListHeader"
-        android:scrollbars="vertical"
-        android:paddingLeft="1dp"
-        android:paddingRight="1dp">
+        android:layout_above="@+id/attendanceHeader1"
+        android:padding="1dp"
+        android:scrollbars="vertical">
         <TableLayout
             android:id="@+id/tblAttendanceStudentList"
             android:layout_width="wrap_content"
@@ -81,4 +81,12 @@
             android:stretchColumns="*">
         </TableLayout>
     </ScrollView>
+    <TextView
+        android:id="@+id/attendanceHeader1"
+        android:layout_above="@+id/attendanceHeader2"
+        style="@style/StyleFooder"/>
+    <TextView
+        android:id="@+id/attendanceHeader2"
+        android:layout_alignParentBottom="true"
+        style="@style/StyleFooder" />
 </RelativeLayout>

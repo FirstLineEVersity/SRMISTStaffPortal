@@ -32,7 +32,6 @@ public class LeaveApproval extends AppCompatActivity{
     SQLiteDatabase db;
     private String strResultMessage="";
     private int intFlag = 0;
-    SqlliteController controllerdb = new SqlliteController(this);
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

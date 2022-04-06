@@ -24,7 +24,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/logo"/>
+            app:srcCompat="@drawable/srmuh_logo"/>
         <TextView
             android:id="@+id/topSecondlmage"
             android:layout_width="match_parent"
@@ -133,7 +133,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/colorblue"
-            android:text=""
+            android:text="41010006"
             android:hint="User Name" />
         <!--android:backgroundTint="#0267B1"-->
         <EditText
@@ -144,7 +144,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/colorblue"
-            android:text=""
+            android:text="luck1234"
             android:hint="Password"
             android:inputType="textPassword" />
 

@@ -14,21 +14,23 @@
     <dimen name="login_staff">24sp</dimen>
     <dimen name="login_text">16sp</dimen>
     <dimen name="login_button">16sp</dimen>
-    <dimen name="home_text">16sp</dimen>
+    <dimen name="home_text">15sp</dimen>
     <dimen name="lstatus_text">16sp</dimen>
-    <dimen name="home_category">18sp</dimen>
+    <dimen name="lAttan_text">12sp</dimen>
+    <dimen name="home_category">16sp</dimen>
     <dimen name="last_updated">12sp</dimen>
     <dimen name="bio_data">4sp</dimen>
-    <dimen name="Notification_list">14sp</dimen>
+    <dimen name="Notification_list">16sp</dimen>
     <dimen name="Notification_list_header">14sp</dimen>
     <dimen name="payslip">16sp</dimen>
     <dimen name="acedamic_list">16sp</dimen>
     <dimen name="acedamic_aatendance_list">16sp</dimen>
     <dimen name="menu_buttons">20sp</dimen>
-    <dimen name="timetableheader">5sp</dimen>
-    <dimen name="timetableAbb">4sp</dimen>
     <dimen name="student_staff_list">4sp</dimen>
     <dimen name="student_Internal">8sp</dimen>
     <dimen name="student_staff_list_header">14sp</dimen>
+    <dimen name="timetableheader">5sp</dimen>
+    <dimen name="timetableAbb">4sp</dimen>
+
 
 </resources>

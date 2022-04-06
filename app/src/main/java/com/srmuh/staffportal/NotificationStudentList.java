@@ -329,7 +329,7 @@ public class NotificationStudentList extends AppCompatActivity implements View.O
         TableLayout tl = findViewById(R.id.tblStudentList);
         TableRow tr = new TableRow(NotificationStudentList.this);
         TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        params1.setMargins(10, 10, 10, 10);
+        params1.setMargins(0, 10, 10, 10);
 //        params1.weight = 1;
         tr.setLayoutParams(params1);
 
@@ -342,6 +342,9 @@ public class NotificationStudentList extends AppCompatActivity implements View.O
         TextView tvStudentName = new TextView(NotificationStudentList.this);
 
         chkIsSend = new CheckBox(this);
+        TableRow.LayoutParams params2 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        params2.setMargins(30, 10, 10, 10);
+        chkIsSend.setLayoutParams(params2);
         chkIsSend.setId(Integer.parseInt(strColumns[0].toString()));
         chkIsSend.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         chkIsSend.setOnClickListener(getOnClickDoSomething());

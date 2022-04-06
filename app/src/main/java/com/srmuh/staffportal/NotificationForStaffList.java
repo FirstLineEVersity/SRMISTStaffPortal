@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -52,7 +53,7 @@ public class NotificationForStaffList extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notificationstafflist);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
-        tvPageTitle.setText("Notification to Employees");
+        tvPageTitle.setText("Notification to Staff");
         Button btnBack = (Button) findViewById(R.id.button_back);
 //        tvLastUpdated = (TextView) findViewById(R.id.txtLastUpdated);
 //        tvLastUpdated.setVisibility(View.INVISIBLE);
@@ -366,7 +367,7 @@ public class NotificationForStaffList extends AppCompatActivity implements View.
         TableLayout tl = findViewById(R.id.tblStaffList);
         TableRow tr = new TableRow(NotificationForStaffList.this);
         TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        params1.setMargins(10, 10, 10, 10);
+        params1.setMargins(0, 10, 10, 10);
         params1.weight = 1;
         tr.setLayoutParams(params1);
         if((pos % 2) == 0){
@@ -381,6 +382,9 @@ public class NotificationForStaffList extends AppCompatActivity implements View.
         TextView tvEmployeeName = new TextView(NotificationForStaffList.this);
 
         chkIsSend = new CheckBox(this);
+        TableRow.LayoutParams params2 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
+        params2.setMargins(30, 10, 10, 10);
+        chkIsSend.setLayoutParams(params2);
         chkIsSend.setId(Integer.parseInt(strColumns[0].toString()));
         chkIsSend.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         chkIsSend.setOnClickListener(getOnClickDoSomething());

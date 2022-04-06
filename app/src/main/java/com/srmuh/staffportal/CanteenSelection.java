@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -77,9 +76,15 @@ public class CanteenSelection extends AppCompatActivity {
         typeid=1;
         strParameters = new String[]{"int", "itemid", String.valueOf(0)};
         WebService.strParameters = strParameters;
-        WebService.METHOD_NAME = "getCanteenListJson";
-        AsyncCallWS task = new AsyncCallWS();
-        task.execute();
+        //network check
+        if (!CheckNetwork.isInternetAvailable(this)) {
+            Toast.makeText(this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+            return;
+        }else {
+            WebService.METHOD_NAME = "getCanteenListJson";
+            AsyncCallWS task = new AsyncCallWS();
+            task.execute();
+        }
 
         ListView listView1=(ListView) findViewById(R.id.lvCanteenName);
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,10 +94,16 @@ public class CanteenSelection extends AppCompatActivity {
                 strCanteenIdSelected=tv.getText().toString();
                 typeid=2;
                 strParameters = new String[]{"int", "canteenid", strCanteenIdSelected};
-                WebService.strParameters = strParameters;
-                WebService.METHOD_NAME = "getItemListJson";
-                AsyncCallWS task = new AsyncCallWS();
-                task.execute();
+                if (!CheckNetwork.isInternetAvailable(CanteenSelection.this)) {
+                    Toast.makeText(CanteenSelection.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    WebService.strParameters = strParameters;
+                    WebService.METHOD_NAME = "getItemListJson";
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
         });
     }
@@ -128,7 +139,6 @@ public class CanteenSelection extends AppCompatActivity {
             if (android.os.Debug.isDebuggerConnected())
                 android.os.Debug.waitForDebugger();
             ResultString = WebService.invokeWS();
-            Log.e("TEST RADHA ",ResultString);
             return null;
         }
 

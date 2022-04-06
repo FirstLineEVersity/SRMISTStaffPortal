@@ -14,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,11 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import webservice.SqlliteController;
@@ -33,7 +37,8 @@ public class StaffTimeTable extends AppCompatActivity {
     private static String strParameters[];
     private static String ResultString = "";
     private long lngEmployeeId=0;
-//    private int intOfficeId=0;
+    private TextView pageHeader;
+    //    private int intOfficeId=0;
     TextView tvPageTitle,tvLastUpdated;
     SQLiteDatabase db;
     SqlliteController controllerdb = new SqlliteController(this);
@@ -53,28 +58,33 @@ public class StaffTimeTable extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-            //Recycler View Menu
-            //Intent intent = new Intent(StaffTimeTable.this, HomeScreen.class);
-            //Grid View Menu
-            Intent intent = new Intent(StaffTimeTable.this, HomeScreenCategory.class);
-            startActivity(intent);
+                onBackPressed();
             }
         });
         Intent i = getIntent();
         intTemplateId = getIntent().getExtras().getInt("templateid");
+        pageHeader = (TextView) findViewById(R.id.pageHeader);
+
+        pageHeader.setText(getIntent().getExtras().getString(Properties.timeTableHeader));
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
 //        intOfficeId = loginsession.getInt("officeid", 1);
         lngEmployeeId = loginsession.getLong("userid", 1);
         btnRefresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-            strParameters = new String[] {"int","templateid",String.valueOf(intTemplateId),
-                    "Long","employeeid", String.valueOf(lngEmployeeId)};
+                if (!CheckNetwork.isInternetAvailable(StaffTimeTable.this)) {
+                    Toast.makeText(StaffTimeTable.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    strParameters = new String[]{"int", "templateid", String.valueOf(intTemplateId),
+                            "Long", "employeeid", String.valueOf(lngEmployeeId)};
 //                    "int","officeid", String.valueOf(intOfficeId)};
-            WebService.strParameters = strParameters;
-            WebService.METHOD_NAME = "getEmployeeTimeTableJson";
-            AsyncCallWS task = new AsyncCallWS();
-            task.execute();
+                    WebService.strParameters = strParameters;
+                    WebService.METHOD_NAME = "getEmployeeTimeTableJson";
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
         });
         displayTimeTable();
@@ -83,14 +93,7 @@ public class StaffTimeTable extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        // new intent to call an activity that you choose
-        //Recycler View Menu
-        //Intent intent = new Intent(this, HomeScreen.class);
-        //Grid View Menu
-        Intent intent = new Intent(this, HomeScreenCategory.class);
-        startActivity(intent);
-        // finish the activity picture
-        this.finish();
+
     }
 
     private void displayTimeTable(){
@@ -148,19 +151,25 @@ public class StaffTimeTable extends AppCompatActivity {
                 cursor.close();
             }
             else{
-                strParameters = new String[] {"int","templateid",String.valueOf(intTemplateId),
-                        "Long","employeeid", String.valueOf(lngEmployeeId)};
+                if (!CheckNetwork.isInternetAvailable(StaffTimeTable.this)) {
+                    Toast.makeText(StaffTimeTable.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    strParameters = new String[]{"int", "templateid", String.valueOf(intTemplateId),
+                            "Long", "employeeid", String.valueOf(lngEmployeeId)};
 //                        "int","officeid", String.valueOf(intOfficeId)};
-                WebService.strParameters = strParameters;
-                WebService.METHOD_NAME = "getEmployeeTimeTableJson";
-                AsyncCallWS task = new AsyncCallWS();
-                task.execute();
+                    WebService.strParameters = strParameters;
+                    WebService.METHOD_NAME = "getEmployeeTimeTableJson";
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
             strParameters = new String[] {"int","templateid",String.valueOf(intTemplateId),
                     "Long","employeeid", String.valueOf(lngEmployeeId)};
-                    //"int","officeid", String.valueOf(intOfficeId)};
+            //"int","officeid", String.valueOf(intOfficeId)};
             WebService.strParameters = strParameters;
             WebService.METHOD_NAME = "getEmployeeTimeTableJson";
             AsyncCallWS task = new AsyncCallWS();
@@ -225,6 +234,13 @@ public class StaffTimeTable extends AppCompatActivity {
     }
 
     public void addHeaderData(String[] str){
+//        String str[];
+//        if (intStructureId==168){
+//            str = new String [] {"Subject", "PT", "NBM", "SEA", "TEX", "OT", "Grade"};
+//        }
+//        else{
+//            str = new String [] {"Subject", "Marks", "Grade"};
+//        }
         TableLayout tl = findViewById(R.id.tblViewTimeTable);
         TableRow tr = new TableRow(this);
         TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -279,9 +295,11 @@ public class StaffTimeTable extends AppCompatActivity {
                 tv.setTextColor(0xFFFFFFFF);
                 tv.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
                 tv.setTextSize(getResources().getDimension(R.dimen.timetableheader));
+
             }else{
                 tv.setBackgroundResource(R.color.colorWhite);
                 tv.setTextSize(getResources().getDimension(R.dimen.timetableheader));
+
             }
 //            tv.setPadding(20,10,20,10);
             tv.setPadding(5,20,5,20);
@@ -297,8 +315,10 @@ public class StaffTimeTable extends AppCompatActivity {
     }
 
     public void addAbbrivationData(String[] str){
-            //String[] str={"PT  - Periodic Test","NBM - Note Book Maintenace","SEA - Subject Enri. Activity","TEX -Terminal Exam","OT  - Overall Total"};
+
+        //String[] str={"PT  - Periodic Test","NBM - Note Book Maintenace","SEA - Subject Enri. Activity","TEX -Terminal Exam","OT  - Overall Total"};
         TableLayout tl = findViewById(R.id.abbrevation);
+        tl.setVisibility(View.VISIBLE);
         for (int i = 0; i < str.length; i++) {
             TableRow tr = new TableRow(this);
             TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
@@ -310,5 +330,6 @@ public class StaffTimeTable extends AppCompatActivity {
             tr.addView(tv);
             tl.addView(tr, new TableLayout.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         }
+
     }
 }

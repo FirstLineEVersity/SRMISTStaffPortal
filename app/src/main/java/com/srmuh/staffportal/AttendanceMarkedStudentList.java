@@ -19,6 +19,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 import webservice.WebService;
 
 public class AttendanceMarkedStudentList extends AppCompatActivity implements View.OnClickListener{
-    private TextView tvPageTitle, tvLastUpdated;
+    private TextView tvPageTitle, tvLastUpdated,attendanceHeader1,attendanceHeader2;
     private long lngAttenTransId=0;
     private static String strParameters[];
     private static String ResultString = "";
@@ -44,6 +47,11 @@ public class AttendanceMarkedStudentList extends AppCompatActivity implements Vi
         setContentView(R.layout.studentattendancestudentlist);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
         tvPageTitle.setText("Attendance Marked View");
+        attendanceHeader1 = (TextView) findViewById(R.id.attendanceHeader1);
+        attendanceHeader2 = (TextView) findViewById(R.id.attendanceHeader2);
+        attendanceHeader1.setText(getIntent().getExtras().getString(Properties.attendanceHeader1));
+        attendanceHeader2.setText(getIntent().getExtras().getString(Properties.attendanceHeader2));
+
         Button btnBack=(Button) findViewById(R.id.button_back);
         ImageButton btnSave=(ImageButton) findViewById(R.id.AttendanceSave);
         btnSave.setBackgroundResource(R.drawable.ic_baseline_cancel_presentation_24);
@@ -67,11 +75,16 @@ public class AttendanceMarkedStudentList extends AppCompatActivity implements Vi
         }
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
-        strParameters = new String[]{"Long", "transid", String.valueOf(lngAttenTransId)};
-        WebService.strParameters = strParameters;
-        WebService.METHOD_NAME = "getAttendanceDetailsJson";
-        AsyncCallWS task = new AsyncCallWS();
-        task.execute();
+        if (!CheckNetwork.isInternetAvailable(getApplicationContext())) {
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                return;
+            }else {
+            strParameters = new String[]{"Long", "transid", String.valueOf(lngAttenTransId)};
+            WebService.strParameters = strParameters;
+            WebService.METHOD_NAME = "getAttendanceDetailsJson";
+            AsyncCallWS task = new AsyncCallWS();
+            task.execute();
+        }
     }
 
     @Override

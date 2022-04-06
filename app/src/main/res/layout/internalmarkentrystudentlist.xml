@@ -75,6 +75,7 @@ style="@style/notificationHeaderValue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tblStudentListHeader"
+        android:layout_above="@id/attendanceHeader1"
         android:scrollbars="vertical">
         <TableLayout
             android:id="@+id/tblStudentList"
@@ -83,26 +84,14 @@ style="@style/notificationHeaderValue"
             android:stretchColumns="*">
         </TableLayout>
     </ScrollView>
-
-
-    <!--<ListView-->
-        <!--android:id="@+id/rvStudentList"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_marginTop="110dp"-->
-        <!--android:descendantFocusability="beforeDescendants">-->
-    <!--</ListView>-->
-
-    <!--<android.support.v7.widget.RecyclerView-->
-        <!--android:id="@+id/rvStudentList"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="110dp"-->
-        <!--android:layout_gravity="left"-->
-        <!--android:background="@color/colornormal"-->
-        <!--android:descendantFocusability="beforeDescendants"-->
-        <!--android:scrollbars="vertical">-->
-    <!--</android.support.v7.widget.RecyclerView>-->
+    <TextView
+        android:id="@+id/attendanceHeader1"
+        android:layout_above="@+id/attendanceHeader2"
+        style="@style/StyleFooder"/>
+    <TextView
+        android:id="@+id/attendanceHeader2"
+        android:layout_alignParentBottom="true"
+        style="@style/StyleFooder" />
 
 </RelativeLayout>
 

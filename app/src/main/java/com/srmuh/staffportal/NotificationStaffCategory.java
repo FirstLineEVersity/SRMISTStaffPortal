@@ -53,15 +53,15 @@ public class NotificationStaffCategory extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent;
-            if (intFlag == 1){
-                intent = new Intent(NotificationStaffCategory.this, HomeScreenCategory.class);
-                startActivity(intent);
-            }
-            if (intFlag == 2){
-                intent = new Intent(NotificationStaffCategory.this, HomePageGridViewLayout.class);
-                startActivity(intent);
-            }
+                Intent intent;
+                if (intFlag == 1){
+                    intent = new Intent(NotificationStaffCategory.this, HomeScreenCategory.class);
+                    startActivity(intent);
+                }
+                if (intFlag == 2){
+                    intent = new Intent(NotificationStaffCategory.this, HomePageGridViewLayout.class);
+                    startActivity(intent);
+                }
             }
         });
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
@@ -81,6 +81,8 @@ public class NotificationStaffCategory extends AppCompatActivity {
     }
 
     private void displayStaffCategory(){
+
+        SqlliteController controllerdb = new SqlliteController(NotificationStaffCategory.this);
         db = controllerdb.getReadableDatabase();
         try { //strftime('%d-%m-%Y %H:%M:%S', lastupdatedate) as lastupdated,
             Cursor cursor = db.rawQuery("SELECT employeecategory,employeecategoryid " +
@@ -88,7 +90,6 @@ public class NotificationStaffCategory extends AppCompatActivity {
             if (cursor.moveToFirst()) {
                 do {
                     //tvLastUpdated.setText("Last Updated: "+cursor.getString(cursor.getColumnIndex("lastupdated")));
-                    Log.e("TEST", cursor.getString(cursor.getColumnIndex("employeecategoryid")) + "##" + cursor.getString(cursor.getColumnIndex("employeecategory")));
                     category_list.add(cursor.getString(cursor.getColumnIndex("employeecategoryid")) + "##" + cursor.getString(cursor.getColumnIndex("employeecategory")));
                 } while (cursor.moveToNext());
                 if (category_list.size() == 0) {
@@ -137,7 +138,6 @@ public class NotificationStaffCategory extends AppCompatActivity {
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         ProgressDialog dialog = new ProgressDialog(NotificationStaffCategory.this);
-
         @Override
         protected void onPreExecute() {
             dialog.setMessage(getResources().getString(R.string.loading));
@@ -157,10 +157,6 @@ public class NotificationStaffCategory extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            //Log.i(TAG, "onPostExecute");
-            if (dialog != null && dialog.isShowing()) {
-                dialog.dismiss();
-            }
             NotificationStaffCategoryLVAdapter TVA = new NotificationStaffCategoryLVAdapter(category_list, R.layout.notificationstaffcategorylistitem);
             try {
                 category_list.clear();
@@ -182,8 +178,12 @@ public class NotificationStaffCategory extends AppCompatActivity {
                 }
                 displayStaffCategory();
             } catch (Exception e) {
+
                 System.out.println(e.getMessage());
                 Toast.makeText(NotificationStaffCategory.this, "Response: " + strResultMessage, Toast.LENGTH_LONG).show();
+            }
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
             }
         }
     }

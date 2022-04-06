@@ -7,18 +7,19 @@
     android:layout_height="match_parent">
     <include android:id="@+id/header"
         layout="@layout/pageheaderwithoutrefresh"/>
+
     <ScrollView
-        android:layout_below="@+id/header"
-        android:layout_above="@id/bottomTotal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottomTotal"
+        android:layout_below="@+id/header"
         android:fillViewport="true">
+
         <ListView
             android:id="@+id/lstmenu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            ></ListView>
+            android:layout_alignParentLeft="true"></ListView>
     </ScrollView>
     <LinearLayout
         android:id="@+id/bottomTotal"
@@ -51,18 +52,36 @@
             android:layout_weight="1"
             ></TextView>
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnmycart"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorblue"
-        android:src="@drawable/ic_actionname"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="45dp"
         android:layout_marginRight="5dp"
-        app:fabSize="mini">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-</RelativeLayout>
+
+>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnmycart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/cardColoro"
+            android:src="@drawable/ic_actionname"
+            app:fabSize="mini"/>
+        <TextView
+            android:id="@+id/txtCartCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/appColor"
+            android:layout_alignParentRight="true"
+            android:elevation="8dp"/>
+
+    </RelativeLayout>
+    </RelativeLayout>
 
 

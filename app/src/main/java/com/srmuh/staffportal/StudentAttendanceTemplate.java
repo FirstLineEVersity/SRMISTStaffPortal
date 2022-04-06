@@ -52,7 +52,7 @@ public class StudentAttendanceTemplate extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-            onBackPressed();
+                onBackPressed();
             }
         });
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));

@@ -20,7 +20,7 @@
                     <corners android:radius="5dp" />
                     <gradient
                         android:startColor="@color/colorWhite"
-                        android:centerColor="@color/colorGreyLoginOld"
+                        android:centerColor="@color/colorGreyLogin"
                         android:endColor="@color/colorWhite"
                         android:angle="90"
 

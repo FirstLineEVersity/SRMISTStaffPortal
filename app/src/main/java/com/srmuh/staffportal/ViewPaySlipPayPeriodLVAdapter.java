@@ -8,6 +8,8 @@ package com.srmuh.staffportal;
     import android.view.ViewGroup;
     import android.widget.RelativeLayout;
     import android.widget.TextView;
+    import android.widget.Toast;
+
     import java.util.ArrayList;
 
 public class ViewPaySlipPayPeriodLVAdapter extends RecyclerView.Adapter<ViewPaySlipPayPeriodLVAdapter.ViewHolder> {
@@ -64,18 +66,24 @@ public class ViewPaySlipPayPeriodLVAdapter extends RecyclerView.Adapter<ViewPayS
             this.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                String item = payperiod_list.get(getPosition());
-                String[] strColumns = item.split("##");
-                String strPdfFileName = strColumns[5].toString().trim();
-                Context context = v.getContext();
-                Intent intent;
-                intent = new Intent(context, ViewPaySlip.class);
-                intent.putExtra("officeid", strColumns[0]);
-                intent.putExtra("employeeid",strColumns[1]);
-                intent.putExtra("paystructureid",strColumns[2]);
-                intent.putExtra("payperiodid",strColumns[3]);
-                intent.putExtra("pdffilename", strPdfFileName);
-                context.startActivity(intent);
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        String item = payperiod_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        String strPdfFileName = strColumns[5].toString().trim();
+                        Context context = v.getContext();
+                        Intent intent;
+                        intent = new Intent(context, ViewPaySlip.class);
+                        intent.putExtra("officeid", strColumns[0]);
+                        intent.putExtra("employeeid", strColumns[1]);
+                        intent.putExtra("paystructureid", strColumns[2]);
+                        intent.putExtra("payperiodid", strColumns[3]);
+                        intent.putExtra("pdffilename", strPdfFileName);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

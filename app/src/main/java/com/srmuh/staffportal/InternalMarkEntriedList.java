@@ -16,13 +16,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import webservice.WebService;
 
 public class InternalMarkEntriedList extends AppCompatActivity {
-    private TextView tvPageTitle, tvLastUpdated;
+    private TextView tvPageTitle, tvLastUpdated,attendanceHeader1,attendanceHeader2;
     private long lngInternalBreakUpId=0, lngProgSecId=0;
     private static String strParameters[];
     private static String ResultString = "";
@@ -36,6 +38,11 @@ public class InternalMarkEntriedList extends AppCompatActivity {
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
         tvPageTitle.setText("Internal Mark View");
+        attendanceHeader1 = (TextView) findViewById(R.id.attendanceHeader1);
+        attendanceHeader2 = (TextView) findViewById(R.id.attendanceHeader2);
+        attendanceHeader1.setText(getIntent().getExtras().getString(Properties.attendanceHeader1));
+        attendanceHeader2.setText(getIntent().getExtras().getString(Properties.attendanceHeader2));
+
         Button btnBack=(Button) findViewById(R.id.button_back);
         ImageButton butSave = (ImageButton) findViewById(R.id.saveButton);
         butSave.setVisibility(View.INVISIBLE);

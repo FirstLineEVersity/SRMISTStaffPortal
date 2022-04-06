@@ -1,12 +1,17 @@
 package com.srmuh.staffportal;
 import java.util.ArrayList;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -78,11 +83,18 @@ public class LeaveStatusLVAdapter extends RecyclerView.Adapter<LeaveStatusLVAdap
                 @Override
                 public void onClick(View v){
                 try {
-                    String item = leavestatus_list.get(getPosition());
-                    String[] strColumns = item.split("##");
-                    lngLeaveApplnId=Long.parseLong(strColumns[8]);
-                    removeAt(getPosition());
-                    ((LeaveStatus) v.getContext()).callLeaveCancel(lngLeaveApplnId);
+                    //network check
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        String item = leavestatus_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        lngLeaveApplnId = Long.parseLong(strColumns[8]);
+                        removeAt(getPosition());
+                        ((LeaveStatus) v.getContext()).callLeaveCancel(lngLeaveApplnId);
+                    }
                 } catch (Exception e){
                     // ignore
                 }

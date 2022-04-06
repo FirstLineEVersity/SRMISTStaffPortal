@@ -36,6 +36,7 @@ dependencies {
     implementation files('libs/commons-io-2.6.jar')
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 //    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.4'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -46,5 +47,4 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.1'
-    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 }

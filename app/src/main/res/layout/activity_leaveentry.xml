@@ -8,6 +8,8 @@
     <include
         android:id="@+id/pageHeader"
         layout="@layout/pageheaderwithoutrefresh"/>
+
+
     <ScrollView xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/ScrollView1"
         android:layout_width="match_parent"
@@ -30,12 +32,7 @@
                 android:textStyle="bold|italic"
                 android:textColor="@color/colorblue"
                 android:textSize="16dp"/>
-            <TextView
-                android:id="@+id/hdnApprovalOfficerId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To approve by"
-                android:visibility="gone"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/textInputLayoutLeaveEntry"
                 android:id="@+id/txtLeavePeriodLayout"
@@ -49,6 +46,7 @@
                     android:id="@+id/txtLeavePeriod"
                     android:drawableRight="@drawable/ic_baseline_expand_circle_down_24"
                     android:hint="@string/lPeriod"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
                     >
 
                 </AutoCompleteTextView>
@@ -68,6 +66,7 @@
                     android:id="@+id/txtLeaveType"
                     android:drawableRight="@drawable/ic_baseline_expand_circle_down_24"
                     android:hint="@string/lType"
+                    android:imeOptions="flagNoExtractUi|actionSearch"
                     >
 
                 </AutoCompleteTextView>
@@ -231,6 +230,14 @@
                     android:layout_gravity="end|center_vertical"
                     android:background="@drawable/btnselector"
                     android:text="Apply"/>
+
+                <TextView
+                    android:id="@+id/hdnApprovalOfficerId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/edRemarks"
+                    android:visibility="gone"/>
+
                 <TextView
                     android:id="@+id/hdnLeavePeriodId"
                     android:layout_width="wrap_content"

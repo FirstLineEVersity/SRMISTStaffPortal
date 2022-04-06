@@ -47,7 +47,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
     private static String strParameters[];
     private static String ResultString1 = "";
     private long lngEmpId=0,lngOfficeId = 0, lngApprovalOfficerId=0;
-    private TextView  hdnFromDate,  txtLeavePeriodId, txtLeaveTypeId,  txtApprovalOfficer,hdnApprovalOfficerId;
+    private TextView  hdnFromDate,  txtLeavePeriodId, txtLeaveTypeId,  txtApprovalOfficer;
     //private TextView txtLeaveAvailabilityHyperLink;
     private int intLeaveTypeId, intLeavePeriodId;
     private String strMinCalendarDate,strMaxCalendarDate, strSetCalendarDate;
@@ -70,11 +70,11 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
 
         txtApprovalOfficer = (TextView) findViewById(R.id.txtApprovalOfficer);
-        hdnApprovalOfficerId = (TextView) findViewById(R.id.hdnApprovalOfficerId);
 
         intFlag=getIntent().getIntExtra("Flag",1);
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
         lngEmpId = loginsession.getLong("userid", 1);
+
         lngOfficeId = loginsession.getLong("officeid", 1);
         Button butSave = (Button) findViewById(R.id.btn_SaveEntries);
         butSave.setOnClickListener(this);
@@ -350,16 +350,22 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         txtLeavePeriodId = (TextView) findViewById(R.id.hdnLeavePeriodId);
         txtLeaveTypeId = (TextView) findViewById(R.id.hdnLeaveTypeId);
-        hdnApprovalOfficerId = (TextView) findViewById(R.id.hdnApprovalOfficerId);
 
         edRemarks = (AutoCompleteTextView) findViewById(R.id.edRemarks);
         edRemarks.getText().toString().trim();
 
         switch (v.getId()){
             case R.id.btn_SaveEntries:
+             if (!CheckNetwork.isInternetAvailable(PermissionEntry.this)) {
+                    Toast.makeText(PermissionEntry.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    
                 if (! Utility.isNotNull(txtLeavePeriodId.getText().toString().trim())){
                     txtEditLeavePeriod.setError("Leave Period required");
                     txtEditLeavePeriod.requestFocus();
+                    showDialog("Leave Period required");
                     return;
                 }
                 else{
@@ -368,34 +374,37 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                 if (! Utility.isNotNull(txtLeaveTypeId.getText().toString().trim())){
                     txtEditLeaveType.setError("Leave Type required");
                     txtEditLeaveType.requestFocus();
+                    showDialog("Leave Type required");
+
                     return;
                 }
                 if (! Utility.isNotNull(txtFromDate.getText().toString().trim())){
                     txtFromDate.setError("From Date required");
+                    showDialog("From Date required");
+
                     return;
                 }
                 if (! Utility.isNotNull(txtEditFromSession.getText().toString().trim())){
                     txtEditFromSession.setError("From Time required");
+                    showDialog("From Time required");
                     txtEditFromSession.requestFocus();
                     return;
                 }
                 if (! Utility.isNotNull(txtEditToSession.getText().toString().trim())){
                     txtEditToSession.setError("To Time required");
+                    showDialog("To Time required");
+
                     txtEditToSession.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(hdnApprovalOfficerId.getText().toString().trim())){
-                    txtEditLeavePeriod.setError("Approval Officer required");
-                    txtEditLeavePeriod.requestFocus();
                     return;
                 }
                 if (! Utility.isNotNull(edRemarks.getText().toString().trim())){
                     edRemarks.setError("Reason is required!");
+                    showDialog("Reason is required!");
+
                     return;
                 }
                 intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
                 intLeaveTypeId = Integer.parseInt(txtLeaveTypeId.getText().toString());
-                lngApprovalOfficerId = Long.parseLong(hdnApprovalOfficerId.getText().toString());
                 String d1 = hdnFromDate.getText().toString() + " "+txtEditFromSession.getText().toString();
                 String d2 = hdnFromDate.getText().toString()+" "+txtEditToSession.getText().toString();
                 try {
@@ -430,6 +439,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
 //            case R.id.btn_Clear:
 //                clearForm((ViewGroup) findViewById(R.id.PermissionEntrylayout));
 //                break;
+}
         }
     }
 
@@ -475,7 +485,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            Log.e("Test Radha",ResultString1.toString());
+            Log.d("TEST", ResultString1.toString());
             if (ResultString1.toString().equals("")){
                 Toast.makeText(PermissionEntry.this, "No Data Found", Toast.LENGTH_LONG).show();
 
@@ -513,7 +523,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                                     leaveperiod_data.put( strLeavePeriodID,object.getString("leaveperioddesc"));
                                     String id = (new ArrayList<String>(leaveperiod_data.keySet())).get(0).toString();
                                     String name = (new ArrayList<String>(leaveperiod_data.values())).get(0).toString();
-                                    Log.i("Name : " , name + " : "+ id);
+                                    // Log.i("Name : " , name + " : "+ id);
                                     java.util.StringTokenizer st = new java.util.StringTokenizer(id,"##");
                                     txtEditLeavePeriod.setText(name);
                                     txtLeavePeriodId.setText(st.nextToken().trim());
@@ -521,8 +531,11 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                                     strMinCalendarDate = st.nextToken().trim();
                                     strMaxCalendarDate = st.nextToken().trim();
 
+
                                     txtApprovalOfficer.setText("To approve by: "+object.getString("reportingofficer"));
-                                    hdnApprovalOfficerId.setText(object.getString("reportingemployeeid"));
+                                   // hdnApprovalOfficerId.setText(object.getString("reportingemployeeid"));
+                                    lngApprovalOfficerId = Long.parseLong(object.getString("reportingemployeeid"));
+                                   //lngApprovalOfficerId
                                     String strReportingOfficer=object.getString("reportingofficer");
                                     if (strReportingOfficer.trim().length() == 0){
                                         builder = new AlertDialog.Builder(PermissionEntry.this);
@@ -550,7 +563,6 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                             for (int i = 1; i <= temp.length() - 1; i++){
 
                                 JSONObject object = new JSONObject(temp.getJSONObject(i).toString());
-                                Log.e(" intLeavePeriodId : ", object.toString());
 
                                 String strLeaveType=object.getString("leavetype") ;
                                 leavetype_data.put(object.getString("leavetypeid"), strLeaveType);
@@ -569,9 +581,6 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                 }
 
             }
-
-
-
         }
     }
 
@@ -623,5 +632,27 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+
+    AlertDialog alert;
+    public void showDialog(String msg){
+        builder = new AlertDialog.Builder(PermissionEntry.this);
+        //Setting message manually and performing action on button click
+        builder.setMessage(msg).setTitle(R.string.leavealertdialogtitle)
+                //builder.setMessage("Do you want to close this application ?")
+                .setCancelable(false)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alert.dismiss();
+                    }
+                });
+        //Creating dialog box
+        //Setting the title manually
+        alert = builder.create();
+
+        alert.setTitle(R.string.leavealertdialogtitle);
+        alert.show();
+
     }
 }

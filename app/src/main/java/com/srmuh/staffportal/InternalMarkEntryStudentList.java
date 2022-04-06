@@ -25,13 +25,16 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import webservice.WebService;
 
 public class InternalMarkEntryStudentList extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvPageTitle;
+    private TextView tvPageTitle,attendanceHeader1,attendanceHeader2;
     private static String strParameters[];
     private static String ResultString = "";
     private long lngInternalBreakUpId=0, lngProgSecId=0, lngEmployeeId=0;
@@ -54,6 +57,11 @@ public class InternalMarkEntryStudentList extends AppCompatActivity implements V
         setContentView(R.layout.internalmarkentrystudentlist);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
         tvPageTitle.setText("Student List");
+        attendanceHeader1 = (TextView) findViewById(R.id.attendanceHeader1);
+        attendanceHeader2 = (TextView) findViewById(R.id.attendanceHeader2);
+        attendanceHeader1.setText(getIntent().getExtras().getString(Properties.attendanceHeader1));
+        attendanceHeader2.setText(getIntent().getExtras().getString(Properties.attendanceHeader2));
+
         Button btnBack=(Button) findViewById(R.id.button_back);
 //        tvLastUpdated = (TextView) findViewById(R.id.txtLastUpdated);
 //        tvLastUpdated.setVisibility(View.INVISIBLE);
@@ -91,83 +99,88 @@ public class InternalMarkEntryStudentList extends AppCompatActivity implements V
     public void onClick(View v){
         switch (v.getId()){
             case R.id.saveButton:
-                // set title
-                alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Mark Entry SAVE");
-                // set dialog message
-                alertDialogBuilder
-                    .setMessage("Do you Want to Save?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, close
-                        // current activity
-                        hideKeyboard(InternalMarkEntryStudentList.this);
-                        JSONObject obj = new JSONObject();
-                        JSONArray ArrayObj = new JSONArray();
-                        String jsonString="";
-                        String strIsAbsent="";
-                        int x,y;
-                        if (student_list.size() == 0) return;
-                        try {
-                            for (int i=0; i < student_list.size(); i++){
-                                String item = student_list.get(i);
-                                String[] strColumns = item.split("##");
-                                strMarkObtained = allEds.get(i).getText().toString();
-                                if (allChks.get(i).isChecked())
-                                    strIsAbsent = "true";
-                                else
-                                    strIsAbsent = "false";
-                                if (! Utility.isNotNull(strMarkObtained) && strIsAbsent.equals("false")){
-                                    allEds.get(i).setError("Value required!");
-                                    allEds.get(i).requestFocus();
-                                    return;
-                                }
-                                if (strIsAbsent.equals("false")){
-                                    x=Integer.parseInt(allEds.get(i).getText().toString());  //Input mark obtained value
-                                    y=Integer.parseInt(strColumns[4]);  //conducting max mark value
-                                    if (x > y) {
-                                        allEds.get(i).setError("Mark should not be greater than Max mark: " + y);
-                                        allEds.get(i).requestFocus();
-                                        return;
+                if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                    Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+// set title
+                    alertDialogBuilder = new AlertDialog.Builder(this);
+                    alertDialogBuilder.setTitle("Mark Entry SAVE");
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Do you Want to Save?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    hideKeyboard(InternalMarkEntryStudentList.this);
+                                    JSONObject obj = new JSONObject();
+                                    JSONArray ArrayObj = new JSONArray();
+                                    String jsonString = "";
+                                    String strIsAbsent = "";
+                                    int x, y;
+                                    if (student_list.size() == 0) return;
+                                    try {
+                                        for (int i = 0; i < student_list.size(); i++) {
+                                            String item = student_list.get(i);
+                                            String[] strColumns = item.split("##");
+                                            strMarkObtained = allEds.get(i).getText().toString();
+                                            if (allChks.get(i).isChecked())
+                                                strIsAbsent = "true";
+                                            else
+                                                strIsAbsent = "false";
+                                            if (!Utility.isNotNull(strMarkObtained) && strIsAbsent.equals("false")) {
+                                                allEds.get(i).setError("Value required!");
+                                                allEds.get(i).requestFocus();
+                                                return;
+                                            }
+                                            if (strIsAbsent.equals("false")) {
+                                                x = Integer.parseInt(allEds.get(i).getText().toString());  //Input mark obtained value
+                                                y = Integer.parseInt(strColumns[4]);  //conducting max mark value
+                                                if (x > y) {
+                                                    allEds.get(i).setError("Mark should not be greater than Max mark: " + y);
+                                                    allEds.get(i).requestFocus();
+                                                    return;
+                                                }
+                                            }
+                                            obj = new JSONObject();
+                                            obj.put("studentid", strColumns[0]);
+                                            obj.put("markobtained", strMarkObtained);
+                                            obj.put("IsAbsent", strIsAbsent);
+                                            ArrayObj.put(obj);
+                                        }
+                                        if (ArrayObj.length() > 0) {
+                                            jsonString = ArrayObj.toString();
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
+                                    }
+                                    if (Utility.isNotNull(jsonString)) {
+                                        strParameters = new String[]{"String", "returndata", jsonString,
+                                                "Long", "internalbreakupid", String.valueOf(lngInternalBreakUpId),
+                                                "Long", "programsectionid", String.valueOf(lngProgSecId),
+                                                "Long", "employeeid", String.valueOf(lngEmployeeId),
+                                                "String", "examdate", String.valueOf(strExamDate)};
+                                        WebService.strParameters = strParameters;
+                                        WebService.METHOD_NAME = "saveInternalMarkEntry";
+                                        AsyncCallSaveWS task = new AsyncCallSaveWS();
+                                        task.execute();
                                     }
                                 }
-                                obj = new JSONObject();
-                                obj.put("studentid", strColumns[0]);
-                                obj.put("markobtained",strMarkObtained);
-                                obj.put("IsAbsent",strIsAbsent);
-                                ArrayObj.put(obj);
-                            }
-                            if (ArrayObj.length() > 0){
-                                jsonString = ArrayObj.toString();
-                            }
-                        }catch(Exception e){
-                            System.out.println(e.getMessage());
-                        }
-                        if (Utility.isNotNull(jsonString)){
-                            strParameters = new String[]{"String", "returndata", jsonString,
-                                    "Long","internalbreakupid",String.valueOf(lngInternalBreakUpId),
-                                    "Long","programsectionid",String.valueOf(lngProgSecId),
-                                    "Long","employeeid",String.valueOf(lngEmployeeId),
-                                    "String","examdate",String.valueOf(strExamDate)};
-                            WebService.strParameters = strParameters;
-                            WebService.METHOD_NAME = "saveInternalMarkEntry";
-                            AsyncCallSaveWS task = new AsyncCallSaveWS();
-                            task.execute();
-                        }
-                        }
-                    })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                        dialog.cancel();
-                        }
-                    });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
         }
     }
 
@@ -355,6 +368,7 @@ public class InternalMarkEntryStudentList extends AppCompatActivity implements V
         edMarkInp.setWidth(100);
         edMarkInp.setLayoutParams(params1);
 
+        //edMarkInp.setBackgroundColor(getResources().getColor(R.color.colorRed));
         edMarkInp.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
         String[] strInnerColumns = strColumns[0].split("_");
         edMarkInp.setTag("edStudentMark"+Integer.parseInt(strInnerColumns[0].toString()));
@@ -369,6 +383,7 @@ public class InternalMarkEntryStudentList extends AppCompatActivity implements V
         tr.addView(edMarkInp);
 
         chkIsAbsent = new CheckBox(this);
+        //chkIsAbsent.setBackgroundColor(getResources().getColor(R.color.colorGreen));
         chkIsAbsent.setLayoutParams(params1);
         chkIsAbsent.setId(Integer.parseInt(strInnerColumns[0].toString()));
         chkIsAbsent.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);

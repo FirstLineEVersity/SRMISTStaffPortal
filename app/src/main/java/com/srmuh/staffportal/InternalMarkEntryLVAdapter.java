@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
 
 public class InternalMarkEntryLVAdapter extends RecyclerView.Adapter<InternalMarkEntryLVAdapter.ViewHolder> {
     private static ArrayList<String> breakup_list=new ArrayList<String>();
@@ -58,13 +61,20 @@ public class InternalMarkEntryLVAdapter extends RecyclerView.Adapter<InternalMar
             this.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    String item = breakup_list.get(getPosition());
-                    String[] strColumns = item.split("##");
-                    int intBreakUpId=Integer.parseInt(strColumns[0]);
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, InternalBreakUp.class);
-                    intent.putExtra("breakupid",intBreakUpId);
-                    context.startActivity(intent);
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        String item = breakup_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        int intBreakUpId = Integer.parseInt(strColumns[0]);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, InternalBreakUp.class);
+                        intent.putExtra("breakupid", intBreakUpId);
+                        intent.putExtra(Properties.timeTableHeader, strColumns[1]);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

@@ -20,6 +20,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ import java.util.StringTokenizer;
 import webservice.WebService;
 
 public class StudentAttendanceStudentList  extends AppCompatActivity implements View.OnClickListener{
-    private TextView tvPageTitle;
+    private TextView tvPageTitle,attendanceHeader1,attendanceHeader2;
     private static String strParameters[];
     private static String ResultString = "";
     private long lngProgSecId=0, lngEmployeeId=0, lngSubId=0;
@@ -47,7 +50,11 @@ public class StudentAttendanceStudentList  extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.studentattendancestudentlist);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
+        attendanceHeader1 = (TextView) findViewById(R.id.attendanceHeader1);
+        attendanceHeader2 = (TextView) findViewById(R.id.attendanceHeader2);
         tvPageTitle.setText("Student List");
+        attendanceHeader1.setText(getIntent().getExtras().getString(Properties.attendanceHeader1));
+        attendanceHeader2.setText(getIntent().getExtras().getString(Properties.attendanceHeader2));
         Button btnBack=(Button) findViewById(R.id.button_back);
 //        tvLastUpdated = (TextView) findViewById(R.id.txtLastUpdated);
 //        tvLastUpdated.setVisibility(View.INVISIBLE);
@@ -99,82 +106,87 @@ public class StudentAttendanceStudentList  extends AppCompatActivity implements 
 
     @Override
     public void onClick(View v){
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.AttendanceSave:
-                // set title
-                alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Attendance Entry SAVE");
-                // set dialog message
-                alertDialogBuilder
-                    .setMessage("Do you Want to Save?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, close
-                            // current activity
-                            hideKeyboard(StudentAttendanceStudentList.this);
-                            JSONObject obj = new JSONObject();
-                            JSONArray ArrayObj = new JSONArray();
-                            String jsonString="";
-                            String strStudentAttendance="";
+                if (!CheckNetwork.isInternetAvailable(StudentAttendanceStudentList.this)) {
+                    Toast.makeText(StudentAttendanceStudentList.this, getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+                    // set title
+                    alertDialogBuilder = new AlertDialog.Builder(this);
+                    alertDialogBuilder.setTitle("Attendance Entry SAVE");
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Do you Want to Save?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    hideKeyboard(StudentAttendanceStudentList.this);
+                                    JSONObject obj = new JSONObject();
+                                    JSONArray ArrayObj = new JSONArray();
+                                    String jsonString = "";
+                                    String strStudentAttendance = "";
 
-                            if (student_list.size() == 0) return;
-                            try {
-                                for (int i=0; i < student_list.size(); i++){
-                                    String item = student_list.get(i);
-                                    String[] strColumns = item.split("##");
-                                    if ( allBts.get(i).getText().toString().equals("\u2713 P")){
-                                        strStudentAttendance = "true";  //present - attendance status
+                                    if (student_list.size() == 0) return;
+                                    try {
+                                        for (int i = 0; i < student_list.size(); i++) {
+                                            String item = student_list.get(i);
+                                            String[] strColumns = item.split("##");
+                                            if (allBts.get(i).getText().toString().equals("\u2713 P")) {
+                                                strStudentAttendance = "true";  //present - attendance status
+                                            } else {
+                                                strStudentAttendance = "false"; // absent - attendance status
+                                            }
+                                            obj = new JSONObject();
+                                            obj.put("uniqueid", strColumns[0]);  //strColumns[0] = programwisesectionid_studentid
+                                            obj.put("studentAttendance", strStudentAttendance);
+                                            ArrayObj.put(obj);
+                                        }
+                                        if (ArrayObj.length() > 0) {
+                                            jsonString = ArrayObj.toString();
+                                        }
+                                    } catch (Exception e) {
+                                        System.out.println(e.getMessage());
                                     }
-                                    else{
-                                        strStudentAttendance = "false"; // absent - attendance status
-                                    }
-                                    obj = new JSONObject();
-                                    obj.put("uniqueid", strColumns[0]);  //strColumns[0] = programwisesectionid_studentid
-                                    obj.put("studentAttendance",strStudentAttendance);
-                                    ArrayObj.put(obj);
-                                }
-                                if (ArrayObj.length() > 0){
-                                    jsonString = ArrayObj.toString();
-                                }
-                            }catch(Exception e){
-                                System.out.println(e.getMessage());
-                            }
-                            if (Utility.isNotNull(jsonString)){
-                                // strIds = subid "$$" progsectionid "$$" delegateempid "$$" attendancetransid "$$" dayorderid "$$" hourid
-                                StringTokenizer strIdsItems = new StringTokenizer(strIds,"$$");
-                                strIdsItems.nextToken();
-                                strIdsItems.nextToken();
-                                long lngDelegationId= Long.parseLong(strIdsItems.nextToken().trim());
-                                strIdsItems.nextToken();
-                                int intDayOrderId=Integer.parseInt(strIdsItems.nextToken().trim());
-                                int intHourId=Integer.parseInt(strIdsItems.nextToken().trim());
+                                    if (Utility.isNotNull(jsonString)) {
+                                        // strIds = subid "$$" progsectionid "$$" delegateempid "$$" attendancetransid "$$" dayorderid "$$" hourid
+                                        StringTokenizer strIdsItems = new StringTokenizer(strIds, "$$");
+                                        strIdsItems.nextToken();
+                                        strIdsItems.nextToken();
+                                        long lngDelegationId = Long.parseLong(strIdsItems.nextToken().trim());
+                                        strIdsItems.nextToken();
+                                        int intDayOrderId = Integer.parseInt(strIdsItems.nextToken().trim());
+                                        int intHourId = Integer.parseInt(strIdsItems.nextToken().trim());
 
-                                strParameters = new String[]{"String", "returndata", jsonString,
-                                        "Long", "subjectid", String.valueOf(lngSubId),
-                                        "Long","employeeid",String.valueOf(lngEmployeeId),
-                                        "Long","delegationid",String.valueOf(lngDelegationId),
-                                        "String","attendancedate",String.valueOf(strAttendanceDate),
-                                        "int","dayorderid",String.valueOf(intDayOrderId),
-                                        "int","hourid",String.valueOf(intHourId)};
-                                WebService.strParameters = strParameters;
-                                WebService.METHOD_NAME = "saveStudentAttendance";
-                                AsyncCallSaveWS task = new AsyncCallSaveWS();
-                                task.execute();
-                            }
-                        }
-                    })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
-                            // if this button is clicked, just close
-                            // the dialog box and do nothing
-                            dialog.cancel();
-                        }
-                    });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                                        strParameters = new String[]{"String", "returndata", jsonString,
+                                                "Long", "subjectid", String.valueOf(lngSubId),
+                                                "Long", "employeeid", String.valueOf(lngEmployeeId),
+                                                "Long", "delegationid", String.valueOf(lngDelegationId),
+                                                "String", "attendancedate", String.valueOf(strAttendanceDate),
+                                                "int", "dayorderid", String.valueOf(intDayOrderId),
+                                                "int", "hourid", String.valueOf(intHourId)};
+                                        WebService.strParameters = strParameters;
+                                        WebService.METHOD_NAME = "saveStudentAttendance";
+                                        AsyncCallSaveWS task = new AsyncCallSaveWS();
+                                        task.execute();
+                                    }
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // if this button is clicked, just close
+                                    // the dialog box and do nothing
+                                    dialog.cancel();
+                                }
+                            });
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
+                break;
         }
     }
 
@@ -331,7 +343,7 @@ public class StudentAttendanceStudentList  extends AppCompatActivity implements 
         TableLayout tl = findViewById(R.id.tblAttendanceStudentList);
         TableRow tr = new TableRow(StudentAttendanceStudentList.this);
         TableRow.LayoutParams params1 = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT);
-        params1.setMargins(2, 0, 0, 2);
+        params1.setMargins(20, 0, 10, 0);
         params1.weight = 1;
 
 
@@ -343,13 +355,14 @@ public class StudentAttendanceStudentList  extends AppCompatActivity implements 
             tr.setBackgroundResource(R.color.cardColorg);
         }else{
             tr.setBackgroundResource(R.color.colorWhite);
+
         }
         btAttenStatus = new Button(this);
         TextView tvRegNO = new TextView(StudentAttendanceStudentList.this);
         TextView tvStudentName = new TextView(StudentAttendanceStudentList.this);
         //registerno
         tvRegNO.setLayoutParams(params1);
-        tvRegNO.setWidth(450);
+        //tvRegNO.setWidth(400);
         tvRegNO.setText(strColumns[2].trim());
         tvRegNO.setTextColor(getResources().getColor(R.color.colorBlack));
         tvRegNO.setOnClickListener(getOnClickDoSomething(btAttenStatus, tvRegNO, tvStudentName));
@@ -376,6 +389,7 @@ public class StudentAttendanceStudentList  extends AppCompatActivity implements 
             btAttenStatus.setBackgroundResource(R.color.cardColorg);
         }else{
             btAttenStatus.setBackgroundResource(R.color.colorWhite);
+
         }
 
         String[] strInnerColumns = strColumns[0].split("_");

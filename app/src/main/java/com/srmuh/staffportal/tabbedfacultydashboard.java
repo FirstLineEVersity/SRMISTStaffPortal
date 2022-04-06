@@ -16,6 +16,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.srmuh.staffportal.properties.Properties;
+
 public class tabbedfacultydashboard extends AppCompatActivity {
     TextView tvPageTitle;
     private int intFlag = 0;
@@ -32,21 +34,13 @@ public class tabbedfacultydashboard extends AppCompatActivity {
 
 //        progressBar = findViewById(R.id.progressBar);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
-        tvPageTitle.setText("Faculty Dashboard");
+        tvPageTitle.setText(getIntent().getExtras().getString(Properties.dashboardName));
         intFlag=getIntent().getIntExtra("Flag",1);
         Button btnBack=(Button) findViewById(R.id.button_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent;
-            if (intFlag == 1){
-                intent = new Intent(tabbedfacultydashboard.this, FacultyDashboard.class);
-                startActivity(intent);
-            }
-            if (intFlag == 2){
-                intent = new Intent(tabbedfacultydashboard.this, HomePageGridViewLayout.class);
-                startActivity(intent);
-            }
+            onBackPressed();
             }
         });
 
@@ -103,16 +97,7 @@ public class tabbedfacultydashboard extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        Intent intent;
-        if (intFlag == 1){
-            intent = new Intent(tabbedfacultydashboard.this, FacultyDashboard.class);
-            startActivity(intent);
-        }
-        if (intFlag == 2){
-            intent = new Intent(tabbedfacultydashboard.this, HomePageGridViewLayout.class);
-            startActivity(intent);
-        }
-        this.finish();
+
     }
 
     public class WebViewClient extends android.webkit.WebViewClient {

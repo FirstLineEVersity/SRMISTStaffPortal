@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ public class TestingActivity extends AppCompatActivity {
     String[] MenuImages;
     float[] Price;
     int[] Quantity;
+    int quantityCount ;
+    TextView txtCartCount;
 
     ListView lstMenu;
     float Total = 0;
@@ -64,8 +67,11 @@ public class TestingActivity extends AppCompatActivity {
         });
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
         tvTotal = (TextView) findViewById(R.id.lTotal);
+        txtCartCount = (TextView) findViewById(R.id.txtCartCount);
         intCanteenId= getIntent().getIntExtra("CanteenId",0);
-        alMenuItems = getIntent().getExtras().getStringArrayList("CanteenItems");
+        if(getIntent().getExtras()!=null) {
+            alMenuItems = getIntent().getExtras().getStringArrayList("CanteenItems");
+        }
         String listString = "";
         if (alMenuItems.size() > 0) {
             MenuId = new int[alMenuItems.size()];
@@ -124,23 +130,30 @@ public class TestingActivity extends AppCompatActivity {
             btnMycart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(Total>0){
-                        assignSelectedItemsForIntentProcess();
-                        Intent intent=new Intent(TestingActivity.this,MenuOrderPlacing.class);
-                        intent.putExtra("CanteenId",intCanteenId);
-                        intent.putExtra("MenuId", MenuIdTemp);
-                        intent.putExtra("Menu", MenuTemp);
-                        intent.putExtra("Price",PriceTemp);
-                        intent.putExtra("Quantity",QuantityTemp);
-                        //intent.putExtra("MenuImages",MenuImagesIdsTemp);
-                        intent.putExtra("MenuImage", MenuImagesTemp);
-                        intent.putExtra("Total",Total);
-                        intent.putExtra("ItemPosition",PositionTemp);
-                        intent.putStringArrayListExtra("CanteenItems",alMenuItems);
-                        startActivity(intent);
-                    }
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(), getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+
+                        if (Total > 0) {
+
+                            assignSelectedItemsForIntentProcess();
+                            Intent intent = new Intent(TestingActivity.this, MenuOrderPlacing.class);
+                            intent.putExtra("CanteenId", intCanteenId);
+                            intent.putExtra("MenuId", MenuIdTemp);
+                            intent.putExtra("Menu", MenuTemp);
+                            intent.putExtra("Price", PriceTemp);
+                            intent.putExtra("Quantity", QuantityTemp);
+                            //intent.putExtra("MenuImages",MenuImagesIdsTemp);
+                            intent.putExtra("MenuImage", MenuImagesTemp);
+                            intent.putExtra("Total", Total);
+                            intent.putExtra("ItemPosition", PositionTemp);
+                            intent.putStringArrayListExtra("CanteenItems", alMenuItems);
+                            startActivity(intent);
+                        }
                     else
                         Toast.makeText(getApplicationContext(), "Menu not selected", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -156,12 +169,15 @@ public class TestingActivity extends AppCompatActivity {
 
     public void getTotal() {
         Total = 0;
+        quantityCount = 0;
         String strtemp = "";
         for (int i = 0; i < Menu.length; i++) {
             float tempTotal = Quantity[i] * Price[i];
             Total = Total + tempTotal;
+            quantityCount = quantityCount+ Quantity[i];
         }
         tvTotal.setText("\u20B9" + " " + String.format("%.02f", Total));
+        txtCartCount.setText(quantityCount+"");
     }
 
     public void assignSelectedItemsForIntentProcess()

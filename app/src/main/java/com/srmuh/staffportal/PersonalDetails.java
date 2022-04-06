@@ -1,5 +1,7 @@
 package com.srmuh.staffportal;
 
+import static webservice.WebService.strParameters;
+
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,15 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-
 import android.os.Debug;
-//import android.util.Log;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -31,19 +25,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-import webservice.SqlliteController;
-import webservice.WebService;
-
-import static webservice.WebService.strParameters;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import webservice.SqlliteController;
+import webservice.WebService;
 
 /**
  * Created by Firstline Infotech on 30-04-2019.
@@ -54,7 +53,8 @@ public class PersonalDetails extends AppCompatActivity {
     private long lngEmployeeId=0;
     ImageView imageView;
     TextView  tvPageTitle, tvLastUpdated,txtLastUpdatedProfile,tvAddress;
-    TextInputEditText tvEmployee, tvDob, tvDivision, tvDesignation, tvQualification,tvDoj, tvMobile, tvEmail;
+    TextView tvEmployee,tvDivision,tvDesignation;
+    TextInputEditText  tvDob,   tvQualification,tvDoj, tvMobile, tvEmail;
     SQLiteDatabase db;
     SqlliteController controllerdb = new SqlliteController(this);
 
@@ -81,9 +81,15 @@ public class PersonalDetails extends AppCompatActivity {
         butEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent = new Intent(PersonalDetails.this, ProfileEdit.class);
-            startActivityForResult(intent, 2);
-            finish();
+                //check Internet
+                if (!CheckNetwork.isInternetAvailable(PersonalDetails.this)) {
+                    Toast.makeText(PersonalDetails.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+                    Intent intent = new Intent(PersonalDetails.this, ProfileEdit.class);
+                    startActivityForResult(intent, 2);
+                    finish();
+                }
 //            startActivity(intent);
             }
         });
@@ -100,11 +106,17 @@ public class PersonalDetails extends AppCompatActivity {
         btnRefresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-            strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
-            WebService.strParameters = strParameters;
-            WebService.METHOD_NAME = "employeePersonalDetailsJson";
-            AsyncCallWS task = new AsyncCallWS();
-            task.execute();
+                if (!CheckNetwork.isInternetAvailable(PersonalDetails.this)) {
+                    Toast.makeText(PersonalDetails.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                    WebService.strParameters = strParameters;
+                    WebService.METHOD_NAME = "employeePersonalDetailsJson";
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
         });
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
@@ -137,31 +149,29 @@ public class PersonalDetails extends AppCompatActivity {
     public void setCirularImage(byte[] byteArray){
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setCornerRadius(10);
         imageView.setImageDrawable(roundedBitmapDrawable);
     }
     private void displayProfile(){
-        Log.e("Display Called","Test");
 
         db = controllerdb.getReadableDatabase();
         try{
             Cursor cursor = db.rawQuery("SELECT strftime('%d-%m-%Y %H:%M:%S', lastupdatedate) as lastupdated,* FROM profiledetails pf WHERE employeeid=" + lngEmployeeId, null);
             if (cursor.moveToFirst()){
                 do{
-                    Log.d("Display Caled","Test Cursor");
 
                     txtLastUpdatedProfile.setText("Last Updated: " + cursor.getString(cursor.getColumnIndex("lastupdated")));
                     tvLastUpdated.setText("Last Updated: " + cursor.getString(cursor.getColumnIndex("lastupdated")));
-                    tvEmployee = (TextInputEditText) findViewById(R.id.txtEmployeeName);
+                    tvEmployee = (TextView) findViewById(R.id.txtEmployeeName);
                     tvEmployee.setText(cursor.getString(cursor.getColumnIndex("employeename")));
 
                     tvQualification = (TextInputEditText) findViewById(R.id.txtQualification);
                     tvQualification.setText(cursor.getString(cursor.getColumnIndex("qualification")));
 
-                    tvDivision = (TextInputEditText) findViewById(R.id.txtDivision);
+                    tvDivision = (TextView) findViewById(R.id.txtDivision);
                     tvDivision.setText(cursor.getString(cursor.getColumnIndex("division")));
 
-                    tvDesignation = (TextInputEditText) findViewById(R.id.txtDesignation);
+                    tvDesignation = (TextView) findViewById(R.id.txtDesignation);
                     tvDesignation.setText(cursor.getString(cursor.getColumnIndex("designation")));
 
                     tvDob = (TextInputEditText) findViewById(R.id.txtDob);
@@ -190,11 +200,17 @@ public class PersonalDetails extends AppCompatActivity {
                     }
                 }catch(Exception e){}
             } else {
-                strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
-                strParameters = strParameters;
-                WebService.METHOD_NAME = "employeePersonalDetailsJson";
-                AsyncCallWS task = new AsyncCallWS();
-                task.execute();
+                if (!CheckNetwork.isInternetAvailable(PersonalDetails.this)) {
+                    Toast.makeText(PersonalDetails.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
+
+                    strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                    strParameters = strParameters;
+                    WebService.METHOD_NAME = "employeePersonalDetailsJson";
+                    AsyncCallWS task = new AsyncCallWS();
+                    task.execute();
+                }
             }
             cursor.close();
         } catch (Exception e) {
@@ -245,7 +261,6 @@ public class PersonalDetails extends AppCompatActivity {
             try {
                 SqlliteController sc = new SqlliteController(PersonalDetails.this);
                 JSONObject object = new JSONObject(ResultString.toString());
-                Log.e("Test Radha Profile : " , object.toString() );
                 if (!object.isNull("Name")) {
                     sc.insertProfileDetails(lngEmployeeId, object.getString("Name"),
                             object.getString("Division"), object.getString("Designation"),
@@ -253,6 +268,7 @@ public class PersonalDetails extends AppCompatActivity {
                             object.getString("Mobile"), object.getString("Email"),
                             object.getString("Qualification"), object.getString("Address"));
                     if(object.has("staffphoto")) {
+
                         String base64 = object.getString("staffphoto");
                         byte[] byteArrPhoto = Base64.decode(base64, Base64.DEFAULT);
                         sc.insertStaffPhoto(lngEmployeeId, byteArrPhoto);
@@ -268,8 +284,6 @@ public class PersonalDetails extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                Log.e("Test Radha Profile : " , e.getMessage() );
-
             }
         }
     }
@@ -284,13 +298,13 @@ public class PersonalDetails extends AppCompatActivity {
                 if (options[item].equals("Take Photo"))
                 {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    File f = new File(Environment.getExternalStorageDirectory(), "temp.jpg");
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 3);
                 }
                 else if (options[item].equals("Choose from Gallery"))
                 {
-                    Intent intent = new   Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent intent = new   Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 4);
                 }
                 else if (options[item].equals("Cancel")) {
@@ -325,7 +339,7 @@ public class PersonalDetails extends AppCompatActivity {
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(),
                             bitmapOptions);
                     imageView.setImageBitmap(bitmap);
-                    String path = android.os.Environment
+                    String path = Environment
                             .getExternalStorageDirectory()
                             + File.separator
                             + "Phoenix" + File.separator + "default";

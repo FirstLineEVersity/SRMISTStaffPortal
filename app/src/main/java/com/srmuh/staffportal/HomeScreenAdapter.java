@@ -37,127 +37,127 @@ public class HomeScreenAdapter extends RecyclerView.Adapter<HomeScreenAdapter.Vi
             this.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                String item = mNavTitles[getPosition()]; //leavepending_list.get(getPosition());
-                String[] strColumns = item.split("##");
-                int intMenuId=Integer.parseInt(strColumns[1]);
-                  //  Log.e("TEst Notification : ",""+intMenuId);
-                if (!CheckNetwork.isInternetAvailable(v.getContext())) {
-                    Toast.makeText(v.getContext(),"You dont have Internet connection", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                switch (intMenuId){
-                    case 1:
-                        Intent intent = new Intent(v.getContext(), PersonalDetails.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 2:
-                        SharedPreferences loginsession = v.getContext().getSharedPreferences("SessionLogin", 0);
-                        SharedPreferences.Editor ed = loginsession.edit();
-                        ed.putInt("menuflag", 1);
-                        ed.commit();
-                        intent = new Intent(v.getContext(), StudentAttendanceTemplate.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 3:
-                        intent = new Intent(v.getContext(), LeaveStatus.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 4:
-                        intent = new Intent(v.getContext(), LeaveEntry.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 5:
-                        intent = new Intent(v.getContext(), LeaveApproval.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 6:
-                        loginsession = v.getContext().getSharedPreferences("SessionLogin", 0);
-                        ed = loginsession.edit();
-                        ed.putInt("menuflag", 2);
-                        ed.commit();
-                        intent = new Intent(v.getContext(), StudentAttendanceTemplate.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 7:
-                        intent = new Intent(v.getContext(), InternalMarkEntryMain.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 8:
-                        intent = new Intent(v.getContext(), StaffBiometricLog.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 9:
-                        intent = new Intent(v.getContext(), ViewPaySlipPayPeriod.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 10:
-                        intent = new Intent(v.getContext(), NotificationForStudentsSubjectList.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 11:
-                        intent = new Intent(v.getContext(), NotificationStaffCategory.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
+                    String item = mNavTitles[getPosition()]; //leavepending_list.get(getPosition());
+                    String[] strColumns = item.split("##");
+                    int intMenuId=Integer.parseInt(strColumns[1]);
+                    //  Log.e("TEst Notification : ",""+intMenuId);
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),"You dont have Internet connection", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    switch (intMenuId){
+                        case 1:
+                            Intent intent = new Intent(v.getContext(), PersonalDetails.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 2:
+                            SharedPreferences loginsession = v.getContext().getSharedPreferences("SessionLogin", 0);
+                            SharedPreferences.Editor ed = loginsession.edit();
+                            ed.putInt("menuflag", 1);
+                            ed.commit();
+                            intent = new Intent(v.getContext(), StudentAttendanceTemplate.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 3:
+                            intent = new Intent(v.getContext(), LeaveStatus.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 4:
+                            intent = new Intent(v.getContext(), LeaveEntry.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 5:
+                            intent = new Intent(v.getContext(), LeaveApproval.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 6:
+                            loginsession = v.getContext().getSharedPreferences("SessionLogin", 0);
+                            ed = loginsession.edit();
+                            ed.putInt("menuflag", 2);
+                            ed.commit();
+                            intent = new Intent(v.getContext(), StudentAttendanceTemplate.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 7:
+                            intent = new Intent(v.getContext(), InternalMarkEntryMain.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 8:
+                            intent = new Intent(v.getContext(), StaffBiometricLog.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 9:
+                            intent = new Intent(v.getContext(), ViewPaySlipPayPeriod.class);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 10:
+                            intent = new Intent(v.getContext(), NotificationForStudentsSubjectList.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 11:
+                            intent = new Intent(v.getContext(), NotificationStaffCategory.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
 //                    case 12:
 //                        intent = new Intent(v.getContext(), NotificationForStudentsSubjectList.class);
 //                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                        v.getContext().startActivity(intent);
 //                        break;
-                    case 13:
-                        intent = new Intent(v.getContext(), NotificationList.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 14:
-                        intent = new Intent(v.getContext(), CanteenSelection.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 15:
-                        intent = new Intent(v.getContext(), VenueBooking.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 16:
-                        intent = new Intent(v.getContext(), ENoticeView.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 17:
-                        intent = new Intent(v.getContext(), ManagementDashboard.class); //ManagementDashboard
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 18:
-                        intent = new Intent(v.getContext(), FacultyDashboard.class);  //FacultyDashboard
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 19:
-                        intent = new Intent(v.getContext(), LMSIndex.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 20:
-                        intent = new Intent(v.getContext(), PermissionEntry.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 50:
-                        SharedPreferences myPrefs = v.getContext().getSharedPreferences("SessionLogin", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = myPrefs.edit();
-                        editor.clear();
-                        editor.commit();
-                        SqlliteController sc = new SqlliteController(v.getContext());
-                        sc.deleteLoginStaffDetails();
-                        intent = new Intent(v.getContext(), MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        v.getContext().startActivity(intent);
-                        break;
-                    default:
-                        break;
+                        case 13:
+                            intent = new Intent(v.getContext(), NotificationList.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 14:
+                            intent = new Intent(v.getContext(), CanteenSelection.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 15:
+                            intent = new Intent(v.getContext(), VenueBooking.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 16:
+                            intent = new Intent(v.getContext(), ENoticeView.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 17:
+                            intent = new Intent(v.getContext(), ManagementDashboard.class); //ManagementDashboard
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 18:
+                            intent = new Intent(v.getContext(), FacultyDashboard.class);  //FacultyDashboard
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 19:
+                            intent = new Intent(v.getContext(), LMSIndex.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 20:
+                            intent = new Intent(v.getContext(), PermissionEntry.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 50:
+                            SharedPreferences myPrefs = v.getContext().getSharedPreferences("SessionLogin", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = myPrefs.edit();
+                            editor.clear();
+                            editor.commit();
+                            SqlliteController sc = new SqlliteController(v.getContext());
+                            sc.deleteLoginStaffDetails();
+                            intent = new Intent(v.getContext(), MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        default:
+                            break;
                     }
                 };
             });

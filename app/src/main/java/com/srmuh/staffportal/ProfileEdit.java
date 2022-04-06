@@ -54,7 +54,7 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
                 //Recycler View Menu
                 //Intent intent = new Intent(PersonalDetails.this, HomeScreen.class);
                 //Grid View Menu
-                Intent intent = new Intent(ProfileEdit.this, PersonalDetails.class);
+                Intent intent = new Intent(ProfileEdit.this,PersonalDetails.class);
                 startActivity(intent);
                 finish();
             }
@@ -112,7 +112,7 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
                 strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
                 strParameters = strParameters;
                 WebService.METHOD_NAME = "employeePersonalDetailsJson";
-                ProfileEdit.AsyncCallWS task = new ProfileEdit.AsyncCallWS();
+                AsyncCallWS task = new AsyncCallWS();
                 task.execute();
             }
             cursor.close();
@@ -121,7 +121,7 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
             strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
             strParameters = strParameters;
             WebService.METHOD_NAME = "employeePersonalDetailsJson";
-            ProfileEdit.AsyncCallWS task = new ProfileEdit.AsyncCallWS();
+            AsyncCallWS task = new AsyncCallWS();
             task.execute();
         }
     }
@@ -190,7 +190,7 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
                 strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
                 WebService.strParameters = strParameters;
                 WebService.METHOD_NAME = "employeePersonalDetailsJson";
-                ProfileEdit.AsyncCallWS task = new ProfileEdit.AsyncCallWS();
+                AsyncCallWS task = new AsyncCallWS();
                 task.execute();
             }
         }
@@ -213,39 +213,45 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         switch (v.getId()){
-            case R.id.btnSave:
-                if (! Utility.isNotNull(tvQualification.getText().toString().trim())){
-                    tvQualification.setError("Qualification required");
-                    tvQualification.requestFocus();
-                    return;
-                }
-                else{
-                    tvQualification.setError(null);
-                }
-                if (! Utility.isNotNull(tvMobile.getText().toString().trim())){
-                    tvMobile.setError("Mobile Number required");
-                    tvMobile.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(tvEmail.getText().toString().trim())){
-                    tvEmail.setError("Email Address required");
-                    return;
-                }
-                if (! Utility.isNotNull(tvAddress.getText().toString().trim())){
-                    tvAddress.setError("Address required");
-                    return;
-                }
-                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(String.valueOf(lngEmployeeId)),
-                        "String", "mobileno", tvMobile.getText().toString().trim(),
-                        "String", "address", tvAddress.getText().toString().trim(),
-                        "String", "email", tvEmail.getText().toString().trim(),
-                        "String", "qualification", tvQualification.getText().toString().trim(),
+
+                case R.id.btnSave:
+                    if (!CheckNetwork.isInternetAvailable(ProfileEdit.this)) {
+                        Toast.makeText(ProfileEdit.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        if (!Utility.isNotNull(tvQualification.getText().toString().trim())) {
+                            tvQualification.setError("Qualification required");
+                            tvQualification.requestFocus();
+                            return;
+                        } else {
+                            tvQualification.setError(null);
+                        }
+                        if (!Utility.isNotNull(tvMobile.getText().toString().trim())) {
+                            tvMobile.setError("Mobile Number required");
+                            tvMobile.requestFocus();
+                            return;
+                        }
+                        if (!Utility.isNotNull(tvEmail.getText().toString().trim())) {
+                            tvEmail.setError("Email Address required");
+                            return;
+                        }
+                        if (!Utility.isNotNull(tvAddress.getText().toString().trim())) {
+                            tvAddress.setError("Address required");
+                            return;
+                        }
+                        WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(String.valueOf(lngEmployeeId)),
+                                "String", "mobileno", tvMobile.getText().toString().trim(),
+                                "String", "address", tvAddress.getText().toString().trim(),
+                                "String", "email", tvEmail.getText().toString().trim(),
+                                "String", "qualification", tvQualification.getText().toString().trim(),
                         };
 
-                //WebService.strParameters = strParameters;
-                WebService.METHOD_NAME = "updateEmployeeProfile";
-                AsyncCallSaveWS task = new AsyncCallSaveWS();
-                task.execute();
+                        //WebService.strParameters = strParameters;
+                        WebService.METHOD_NAME = "updateEmployeeProfile";
+                        AsyncCallSaveWS task = new AsyncCallSaveWS();
+                        task.execute();
+                    }
                 break;
         }
     }
@@ -263,8 +269,8 @@ public class ProfileEdit extends AppCompatActivity implements View.OnClickListen
         @Override
         protected Void doInBackground(Void... params) {
             //Log.i(TAG, "doInBackground");
-            if (android.os.Debug.isDebuggerConnected())
-                android.os.Debug.waitForDebugger();
+            if (Debug.isDebuggerConnected())
+                Debug.waitForDebugger();
             ResultString = WebService.invokeWS();
             return null;
         }

@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import com.srmuh.staffportal.properties.Properties;
+
+import webservice.WebService;
+
 public class FacultyDashboard extends AppCompatActivity implements View.OnClickListener {
     long lngEmployeeId = 0;
     TextView tvPageTitle;
@@ -22,14 +26,13 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
         lngEmployeeId = loginsession.getLong("userid", 1);
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
-        tvPageTitle.setText("Faculty Dashboard");
+        tvPageTitle.setText(getResources().getString(R.string.mFacultyDashBoard));
 
         Button btnBack=(Button) findViewById(R.id.button_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent = new Intent(FacultyDashboard.this, HomeScreenCategory.class);
-            startActivity(intent);
+            onBackPressed();
             }
         });
 
@@ -38,7 +41,7 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
         CardView cv_absenteecount = (CardView) findViewById(R.id.fdbabsenteecount);
         CardView cv_todaysabsentee = (CardView) findViewById(R.id.fdbtodaysabsentee);
 //        CardView cv_projecttracker = (CardView) findViewById(R.id.fdbprojecttracker);
-//        CardView cv_staffbirthday = (CardView) findViewById(R.id.fdbstaffbirthday);
+       CardView cv_staffbirthday = (CardView) findViewById(R.id.fdbstaffbirthday);
 //        CardView cv_UpcomingEvents = (CardView) findViewById(R.id.fdbUpcomingEvents);
 
         cv_staffleave.setOnClickListener(this);
@@ -46,7 +49,7 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
         cv_absenteecount.setOnClickListener(this);
         cv_todaysabsentee.setOnClickListener(this);
 //        cv_projecttracker.setOnClickListener(this);
-//        cv_staffbirthday.setOnClickListener(this);
+        cv_staffbirthday.setOnClickListener(this);
 //        cv_UpcomingEvents.setOnClickListener(this);
     }
 
@@ -55,26 +58,42 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
         Intent intent = new Intent(FacultyDashboard.this, tabbedfacultydashboard.class);
         switch(v.getId()){
             case R.id.fdbstaffleave:
+                intent = new Intent(FacultyDashboard.this, MISActivity.class);
+                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                WebService.METHOD_NAME = getResources().getString(R.string.wsLeaveDetails);
                 intent.putExtra("ClickedId",0);
+                intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdStaffLeave));
                 break;
             case R.id.fdblibrarytransactions:
                 intent.putExtra("ClickedId",1);
+                intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdLibraryTransaction));
+
                 break;
             case R.id.fdbabsenteecount:
+                intent = new Intent(FacultyDashboard.this, MISActivity.class);
+                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                WebService.METHOD_NAME = getResources().getString(R.string.wsAbsenteeCount);
+
+                intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdAbsenteeCount));
                 intent.putExtra("ClickedId",2);
+
+
                 break;
             case R.id.fdbtodaysabsentee:
+                intent = new Intent(FacultyDashboard.this, MISActivity.class);
+                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                WebService.METHOD_NAME = getResources().getString(R.string.wsTodayAbsentee);
                 intent.putExtra("ClickedId",3);
+                intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdTodaysAbsentee));
+
                 break;
-//            case R.id.fdbprojecttracker:
-//                intent.putExtra("ClickedId",4);
-//                break;
-//            case R.id.fdbstaffbirthday:
-//                intent.putExtra("ClickedId",5);
-//                break;
-//            case R.id.fdbUpcomingEvents:
-//                intent.putExtra("ClickedId",6);
-//                break;
+            case R.id.fdbstaffbirthday:
+                intent = new Intent(FacultyDashboard.this, MISActivity.class);
+                WebService.METHOD_NAME = getResources().getString(R.string.wsBitrhdayList);
+                intent.putExtra("ClickedId",5);
+                intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdStaffBirthday));
+                break;
+
         }
         startActivity(intent);
     }
@@ -82,8 +101,6 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        Intent intent = new Intent(this, HomeScreenCategory.class);
-        startActivity(intent);
-        this.finish();
+
     }
 }

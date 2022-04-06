@@ -79,7 +79,7 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
     public void setCirularImage(byte[] byteArray){
         Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setCornerRadius(10);
         imageView.setImageDrawable(roundedBitmapDrawable);
     }
 
@@ -102,7 +102,7 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
                        // Intent intent = new Intent(getApplicationContext(), UploadFiles.class);
                         startActivity(intent);
                         finish();
-                    } else if (finalI == 8){ //Logout
+                    } else if (finalI == 6){ //Logout
                         SharedPreferences myPrefs = getApplicationContext().getSharedPreferences("SessionLogin", MODE_PRIVATE);
                         SharedPreferences.Editor editor = myPrefs.edit();
                         editor.clear();

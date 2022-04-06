@@ -370,7 +370,7 @@ public class SqlliteController extends SQLiteOpenHelper {
         values.put("employeecategory",strEmpCategoryDesc);
         values.put("employeecode",strEmployeeCode);
         values.put("employeename",strEmployeeName);
-        Log.d("insert query",String.valueOf(values));
+       // Log.d("insert query",String.valueOf(values));
         database.insert("stafflist", null, values);
         database.close();
     }

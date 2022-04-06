@@ -33,12 +33,12 @@
                     >
 
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_staffleave" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_staff_leave" />
 
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Staff Leave"
+                        android:text="@string/mdStaffLeave"
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -53,12 +53,12 @@
                     >
 
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_librarytransaction" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_library_transaction" />
 
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Library Transaction"
+                        android:text="@string/mdLibraryTransaction"
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -73,19 +73,18 @@
                     >
 
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_absenteecount" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_absentee_count" />
 
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Absentee Count"
+                        android:text="@string/mdAbsenteeCount"
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/fdbtodaysabsentee"
                 style="@style/StyleHomeGridCardView"
-
                 >
 
                 <LinearLayout
@@ -93,39 +92,18 @@
                     >
 
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_todayabsentee" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_todays_absentee" />
 
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Todays Absentee"
+                        android:text="@string/mdTodaysAbsentee"
                         />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/fdbprojecttracker"-->
-<!--                style="@style/StyleHomeGridCardView"-->
-
-<!--                >-->
-
-<!--                <LinearLayout-->
-<!--                    style="@style/StyleHomeGridLayout"-->
-<!--                    >-->
-
-<!--                    <ImageView-->
-<!--                        style="@style/StyleHomeGridImage"-->
-<!--                        android:src="@drawable/icondb_projecttracker" />-->
-
-<!--                    <TextView-->
-<!--                        style="@style/StyleHomeGridText"-->
-<!--                        android:text="Project Tracker"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
-<!--            </androidx.cardview.widget.CardView>  -->
-            <androidx.cardview.widget.CardView
+             <androidx.cardview.widget.CardView
             android:id="@+id/fdbstaffbirthday"
             style="@style/StyleHomeGridCardView"
-
             >
 
             <LinearLayout
@@ -133,36 +111,16 @@
                 >
 
                 <ImageView
-                    style="@style/StyleHomeGridImage"
-                    android:src="@drawable/icondb_staffbirthday" />
+                    style="@style/StyleManagementGridImage"
+                    android:src="@drawable/m_staff_birthday" />
 
                 <TextView
                     style="@style/StyleHomeGridText"
-                    android:text="Staff Birthday"
+                    android:text="@string/mdStaffBirthday"
                     />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/fdbUpcomingEvents"-->
-<!--                style="@style/StyleHomeGridCardView"-->
-
-<!--                >-->
-
-<!--                <LinearLayout-->
-<!--                    style="@style/StyleHomeGridLayout"-->
-<!--                    >-->
-
-<!--                    <ImageView-->
-<!--                        style="@style/StyleHomeGridImage"-->
-<!--                        android:src="@drawable/icondb_upcomingevents" />-->
-
-<!--                    <TextView-->
-<!--                        style="@style/StyleHomeGridText"-->
-<!--                        android:text="Upcoming Events"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
-<!--            </androidx.cardview.widget.CardView>-->
 
         </GridLayout>
     </LinearLayout>

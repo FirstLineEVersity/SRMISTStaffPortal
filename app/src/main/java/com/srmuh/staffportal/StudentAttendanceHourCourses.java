@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
@@ -47,15 +50,17 @@ public class StudentAttendanceHourCourses extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-            //Recycler View Menu
-            //Intent intent = new Intent(StudentAttendanceHourCourses.this, HomeScreen.class);
-            //Grid View Menu
-            Intent intent = new Intent(StudentAttendanceHourCourses.this, HomeScreenCategory.class);
-            startActivity(intent);
+                //Recycler View Menu
+                //Intent intent = new Intent(StudentAttendanceHourCourses.this, HomeScreen.class);
+                //Grid View Menu
+                Intent intent = new Intent(StudentAttendanceHourCourses.this, HomeScreenCategory.class);
+                startActivity(intent);
             }
         });
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
         lngEmployeeId = loginsession.getLong("userid", 1);
+        TextView pageHeader = findViewById(R.id.pageHeader);
+        pageHeader.setText(getIntent().getExtras().getString(Properties.timeTableHeader));
 
         txtAttendanceDate = findViewById(R.id.txtAttendanceDate);
         hdnAttendanceDate = findViewById(R.id.hdnAttendanceDate);

@@ -14,7 +14,7 @@
         style="@style/HeaderTextStyle"
         android:layout_below="@layout/pageheaderwithoutrefresh"
         android:layout_marginTop="60dp"
-        android:text=" Employee Category" />
+        android:text=" Staff Category" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvStaffCategory"

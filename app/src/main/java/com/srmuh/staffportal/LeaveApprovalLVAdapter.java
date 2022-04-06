@@ -1,11 +1,14 @@
 package com.srmuh.staffportal;
 
+import android.os.Build;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -81,12 +84,17 @@ public class LeaveApprovalLVAdapter extends RecyclerView.Adapter<LeaveApprovalLV
                 @Override
                 public void onClick(View v){
                 try {
-                    String item = leavepending_list.get(getPosition());
-                    String[] strColumns = item.split("##");
-                    lngLeaveApplnId=Long.parseLong(strColumns[0]);
-                    removeAt(getPosition());
-                    ((LeaveApproval) v.getContext()).callLeaveApproveReject(lngLeaveApplnId,1);
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
 
+                        String item = leavepending_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        lngLeaveApplnId = Long.parseLong(strColumns[0]);
+                        removeAt(getPosition());
+                        ((LeaveApproval) v.getContext()).callLeaveApproveReject(lngLeaveApplnId, 1);
+                    }
                 } catch (Exception e) {
                     // ignore
                 }
@@ -96,12 +104,17 @@ public class LeaveApprovalLVAdapter extends RecyclerView.Adapter<LeaveApprovalLV
                 @Override
                 public void onClick(View v){
                 try {
-                    String item = leavepending_list.get(getPosition());
-                    String[] strColumns = item.split("##");
-                    lngLeaveApplnId=Long.parseLong(strColumns[0]);
-                    removeAt(getPosition());
-                    ((LeaveApproval) v.getContext()).callLeaveApproveReject(lngLeaveApplnId,9);
-                } catch (Exception e) {
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        String item = leavepending_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        lngLeaveApplnId = Long.parseLong(strColumns[0]);
+                        removeAt(getPosition());
+                        ((LeaveApproval) v.getContext()).callLeaveApproveReject(lngLeaveApplnId, 9);
+                    } } catch (Exception e) {
                     // ignore
                 }
                 }

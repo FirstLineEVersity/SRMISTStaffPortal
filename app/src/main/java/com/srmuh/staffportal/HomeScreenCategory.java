@@ -165,7 +165,7 @@ public class HomeScreenCategory extends AppCompatActivity {
             cursor.close();
 
             if (MENULIST.length == 0) {
-                Toast.makeText(HomeScreenCategory.this, getResources().getString(R.string.responseNoData), Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeScreenCategory.this, getResources().getString(R.string.noFeature), Toast.LENGTH_LONG).show();
             } else {
                 mRecyclerView = (RecyclerView) findViewById(R.id.rvMenuContentCategory); // Assigning the RecyclerView Object to the xml View
                 mRecyclerView.setHasFixedSize(true);

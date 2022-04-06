@@ -114,7 +114,7 @@ public class MenuOrderPlacing extends AppCompatActivity {
                     System.out.println(e.getMessage());
                 }
                 if (lTotal > 0) {
-                    Log.i("Menu Order Details : ", intCanteenId +"--"+strOrderDetails);
+                  //  Log.i("Menu Order Details : ", intCanteenId +"--"+strOrderDetails);
                     strParameters = new String[]{
                             "String", "returndata", strOrderDetails,
                             "int", "canteenid", String.valueOf(intCanteenId),

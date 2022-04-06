@@ -1,16 +1,21 @@
 package com.srmuh.staffportal;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.srmuh.staffportal.properties.Properties;
 
 import java.util.ArrayList;
 
@@ -76,23 +81,33 @@ public class StudentAttendanceHourCoursesLVAdapter extends RecyclerView.Adapter<
             this.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Context context = v.getContext();
-                    String item = sub_list.get(getPosition());
-                    String[] strColumns = item.split("##");
-                    long lngSubId=Long.parseLong(strColumns[0]);
-                    long lngProgSecId=Long.parseLong(strColumns[6]);
-                    long lngAttenTransId=Long.parseLong(strColumns[8]);
-                    if (lngAttenTransId == 0){ //strColumns[8] contains attendance transaction id
-                        Intent intent = new Intent(context, StudentAttendanceStudentList.class);
-                        intent.putExtra("subid", lngSubId);
-                        intent.putExtra("progsecid", lngProgSecId);
-                        intent.putExtra("ids",txtIds.getText());
-                        context.startActivity(intent);
-                    }else{
-                        Toast.makeText(context, "Response: Already Mark entered", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(context, AttendanceMarkedStudentList.class);
-                        intent.putExtra("attentransid", lngAttenTransId);
-                        context.startActivity(intent);
+                    if (!CheckNetwork.isInternetAvailable(v.getContext())) {
+                        Toast.makeText(v.getContext(),"You dont have Internet connection", Toast.LENGTH_LONG).show();
+                        return;
+                    }else {
+
+                        Context context = v.getContext();
+                        String item = sub_list.get(getPosition());
+                        String[] strColumns = item.split("##");
+                        long lngSubId = Long.parseLong(strColumns[0]);
+                        long lngProgSecId = Long.parseLong(strColumns[6]);
+                        long lngAttenTransId = Long.parseLong(strColumns[8]);
+                        if (lngAttenTransId == 0) { //strColumns[8] contains attendance transaction id
+                            Intent intent = new Intent(context, StudentAttendanceStudentList.class);
+                            intent.putExtra("subid", lngSubId);
+                            intent.putExtra("progsecid", lngProgSecId);
+                            intent.putExtra("ids", txtIds.getText());
+                            intent.putExtra(Properties.attendanceHeader1, strColumns[5]);
+                            intent.putExtra(Properties.attendanceHeader2, txtDayorderHour.getText().toString());
+                            context.startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "Response: Already Mark entered", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context, AttendanceMarkedStudentList.class);
+                            intent.putExtra("attentransid", lngAttenTransId);
+                            intent.putExtra(Properties.attendanceHeader1, strColumns[5]);
+                            intent.putExtra(Properties.attendanceHeader2, txtDayorderHour.getText().toString());
+                            context.startActivity(intent);
+                        }
                     }
                 }
             });

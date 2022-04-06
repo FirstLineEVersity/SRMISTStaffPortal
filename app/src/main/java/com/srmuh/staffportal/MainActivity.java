@@ -132,31 +132,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.loginButton:
-                if (! Utility.isNotNull(editTextUsername)){
-                    usernameInputLayout.setError("username is required!");
-                }
-                if (! Utility.isNotNull(editTextPassword)){
-                   // etPassword.setError("password is required!");
-                    passwordInputLayout.setError("password is required!");
-                }
-                deviceId();
-                if (Utility.isNotNull(editTextPassword) && Utility.isNotNull(editTextUsername)) {
-                    strParameters = new String[]{"String", "userid", editTextUsername, "String", "password", editTextPassword,
-                                                 "String", "deviceid", imeiNumber, "String", "acesstoken", token};
-                    new Thread(new Runnable(){
-                        public void run() {
-                        WebService.strParameters = strParameters;
-                        WebService.METHOD_NAME = "authenticateLoginUserJson";  //"authenticateLoginUserJsonEncrypted";
-                        AsyncCallWS task = new AsyncCallWS();
-                        task.execute();
-                        }
-                    }).start();
-                   // dialog.setMessage("Loading......");
-                    dialog.setMessage(getResources().getString(R.string.loading));
+                if (!CheckNetwork.isInternetAvailable(MainActivity.this)) {
+                    Toast.makeText(MainActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                    return;
+                }else {
 
-                    dialog.show();
-                    hideKeyboard();
-                    butLogin.setEnabled(false);
+                    if (!Utility.isNotNull(editTextUsername)) {
+                        usernameInputLayout.setError("username is required!");
+                    }
+                    if (!Utility.isNotNull(editTextPassword)) {
+                        // etPassword.setError("password is required!");
+                        passwordInputLayout.setError("password is required!");
+                    }
+                    deviceId();
+                    if (Utility.isNotNull(editTextPassword) && Utility.isNotNull(editTextUsername)) {
+                        strParameters = new String[]{"String", "userid", editTextUsername, "String", "password", editTextPassword,
+                                "String", "deviceid", imeiNumber, "String", "acesstoken", token};
+                        new Thread(new Runnable() {
+                            public void run() {
+                                WebService.strParameters = strParameters;
+                                WebService.METHOD_NAME = "authenticateLoginUserJson";  //"authenticateLoginUserJsonEncrypted";
+                                AsyncCallWS task = new AsyncCallWS();
+                                task.execute();
+                            }
+                        }).start();
+                        // dialog.setMessage("Loading......");
+                        dialog.setMessage(getResources().getString(R.string.loading));
+
+                        dialog.show();
+                        hideKeyboard();
+                        butLogin.setEnabled(false);
+                    }
                 }
                 break;
             case R.id.btnInfo:
@@ -241,18 +247,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ed.commit();
                     SqlliteController sc = new SqlliteController(MainActivity.this);
                     sc.deleteLoginStaffDetails();
-                    /*
-                    Log.e("Radha Test menu : ",object.getString("menuids"));
-                    1##Personal Details,2##My Timetable,4##Leave Entry,
-                    7##Internal Mark Entry,8##Biometric Log,
-                    9##Payslip,10##Send Notification to Students,
-                    11##Send Notification to Staff,12##Notification to All,
-                             13##Notification View,20##Permission Entry,50##Logout
 
-
-                     */
-
-
+                   
                     sc.insertLoginStaffDetails(object.getLong("employeeid"),object.getString("employeename"),
                             object.getString("department"),object.getString("designation"),object.getString("menuids"));
                     if (dialog != null && dialog.isShowing()) {
@@ -275,7 +271,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();

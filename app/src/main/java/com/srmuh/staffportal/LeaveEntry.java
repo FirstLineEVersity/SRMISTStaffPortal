@@ -53,6 +53,8 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
     private float flLeaveApplied;
     private static String ResultString = "";
     private TextView tvPageTitle;
+
+    private float availableDays = 0;
     AlertDialog.Builder builder;
     private int intFlag = 0;
     private LinkedHashMap<String, String> leaveperiod_data=new LinkedHashMap<String, String>();
@@ -198,6 +200,15 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
                 java.util.StringTokenizer st = new java.util.StringTokenizer(name,"[");
                 txtEditLeaveType.setText(st.nextToken());
                 txtLeaveAvailability.setText("["+st.nextToken());
+                java.util.StringTokenizer st1 = new java.util.StringTokenizer(name, "[");
+
+                String lavail1 = st1.nextToken();
+                String lavail = "["+st1.nextToken();
+                String[] strColumns = lavail.split(" ");
+                availableDays = Float.parseFloat(strColumns[3]);
+                Log.i("TEST FLOAT : ", strColumns[3]);
+                txtLeaveTypeId.setText(id);
+
                 txtLeaveTypeId.setText(id);
             }
         });
@@ -550,30 +561,46 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
                 try {
                     Date dtFromdate = sdf.parse(d1);
                     Date dtTodate = sdf.parse(d2);
-                    if (dtFromdate.compareTo(dtTodate) > 0){
+                    long diff =  dtTodate.getTime() - dtFromdate.getTime();
+                    float numOfDays = (float) (diff / (1000 * 60 * 60 * 24));
+                    if(numOfDays > availableDays){
+                        showDialog("Number of Available days for this Leave type is "+availableDays+", Please select days with in the limit ");
+                        txtToDate.setError("Number of Available days for this Leave type is "+availableDays+" Please select days with in the limit ");
+                        return;
+                    }else  if (dtFromdate.compareTo(dtTodate) > 0) {
                         //System.out.println("Please ensure that the To Date is greater than or equal to the From Date.");
+                        showDialog("'To Date' should be greater than 'From Date'.");
                         txtToDate.setError("'To Date' should be greater than 'From Date'.");
                         return;
                     } else if (dtFromdate.compareTo(dtTodate) < 0) { // Multiple days leave
-                        if (intFromSessId==3){ // sessionId= "2","Full Day";       "3","ForeNoon";      "4","AfterNoon"
+                        if (intFromSessId == 3) { // sessionId= "2","Full Day";       "3","ForeNoon";      "4","AfterNoon"
                             //Morning session not allowed (instead use fullday)
+                            showDialog("Instead of ForeNoon, use Full Day");
                             txtEditFromSession.setError("Instead of ForeNoon, use Full Day");
                             return;
                         }
-                        if (intToSessId==4){
+                        if (intToSessId == 4) {
                             //Evening session not allowed (instead use fullday)
+                            showDialog("Instead of AfterNoon, use Full Day");
+
                             txtEditFromSession.setError("Instead of AfterNoon, use Full Day");
                             return;
                         }
                         // System.out.println("Date1 is before Date2");
                     } else if (dtFromdate.compareTo(dtTodate) == 0) { // single day leave
-                        if (intFromSessId != intToSessId){
+                        if (intFromSessId != intToSessId) {
+                            showDialog("Same session expected for one day leave");
                             txtEditToSession.setError("Same session expected for one day leave");
                             return;
                         }
+                        //System.out.println("Date1 is equal to Date2");
                     }
-                }catch (Exception e){}
-                strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId),
+//                    if(!isDateAfter(d1,d2)){
+//                        txtToDate.setError("Please ensure that the End Date is greater than or equal to the Start Date.");
+//                        break;
+//                    }
+                } catch (Exception e) {
+                }strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId),
                         "Long","approvalempid", String.valueOf(lngApprovalOfficerId),
                         "int","officeid", String.valueOf(lngOfficeId),
                         "int", "leaveperiodid", String.valueOf(intLeavePeriodId),
@@ -792,5 +819,26 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    AlertDialog alert;
+    public void showDialog(String msg){
+        builder = new AlertDialog.Builder(LeaveEntry.this);
+        //Setting message manually and performing action on button click
+        builder.setMessage(msg).setTitle(R.string.leavealertdialogtitle)
+                //builder.setMessage("Do you want to close this application ?")
+                .setCancelable(false)
+                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        alert.dismiss();
+                    }
+                });
+        //Creating dialog box
+        //Setting the title manually
+        alert = builder.create();
+
+        alert.setTitle(R.string.leavealertdialogtitle);
+        alert.show();
+
     }
 }

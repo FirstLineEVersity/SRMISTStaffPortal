@@ -24,54 +24,82 @@
             <!-- ROW 1  -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/mdbcurrentadmission"
-                style="@style/StyleHomeGridCardView">
+                style="@style/StyleHomeGridCardView"
+
+                >
+
                 <LinearLayout
-                    style="@style/StyleHomeGridLayout">
+                    style="@style/StyleHomeGridLayout"
+                    >
+
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_admissioncurrentyear" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_current_admission" />
+
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Current Admission"/>
+                        android:text="@string/mdCurrentAdmission"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/mdbduelist"
-                style="@style/StyleHomeGridCardView">
+                style="@style/StyleHomeGridCardView"
+
+                >
+
                 <LinearLayout
-                    style="@style/StyleHomeGridLayout">
+                    style="@style/StyleHomeGridLayout"
+                    >
+
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_duelist" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_duelist" />
+
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Due List"/>
+                        android:text="@string/mdDueList"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/mdbstaffbirthday"
-                style="@style/StyleHomeGridCardView">
+                style="@style/StyleHomeGridCardView"
+
+                >
+
                 <LinearLayout
-                    style="@style/StyleHomeGridLayout">
+                    style="@style/StyleHomeGridLayout"
+                    >
+
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_staffbirthday" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_staff_birthday" />
+
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Staff Birthday"/>
+                        android:text="@string/mdStaffBirthday"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:id="@+id/mdbstaffattendance"
-                style="@style/StyleHomeGridCardView">
+                style="@style/StyleHomeGridCardView"
+
+                >
+
                 <LinearLayout
-                    style="@style/StyleHomeGridLayout">
+                    style="@style/StyleHomeGridLayout"
+                    >
+
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_staffattendance" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_staff_attendance" />
+
                     <TextView
                         style="@style/StyleHomeGridText"
-                        android:text="Staff Attendance"/>
+                        android:text="@string/mdStaffAttendance"
+                        />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
@@ -80,8 +108,8 @@
                 <LinearLayout
                     style="@style/StyleHomeGridLayout">
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_projecttracker" />
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_project_tracker" />
                     <TextView
                         style="@style/StyleHomeGridText"
                         android:text="Library Details"/>
@@ -93,33 +121,37 @@
                 <LinearLayout
                     style="@style/StyleHomeGridLayout">
                     <ImageView
-                        style="@style/StyleHomeGridImage"
-                        android:src="@drawable/icondb_upcomingevents"/>
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_upcoming_events" />
                     <TextView
                         style="@style/StyleHomeGridText"
                         android:text="Voucher Details"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/mdbhelpdesk"-->
-<!--                style="@style/StyleHomeGridCardView"-->
+            <!--
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mdbhelpdesk"
+                style="@style/StyleHomeGridCardView"
 
-<!--                >-->
+                >
 
-<!--                <LinearLayout-->
-<!--                    style="@style/StyleHomeGridLayout"-->
-<!--                    >-->
+                <LinearLayout
+                    style="@style/StyleHomeGridLayout"
+                    >
 
-<!--                    <ImageView-->
-<!--                        style="@style/StyleHomeGridImage"-->
-<!--                        android:src="@drawable/icondb_helpdesk" />-->
+                    <ImageView
+                        style="@style/StyleManagementGridImage"
+                        android:src="@drawable/m_help_desk" />
 
-<!--                    <TextView-->
-<!--                        style="@style/StyleHomeGridText"-->
-<!--                        android:text="Help Desk"-->
-<!--                        />-->
-<!--                </LinearLayout>-->
-<!--            </androidx.cardview.widget.CardView>-->
+                    <TextView
+                        style="@style/StyleHomeGridText"
+                        android:text="@string/mdHelpDesk"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+-->
+
         </GridLayout>
     </LinearLayout>
 </TableLayout>

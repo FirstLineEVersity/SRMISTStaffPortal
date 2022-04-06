@@ -17,6 +17,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.srmuh.staffportal.properties.Properties;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -29,7 +31,7 @@ public class InternalBreakUp extends AppCompatActivity {
     RecyclerView mRecyclerView;                           // Declaring RecyclerView
     RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
     RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
-    private TextView tvPageTitle, txtExamDate, hdnExamDate;
+    private TextView pageHeader,tvPageTitle, txtExamDate, hdnExamDate;
     private static String strParameters[];
     private static String ResultString = "", strExamDate="", strResultMessage="";
     private long lngEmployeeId=0;
@@ -43,19 +45,14 @@ public class InternalBreakUp extends AppCompatActivity {
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
         tvPageTitle.setText("Internal Mark Entry");
+        pageHeader = (TextView) findViewById(R.id.pageHeader);
+        pageHeader.setText(getIntent().getExtras().getString(Properties.timeTableHeader));
         Button btnBack=(Button) findViewById(R.id.button_back);
-//        tvLastUpdated = (TextView) findViewById(R.id.txtLastUpdated);
-//        tvLastUpdated.setVisibility(View.INVISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-            // new intent to call an activity that you choose
-            //Intent intent = new Intent(InternalBreakUp.this, HomeScreen.class);
-            //Grid View Menu
-            Intent intent = new Intent(InternalBreakUp.this, HomeScreenCategory.class);
-            //Intent intent = new Intent(InternalBreakUp.this, HomeScreen.class);
-            startActivity(intent);
+                onBackPressed();
             }
         });
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
@@ -109,14 +106,7 @@ public class InternalBreakUp extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        // new intent to call an activity that you choose
-        //Intent intent = new Intent(this, HomeScreen.class);
-        //Grid View Menu
-        Intent intent = new Intent(this, HomeScreenCategory.class);
-        startActivity(intent);
-        // finish the activity picture
-        this.finish();
-    }
+            }
 
     private class AsyncCallWS extends AsyncTask<Void, Void, Void> {
         ProgressDialog dialog = new ProgressDialog(InternalBreakUp.this);

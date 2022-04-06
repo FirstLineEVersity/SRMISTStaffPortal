@@ -70,6 +70,8 @@
     <string name="lsReason">Reason</string>
     <string name="lsDays">No of Days</string>
     <string name="lsStatus">Leave Status</string>
+    <string name="lsEligibility">Eligibility</string>
+    <string name="lsAvailability">Availability</string>
 
     <string name="nMessage">Message</string>
     <string name="nSentTime">Sent Time</string>
@@ -116,11 +118,12 @@
     <string name="mNotificationToAll">Notification To All</string>
     <string name="mNotificationView">Notification View</string>
     <string name="mENotice">E-Notice View</string>
-    <string name="mManagementDashboard">Management Dashboard</string>
-    <string name="mFacultyDashBoard">Faculty Dashboard</string>
+    <string name="mManagementDashboard">MIS for Management </string>
+    <string name="mFacultyDashBoard">MIS for Faculty </string>
     <string name="mVenue">Venue Booking</string>
     <string name="mCanteenMenu">Canteen Menu Order</string>
-    <string name="responseNoData">Response: No Data Foundr</string>
+    <string name="responseNoData">Response: No Data Found</string>
+    <string name="noFeature">This Feature Not Available...</string>
     <string name="lastUpdated">Last Updated</string>
     <!-- Bio Entry-->
     <string name="bDate">Date</string>
@@ -131,4 +134,36 @@
     <string name="sName">Student Name</string>
     <string name="empCode">Emp. Code</string>
     <string name="empName">Employee Name</string>
+
+    <string name="mdCurrentAdmission">Current Admission</string>
+    <string name="mdDueList">Due List</string>
+    <string name="mdLib">Library Details</string>
+    <string name="mdVoucherDetails">Voucher Details</string>
+    <string name="mdStaffBirthday">Staff Birthday</string>
+    <string name="mdStaffAttendance">Staff Attendance</string>
+    <string name="mdProjectTracker">Project Tracker</string>
+    <string name="mdUpcomingEvents">Upcoming Events</string>
+    <string name="mdHelpDesk">Help Desk</string>
+    <string name="mdStaffLeave">Staff Leave</string>
+    <string name="mdLibraryTransaction">Library Transaction</string>
+    <string name="mdAbsenteeCount">Absentee Count</string>
+    <string name="mdTodaysAbsentee">Todays Absentee</string>
+
+    <string name="wsBitrhdayList">getTodayBirthDayListForMgmtandFaculty</string>
+    <string name="wsLeaveDetails">getStaffLeaveDetails</string>
+    <string name="wsAbsenteeCount">getStudentAbsenteeCountAbstractforFaculty</string>
+    <string name="wsTodayAbsentee">getTodayAbsenteesforFaculty</string>
+    <string name="aProgram">Program</string>
+    <string name="absenteecount">Absentee Count</string>
+    <string name="abSN">Student Name</string>
+    <string name="abRegN">Register Number</string>
+    <string name="abdayorder">Day Order</string>
+    <string name="aStudentcount">Student Count</string>
+    <string name="aHour">Hour</string>
+
+    <string name="asleavecnt">Leave Count</string>
+    <string name="aslatecnt">Late count</string>
+    <string name="aspermissioncnt">Permission count</string>
+    <string name="asodcnt">OD Count</string>
+
 </resources>

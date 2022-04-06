@@ -16,6 +16,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.srmuh.staffportal.properties.Properties;
+
 public class tabbedmanagementdashboard extends AppCompatActivity {
     TextView tvPageTitle;
     private int intFlag = 0;
@@ -27,21 +29,13 @@ public class tabbedmanagementdashboard extends AppCompatActivity {
         setContentView(R.layout.activity_tabbedmanagementdashboard);
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
-
+        tvPageTitle.setText(getIntent().getExtras().getString(Properties.dashboardName));
         intFlag=getIntent().getIntExtra("Flag",1);
         Button btnBack=(Button) findViewById(R.id.button_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-            Intent intent;
-            if (intFlag == 1){
-                intent = new Intent(tabbedmanagementdashboard.this, ManagementDashboard.class);
-                startActivity(intent);
-            }
-            if (intFlag == 2){
-                intent = new Intent(tabbedmanagementdashboard.this, HomePageGridViewLayout.class);
-                startActivity(intent);
-            }
+            onBackPressed();
             }
         });
 
@@ -106,16 +100,7 @@ public class tabbedmanagementdashboard extends AppCompatActivity {
     @Override
     public void onBackPressed(){
         super.onBackPressed();
-        Intent intent;
-        if (intFlag == 1){
-            intent = new Intent(tabbedmanagementdashboard.this, ManagementDashboard.class);
-            startActivity(intent);
-        }
-        if (intFlag == 2){
-            intent = new Intent(tabbedmanagementdashboard.this, HomePageGridViewLayout.class);
-            startActivity(intent);
-        }
-        this.finish();
+
     }
 
     public class WebViewClient extends android.webkit.WebViewClient {

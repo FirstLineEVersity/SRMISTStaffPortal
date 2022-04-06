@@ -19,7 +19,9 @@
             android:id="@+id/imgMenuImage"
             android:layout_width="40dp"
             android:layout_centerVertical="true"
-            android:layout_height="40dp"
+        android:background="@drawable/grid_corner_radious"
+        android:layout_height="40dp"
+        android:padding="1dp"
             />
         <TextView
             android:id="@+id/txtMenuContent"
@@ -27,14 +29,15 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/imgMenuImage"
             android:padding="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
             android:textSize="@dimen/home_category"/>
 
         <ImageView
             android:id="@+id/imgNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="5dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_baseline_navigate_next_24" />

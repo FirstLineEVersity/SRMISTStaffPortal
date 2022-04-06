@@ -84,10 +84,13 @@ android:fitsSystemWindows="true"
                     <!-- ROW 1  -->
                     <!-- COLUMN 1  -->
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+
+                        >
 
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                             <ImageView
                                 style="@style/StyleHomeGridImage"
@@ -95,16 +98,19 @@ android:fitsSystemWindows="true"
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hProfile"/>
+                                android:text="@string/hProfile"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <!-- COLUMN 2  -->
 
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                        >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
@@ -112,7 +118,8 @@ android:fitsSystemWindows="true"
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hLeave"/>
+                                android:text="@string/hLeave"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -121,9 +128,11 @@ android:fitsSystemWindows="true"
                     <!-- COLUMN 1  -->
 
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                        >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
@@ -131,7 +140,8 @@ android:fitsSystemWindows="true"
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hWorkForce"/>
+                                android:text="@string/hWorkForce"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -141,23 +151,28 @@ android:fitsSystemWindows="true"
                     <!-- COLUMN 1  -->
 
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                        >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
                         <ImageView
                             style="@style/StyleHomeGridImage"
                             android:src="@drawable/icon_academic" />
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hAcademic"/>
+                                android:text="@string/hAcademic"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                       >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
@@ -165,16 +180,19 @@ android:fitsSystemWindows="true"
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hNotification"/>
+                                android:text="@string/hNotification"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <!-- COLUMN 2  -->
 
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                       >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
@@ -182,60 +200,77 @@ android:fitsSystemWindows="true"
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hDashboard"/>
+                                android:text="@string/hDashboard"
+                                 />
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+                    <!-- COLUMN 2  -->
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                        >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
-                        <ImageView
-                            style="@style/StyleHomeGridImage"
-                            android:src="@drawable/icon_canteen"/>
+                            <ImageView
+                                style="@style/StyleHomeGridImage"
+                                android:src="@drawable/icon_logout" />
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hCanteen"/>
+                                android:text="@string/hLogout"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/StyleHomeGridCardView"
+                        android:visibility="gone"
+                        >
+                        <LinearLayout
+                            style="@style/StyleHomeGridLayout"
+                            >
+
+                        <ImageView
+                            style="@style/StyleHomeGridImage"
+                            android:src="@drawable/icon_canteen" />
+
+                            <TextView
+                                style="@style/StyleHomeGridText"
+                                android:text="@string/hCanteen"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                     <!-- ROW 4  -->
                     <!-- COLUMN 1  -->
                     <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
+                        style="@style/StyleHomeGridCardView"
+                        android:visibility="gone"
+                       >
                         <LinearLayout
-                            style="@style/StyleHomeGridLayout">
+                            style="@style/StyleHomeGridLayout"
+                            >
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
-                            android:src="@drawable/icon_others"/>
+                            android:src="@drawable/icon_others" />
 
                             <TextView
                                 style="@style/StyleHomeGridText"
-                                android:text="@string/hOthers"/>
+                                android:text="@string/hOthers"
+                                 />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- COLUMN 2  -->
-                    <androidx.cardview.widget.CardView
-                        style="@style/StyleHomeGridCardView">
-                        <LinearLayout
-                            style="@style/StyleHomeGridLayout">
 
-                        <ImageView
-                            style="@style/StyleHomeGridImage"
-                            android:src="@drawable/icon_logout"/>
-                            <TextView
-                                style="@style/StyleHomeGridText"
-                                android:text="@string/hLogout"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                </GridLayout>
+                  </GridLayout>
             </LinearLayout>
+
         </FrameLayout>
         </ScrollView>
     </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -244,3 +279,4 @@ android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
         app:menu="@menu/main_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
+

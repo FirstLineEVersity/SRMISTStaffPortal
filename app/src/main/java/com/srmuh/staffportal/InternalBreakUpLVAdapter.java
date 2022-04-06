@@ -72,26 +72,26 @@ public class InternalBreakUpLVAdapter extends RecyclerView.Adapter<InternalBreak
             this.itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                Context context = v.getContext();
-                String item = sub_list.get(getPosition());
-                String[] strColumns = item.split("##");
-                long lngInternalBreakUpId=Long.parseLong(strColumns[0]);
-                long lngProgSecId=Long.parseLong(strColumns[1]);
-                final SharedPreferences loginsession = context.getSharedPreferences("SessionLogin", 0);
-                int intBreakUpId = loginsession.getInt("breakupid", 1);
-                if (Integer.parseInt(strColumns[7]) == 0){
-                    Intent intent = new Intent(context, InternalMarkEntryStudentList.class);
-                    intent.putExtra("internalbreakupid", lngInternalBreakUpId);
-                    intent.putExtra("progsecid", lngProgSecId);
-                    intent.putExtra("breakupid", intBreakUpId);
-                    context.startActivity(intent);
-                }else{
-                    Toast.makeText(context, "Response: Already Mark entered", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(context, InternalMarkEntriedList.class);
-                    intent.putExtra("internalbreakupid", lngInternalBreakUpId);
-                    intent.putExtra("progsecid", lngProgSecId);
-                    context.startActivity(intent);
-                }
+                    Context context = v.getContext();
+                    String item = sub_list.get(getPosition());
+                    String[] strColumns = item.split("##");
+                    long lngInternalBreakUpId=Long.parseLong(strColumns[0]);
+                    long lngProgSecId=Long.parseLong(strColumns[1]);
+                    final SharedPreferences loginsession = context.getSharedPreferences("SessionLogin", 0);
+                    int intBreakUpId = loginsession.getInt("breakupid", 1);
+                    if (Integer.parseInt(strColumns[7]) == 0){
+                        Intent intent = new Intent(context, InternalMarkEntryStudentList.class);
+                        intent.putExtra("internalbreakupid", lngInternalBreakUpId);
+                        intent.putExtra("progsecid", lngProgSecId);
+                        intent.putExtra("breakupid", intBreakUpId);
+                        context.startActivity(intent);
+                    }else{
+                        Toast.makeText(context, "Response: Already Mark entered", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, InternalMarkEntriedList.class);
+                        intent.putExtra("internalbreakupid", lngInternalBreakUpId);
+                        intent.putExtra("progsecid", lngProgSecId);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
