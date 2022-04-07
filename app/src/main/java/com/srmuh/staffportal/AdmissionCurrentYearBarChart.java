@@ -14,10 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.BarLineChartBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition;
@@ -29,7 +31,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.srmuh.staffportal.properties.DemoBase;
 import com.srmuh.staffportal.properties.Properties;
 
@@ -38,11 +39,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import webservice.WebService;
 
 public class AdmissionCurrentYearBarChart extends DemoBase implements
         OnChartValueSelectedListener {
+    List<Integer> gradientFills = new ArrayList<>();
+    RecyclerView mRecyclerView;                           // Declaring RecyclerView
+    RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
 
     private BarChart chart;
 
@@ -64,6 +69,56 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
                 onBackPressed();
             }
         });
+
+        int endColor1 = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
+        int endColor2 = ContextCompat.getColor(this, android.R.color.holo_purple);
+        int endColor3 = ContextCompat.getColor(this, android.R.color.holo_green_dark);
+        int endColor4 = ContextCompat.getColor(this, android.R.color.holo_red_dark);
+        int endColor5 = ContextCompat.getColor(this, android.R.color.holo_orange_dark);
+        int endColor6 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+        int endColor7 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
+        int endColor8 = ContextCompat.getColor(this, android.R.color.holo_green_light);
+        int endColor9 = ContextCompat.getColor(this, android.R.color.holo_red_light);
+        int endColor10 = ContextCompat.getColor(this, R.color.btnHoverGreen);
+        int endColor11 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+        int endColor12 = ContextCompat.getColor(this, R.color.bYellow);
+        int endColor13 = ContextCompat.getColor(this, R.color.bMeroon);
+        int endColor14 = ContextCompat.getColor(this, R.color.bpink);
+        int endColor15 = ContextCompat.getColor(this, R.color.bIblue);
+
+        gradientFills.add(endColor1);
+        gradientFills.add(endColor2);
+        gradientFills.add(endColor3);
+        gradientFills.add(endColor4);
+        gradientFills.add(endColor5);
+        gradientFills.add(endColor6);
+        gradientFills.add(endColor7);
+        gradientFills.add(endColor8);
+        gradientFills.add(endColor9);
+        gradientFills.add(endColor10);
+        gradientFills.add(endColor11);
+        gradientFills.add(endColor12);
+        gradientFills.add(endColor13);
+        gradientFills.add(endColor14);
+        gradientFills.add(endColor15);
+        gradientFills.add(endColor1);
+        gradientFills.add(endColor2);
+        gradientFills.add(endColor3);
+        gradientFills.add(endColor4);
+        gradientFills.add(endColor5);
+        gradientFills.add(endColor6);
+        gradientFills.add(endColor7);
+        gradientFills.add(endColor8);
+        gradientFills.add(endColor9);
+        gradientFills.add(endColor10);
+        gradientFills.add(endColor11);
+        gradientFills.add(endColor12);
+        gradientFills.add(endColor13);
+        gradientFills.add(endColor14);
+        gradientFills.add(endColor15);
+
+
+
 
 
 
@@ -113,15 +168,6 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
         rightAxis.setSpaceTop(15f);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-        l.setForm(LegendForm.SQUARE);
-        l.setFormSize(9f);
-        l.setTextSize(11f);
-        l.setXEntrySpace(4f);
 
         WebService.strParameters = new String[]{"int", "flag", "0"};
         WebService.METHOD_NAME = "getCurrentYearAdmissionShift";
@@ -136,39 +182,10 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
         //seekBarY.setProgress(50);
         //seekBarX.setProgress(12);
 
-        // chart.setDrawLegend(false);
+        chart.getLegend().setEnabled(false);
+        //chart.setDrawLegend(false);
     }
 
-    private void setData() {
-
-
-        BarDataSet set1;
-
-        if (chart.getData() != null &&
-                chart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
-            set1.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-
-        } else {
-            set1 = new BarDataSet(values, "Current Year Admission");
-
-            set1.setDrawIcons(false);
-            set1.setColors(ColorTemplate.COLORFUL_COLORS);
-
-
-            ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-            dataSets.add(set1);
-
-            BarData data = new BarData(dataSets);
-            data.setValueTextSize(10f);
-            data.setValueTypeface(tfLight);
-            data.setBarWidth(0.9f);
-
-            chart.setData(data);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,7 +205,7 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
 
         if (e == null)
             return;
-        Intent intent = new Intent(AdmissionCurrentYearBarChart.this, DeptWiseAdmissionBarChart.class);
+        Intent intent = new Intent(AdmissionCurrentYearBarChart.this, com.srmuh.staffportal.DeptWiseAdmissionBarChart.class);
         try {
             JSONObject JSobject = new JSONObject(ResultString.toString());
             if(JSobject.has("Status") && JSobject.getString("Status").equalsIgnoreCase("Success")) {
@@ -244,17 +261,45 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
+            leavestatus_list.clear();
+
             try {
                 JSONObject JSobject = new JSONObject(ResultString.toString());
                 if(JSobject.has("Status") && JSobject.getString("Status").equalsIgnoreCase("Success")) {
                     JSONArray temp = new JSONArray(JSobject.getString("Data"));
 
+                    BarDataSet set1;
+                    ArrayList<IBarDataSet> dataSets = new ArrayList<>();
 
-                for (int i = 0; i <= temp.length() - 1; i++) {
+
+                    for (int i = 0; i <= temp.length() - 1; i++) {
                     JSONObject object = new JSONObject(temp.getJSONObject(i).toString());
+                    ArrayList<BarEntry> values = new ArrayList<>();
                     values.add(new BarEntry(i,Float.parseFloat(object.getString("admissioncnt"))));
+                    set1 = new BarDataSet(values,"");
+                        xAxisLabel.add(object.getString("officename"));
+                    set1.setDrawIcons(false);
+                    int color = getResources().getColor(R.color.appColor);
+                    if(i< gradientFills.size()) {
+                        color = gradientFills.get(i);
+                    }
+                        set1.setColors(color);
+                        dataSets.add(set1);
+                        leavestatus_list.add(object.getString("officename")+" - "+object.getString("admissioncnt")+ "##" +color);
+
+
                 }
-               setData();
+                    BarData data = new BarData(dataSets);
+                    data.setValueTextSize(10f);
+                    data.setValueTypeface(tfLight);
+                    data.setBarWidth(0.9f);
+                    chart.setData(data);
+                    mRecyclerView = (RecyclerView) findViewById(R.id.xyLable); // Assigning the RecyclerView Object to the xml View
+                    BarChartXYLableAdapter TVA = new BarChartXYLableAdapter(leavestatus_list, R.layout.barchartxylableitem);
+                    TVA.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(TVA);
+                    mLayoutManager = new LinearLayoutManager(getApplicationContext());                 // Creating a layout Manager
+                    mRecyclerView.setLayoutManager(mLayoutManager);
                 }else{
                     Toast.makeText(AdmissionCurrentYearBarChart.this,JSobject.getString("Message"),Toast.LENGTH_LONG).show();
                 }
@@ -263,9 +308,11 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
                 Toast.makeText(AdmissionCurrentYearBarChart.this,ResultString,Toast.LENGTH_LONG).show();
             }
         }
-    }
-    ArrayList<BarEntry> values = new ArrayList<>();
-    private static String ResultString = "";
+    }private static String ResultString = "";
+    private ArrayList<String> leavestatus_list = new ArrayList<String>(200);
+
+    final ArrayList<String> xAxisLabel = new ArrayList<>();
+
 
     public class DayAxisValueFormatter extends ValueFormatter {
         private final BarLineChartBase<?> chart;
@@ -274,10 +321,13 @@ public class AdmissionCurrentYearBarChart extends DemoBase implements
         }
         @Override
         public String getFormattedValue(float value) {
-            int val = Math.round(value)+1;
+            int val = Math.round(value);
 
-            return "Shift-" + val;
+String xAxisLabelText = xAxisLabel.get(val);
+            return xAxisLabelText;
         }
+
+
     }
 
     @Override

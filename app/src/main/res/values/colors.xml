@@ -38,4 +38,11 @@
     <color name="lSelectedDay">#f7d7e3</color>
     <color name="lFutureDay">#FFE97F</color>
 
+    <color name="bYellow">#FFD800</color>
+    <color name="bIblue">#00137F</color>
+    <color name="bGreen">#00FFFF</color>
+    <color name="bMeroon">#7F0000</color>
+    <color name="bpink">#FF00DC</color>
+
+
 </resources>

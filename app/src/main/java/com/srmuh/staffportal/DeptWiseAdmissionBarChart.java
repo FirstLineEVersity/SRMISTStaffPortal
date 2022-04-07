@@ -19,6 +19,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
@@ -38,6 +42,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import webservice.WebService;
 
@@ -47,6 +52,10 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
     private PieChart chart;
     private static String ResultString = "";
     private int intOfficeId = 0;
+    List<Integer> gradientFills = new ArrayList<>();
+    RecyclerView mRecyclerView;                           // Declaring RecyclerView
+    RecyclerView.LayoutManager mLayoutManager;            // Declaring Layout Manager as a linear layout manager
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +74,55 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
             }
         });
 
+        int endColor1 = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
+        int endColor2 = ContextCompat.getColor(this, android.R.color.holo_purple);
+        int endColor3 = ContextCompat.getColor(this, android.R.color.holo_green_dark);
+        int endColor4 = ContextCompat.getColor(this, android.R.color.holo_red_dark);
+        int endColor5 = ContextCompat.getColor(this, android.R.color.holo_orange_dark);
+        int endColor6 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+        int endColor7 = ContextCompat.getColor(this, android.R.color.holo_orange_light);
+        int endColor8 = ContextCompat.getColor(this, android.R.color.holo_green_light);
+        int endColor9 = ContextCompat.getColor(this, android.R.color.holo_red_light);
+        int endColor10 = ContextCompat.getColor(this, R.color.btnHoverGreen);
+        int endColor11 = ContextCompat.getColor(this, android.R.color.holo_blue_light);
+        int endColor12 = ContextCompat.getColor(this, R.color.bYellow);
+        int endColor13 = ContextCompat.getColor(this, R.color.bMeroon);
+        int endColor14 = ContextCompat.getColor(this, R.color.bpink);
+        int endColor15 = ContextCompat.getColor(this, R.color.bIblue);
+
+        gradientFills.add(endColor1);
+        gradientFills.add(endColor2);
+        gradientFills.add(endColor3);
+        gradientFills.add(endColor4);
+        gradientFills.add(endColor5);
+        gradientFills.add(endColor6);
+        gradientFills.add(endColor7);
+        gradientFills.add(endColor8);
+        gradientFills.add(endColor9);
+        gradientFills.add(endColor10);
+        gradientFills.add(endColor11);
+        gradientFills.add(endColor12);
+        gradientFills.add(endColor13);
+        gradientFills.add(endColor14);
+        gradientFills.add(endColor15);
+        gradientFills.add(endColor1);
+        gradientFills.add(endColor2);
+        gradientFills.add(endColor3);
+        gradientFills.add(endColor4);
+        gradientFills.add(endColor5);
+        gradientFills.add(endColor6);
+        gradientFills.add(endColor7);
+        gradientFills.add(endColor8);
+        gradientFills.add(endColor9);
+        gradientFills.add(endColor10);
+        gradientFills.add(endColor11);
+        gradientFills.add(endColor12);
+        gradientFills.add(endColor13);
+        gradientFills.add(endColor14);
+        gradientFills.add(endColor15);
 
         chart = findViewById(R.id.chart1);
-        chart.setUsePercentValues(true);
+        chart.setUsePercentValues(false);
         chart.getDescription().setEnabled(false);
         chart.setExtraOffsets(5, 10, 5, 5);
 
@@ -94,6 +149,13 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
         chart.setHighlightPerTapEnabled(true);
         chart.setCenterText("Admission Count");
 
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(false);
+        l.setEnabled(false);
+
 
 
         // chart.setUnit(" €");
@@ -115,26 +177,15 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
         chart.animateY(400, Easing.EaseInOutQuad);
         // chart.spin(2000, 0, 360);
 
-        Legend l = chart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(false);
-        l.setXEntrySpace(7f);l.setYEntrySpace(0f);
-        l.setYOffset(0f);
 
         // entry label styling
-        chart.setEntryLabelColor(Color.WHITE);
-        chart.setEntryLabelTypeface(tfRegular);
-        chart.setEntryLabelTextSize(12f);
+
     }
 
     private void setData() {
 
         for(int i=0;i<entries.size();i++){
             PieEntry pe = entries.get(i);
-            Log.d("TEST Pie Data : ",""+ pe.getValue());
-            Log.d("TEST Pie Data : ",""+ pe.getLabel());
         }
         PieDataSet dataSet = new PieDataSet(entries, "Admission Count");
 
@@ -146,26 +197,8 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
 
         // add a lot of colors
 
-        ArrayList<Integer> colors = new ArrayList<>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
+        dataSet.setColors(gradientFills);
         //dataSet.setSelectionShift(0f);
 
         PieData data = new PieData(dataSet);
@@ -256,23 +289,31 @@ public class DeptWiseAdmissionBarChart extends DemoBase implements
                     JSONArray temp = new JSONArray(JSobject.getString("Data"));
                     for (int i = 0; i <= temp.length() - 1; i++) {
 
-                    JSONObject object = new JSONObject(temp.getJSONObject(i).toString());
-                        Log.d("TEST: ",object.getString("admissioncnt"));
-                        Log.d("TEST: ",object.getString("program"));
+                        JSONObject object = new JSONObject(temp.getJSONObject(i).toString());
                         entries.add(new PieEntry(Float.parseFloat(object.getString("admissioncnt")),object.getString("program")+" : "+object.getString("admissioncnt")));
+                        leavestatus_list.add(object.getString("program")+" - "+object.getString("admissioncnt")+ "##" +gradientFills.get(i));
+
+                    }
+                    setData();
+                    mRecyclerView = (RecyclerView) findViewById(R.id.xyLable); // Assigning the RecyclerView Object to the xml View
+                    BarChartXYLableAdapter TVA = new BarChartXYLableAdapter(leavestatus_list, R.layout.barchartxylableitem);
+                    TVA.notifyDataSetChanged();
+                    mRecyclerView.setAdapter(TVA);
+                    mLayoutManager = new LinearLayoutManager(getApplicationContext());                 // Creating a layout Manager
+                    mRecyclerView.setLayoutManager(mLayoutManager);
+                    //displayBarChart();
+                }else{
+                    Toast.makeText(DeptWiseAdmissionBarChart.this,JSobject.getString("Message"),Toast.LENGTH_LONG).show();
                 }
-                setData();
-                //displayBarChart();
-            }else{
-                Toast.makeText(DeptWiseAdmissionBarChart.this,JSobject.getString("Message"),Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                Toast.makeText(DeptWiseAdmissionBarChart.this,ResultString,Toast.LENGTH_LONG).show();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            Toast.makeText(DeptWiseAdmissionBarChart.this,ResultString,Toast.LENGTH_LONG).show();
-        }
         }
     }
     ArrayList<PieEntry> entries = new ArrayList<>();
+
+    private ArrayList<String> leavestatus_list = new ArrayList<String>(200);
 
     @Override
     public void onBackPressed() {
