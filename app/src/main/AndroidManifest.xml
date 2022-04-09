@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.srmuh.staffportal">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!--        android:roundIcon="@mipmap/ic_launcher_round"-->
-<!--    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />-->
     <application
         android:allowBackup="true"
         android:icon="@drawable/slogo5"
@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar.NoActionBar"
         android:usesCleartextTraffic="true">
-
-
+        <activity
+            android:name=".test.TestViewActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
@@ -202,7 +203,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
-        <service android:name=".properties.FirebaseMessageReceiver"
+        <service
+            android:name=".properties.FirebaseMessageReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -211,6 +213,3 @@
     </application>
 
 </manifest>
-
-<!--server key for Shasun staff portal-->
-<!--    AAAAWdrl01g:APA91bHN8ZcB_t_xrzaUuymm-76JDKnwny16qQSUxiGYvvMVfEkgHoomslS1iso1jKvm4M9YmbJ1dYEE4t16izYRv5JoD1W2U5WRmXSTbNrsZLbBLYsZ5F5SEctStsdpftkaIC6_uS5o-->

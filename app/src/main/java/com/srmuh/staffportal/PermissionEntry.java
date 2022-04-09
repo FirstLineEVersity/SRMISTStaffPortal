@@ -327,7 +327,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
             Collection<String> LeaveTypecollection=leavetype_data.values();
             String[] arrayLeaveType = LeaveTypecollection.toArray(new String[LeaveTypecollection.size()]);
             System.out.println(arrayLeaveType);
-            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayLeaveType);
+            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
             txtEditLeaveType.setAdapter(LTA);
             txtEditLeaveType.setThreshold(2000);
             txtEditLeaveType.showDropDown();

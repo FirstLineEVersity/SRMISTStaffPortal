@@ -117,6 +117,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         txtLeavePeriodId = (TextView) findViewById(R.id.hdnLeavePeriodId);
         txtEditLeavePeriod = (AutoCompleteTextView) findViewById(R.id.txtLeavePeriod);
+        txtEditLeavePeriod.setThreshold(5000);
         txtEditLeavePeriod.setInputType(InputType.TYPE_NULL);
         txtEditLeavePeriod.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -343,7 +344,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         Collection<String> FromSessioncollection=FromSession_data.values();
         String[] FromSessionArray= FromSessioncollection.toArray(new String[FromSessioncollection.size()]);
-        ArrayAdapter<String> FSA = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, FromSessionArray);
+        ArrayAdapter<String> FSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, FromSessionArray);
         txtEditFromSession.setThreshold(1000);
         txtEditFromSession.setAdapter(FSA);
 
@@ -351,7 +352,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtToSessionId = (TextView) findViewById(R.id.hdnToSessionId);
         Collection<String> ToSessioncollection=ToSession_data.values();
         String[] ToSessionArray= ToSessioncollection.toArray(new String[ToSessioncollection.size()]);
-        ArrayAdapter<String> TSA = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, ToSessionArray);
+        ArrayAdapter<String> TSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, ToSessionArray);
         txtEditToSession.setThreshold(1000);
         txtEditToSession.setAdapter(TSA);
 
@@ -458,8 +459,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         } else {
             txtEditLeavePeriod = (AutoCompleteTextView) findViewById(R.id.txtLeavePeriod);
             Collection<String> LeavePeriodcollection = leaveperiod_data.values();
+            ArrayList<String> lt1 = new ArrayList<>();
+            for(int i = 0 ; i<leaveperiod_data.size();i++){
+                lt1.add(leaveperiod_data.get(i));
+
+            }
             String[] arrayLeavePeriod = LeavePeriodcollection.toArray(new String[LeavePeriodcollection.size()]);
-            ArrayAdapter<String> LPA = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayLeavePeriod);
+            ArrayAdapter<String> LPA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeavePeriod);
 
             txtEditLeavePeriod.setAdapter(LPA);
             txtEditLeavePeriod.showDropDown();
@@ -479,7 +485,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
             Collection<String> LeaveTypecollection=leavetype_data.values();
             String[] arrayLeaveType = LeaveTypecollection.toArray(new String[LeaveTypecollection.size()]);
            // System.out.println(arrayLeaveType);
-            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, arrayLeaveType);
+            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
             txtEditLeaveType.setAdapter(LTA);
             txtEditLeaveType.setThreshold(2000);
             txtEditLeaveType.showDropDown();

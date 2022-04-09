@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ed.putString("designation", cursor.getString(cursor.getColumnIndex("designation")));
                     ed.commit();
                 } while (cursor.moveToNext());
+               // Intent intent = new Intent(MainActivity.this, HomePageGridViewLayout.class);
                 Intent intent = new Intent(MainActivity.this, HomePageGridViewLayout.class);
                 startActivity(intent);
                 finish();
