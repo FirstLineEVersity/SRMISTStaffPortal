@@ -33,6 +33,7 @@
     <color name="cardColorp">#CED7FF</color>
     <color name="cardColoro">#329FFF</color>
     <color name="cardColorOld">#c3cddd</color>
+    <color name="cardColorList">#9FCFFD</color>
 
     <color name="lPreviousDay">#DAFF7F</color>
     <color name="lSelectedDay">#f7d7e3</color>
