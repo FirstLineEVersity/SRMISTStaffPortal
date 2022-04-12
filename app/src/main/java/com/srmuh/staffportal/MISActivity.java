@@ -103,16 +103,13 @@ public class MISActivity extends AppCompatActivity {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            Log.e("TEST:", ResultString);
+            //Log.d("TEST:", ResultString);
 
             leavestatus_list.clear();
             try {
                 JSONObject JSobject = new JSONObject(ResultString.toString());
                 if(JSobject.has("Status") && JSobject.getString("Status").equalsIgnoreCase("Success")) {
-
                     JSONArray temp = new JSONArray(JSobject.getString("Data"));
-                    Log.e("TEST1:", temp.toString());
-
                     mRecyclerView = (RecyclerView) findViewById(R.id.rvLeaveStatus); // Assigning the RecyclerView Object to the xml View
                     if (pageTitele.equalsIgnoreCase(getResources().getString(R.string.mdStaffBirthday))) {
                         for (int i = 0; i <= temp.length() - 1; i++) {
@@ -171,15 +168,12 @@ public class MISActivity extends AppCompatActivity {
                         mRecyclerView.setAdapter(TVA);
 
                     } else if (pageTitele.equalsIgnoreCase(getResources().getString(R.string.mdStaffLeave))) {
-                        Log.e("TEST2:", temp.toString());
-
                         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
                         int colorID=0;
                         for (int i = 0; i <= temp.length() - 1; i++) {
                             JSONObject object = new JSONObject(temp.getJSONObject(i).toString());
 
                             String displayDate = object.getString("disleavedate");
-                            Log.e("TEST3:", displayDate);
 
                             Date d = df.parse(displayDate);
                             Date currentDate = Calendar.getInstance().getTime();

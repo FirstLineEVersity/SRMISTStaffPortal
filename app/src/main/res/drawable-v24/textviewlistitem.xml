@@ -15,7 +15,7 @@
                     <gradient
                         android:angle="90"
                         android:startColor="@color/cardColorList"
-                        android:centerColor="@color/colorWhite"
+                        android:centerColor="@color/cardColorList"
                         android:endColor="@color/cardColorList"
                         android:type="linear" />
                 </shape>

@@ -76,7 +76,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
               //  Log.e("Token Test : ", token);
                }
         });
-
+        /*
+        if(getIntent().getExtras()!= null) {
+            String notificationTitle = getIntent().getExtras().toString();
+            String notificationTitle1 = getIntent().getExtras().getString("notification"," Title Empty");
+            String notificationBody = getIntent().getExtras().getString("body","Body Empty");
+            String notificationMessage = getIntent().getExtras().getString("title","title Empty");
+            Log.i("TEST: " ,notificationTitle+" : "+notificationBody +" : "+ notificationMessage);
+            Toast.makeText(this,notificationTitle+" : "+notificationBody+" : "+ notificationMessage,Toast.LENGTH_LONG).show();
+        }
+        
+         */
 
         deviceId();
 
@@ -114,6 +124,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
         }
     }
+
+
 
     @Override
     public void onClick(View v){

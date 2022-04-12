@@ -75,7 +75,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         intFlag=getIntent().getIntExtra("Flag",1);
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
         lngEmpId = loginsession.getLong("userid", 1);
-        lngOfficeId = loginsession.getLong("officeid", 1);
+        lngOfficeId = 1;
+        try{
+            lngOfficeId =  loginsession.getLong("officeid",1);
+        }catch (ClassCastException e){
+            Log.e("TAG",e.toString());
+        }
+
         Button butLeaveAvailability = (Button) findViewById(R.id.btn_LeaveAvailability);
         butLeaveAvailability.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -811,7 +817,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         @Override
         protected void onPostExecute(Void result){
-            //Log.i(TAG, "onPostExecute");
+            Log.i("TAG", ResultString.toString());
             if(dialog != null && dialog.isShowing()){
                 dialog.dismiss();
             }
