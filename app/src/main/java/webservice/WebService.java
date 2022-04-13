@@ -104,9 +104,11 @@ public class WebService {
         if(strParameters != null) {
 
             for (int i = 0; i <= strParameters.length - 1; i = i + 3) {
+
                 strBody += "<" + strParameters[i + 1] + ">" + strParameters[i + 2] + "</" + strParameters[i + 1] + ">";
             }
         }
+        Log.d("TEST : ",strBody);
         EncryptDecrypt ED = new EncryptDecrypt();
         String strEncryptedData =  ED.getEncryptedData(strBody);
         PropertyInfo piInfo = new PropertyInfo();

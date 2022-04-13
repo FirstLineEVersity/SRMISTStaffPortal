@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_margin="10dp"
+app:cardCornerRadius="@dimen/corner_radious"
+app:cardElevation="10dp"
+xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/btnselector_revarse"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/textInputLayoutProfile"
+            android:id="@+id/txtLeaveTypeLayout"
+            android:layout_marginTop="1dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/lstextInputProfile"
+                android:id="@+id/txtIssueDate"
+                android:hint="@string/bhIssueDate"
+                android:drawableLeft="@drawable/calendar"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/textInputLayoutProfile"
+            android:id="@+id/txtFromDateLayout"
+            android:layout_marginTop="1dp"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/lstextInputProfile"
+                android:id="@+id/txtAccessionNumber"
+                android:hint="@string/bhAccessionNumber"
+                android:drawableLeft="@drawable/m_absentee_count_meroon"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/textInputLayoutProfile"
+        android:id="@+id/txtFromDateLayout1"
+        android:layout_marginTop="1dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/lstextInputProfile"
+            android:id="@+id/txtTitle"
+            android:hint="@string/bhTitle"
+            android:drawableLeft="@drawable/ic_baseline_title_24"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/textInputLayoutProfile"
+        android:id="@+id/txtFromDateLayout2"
+        android:layout_marginTop="1dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/lstextInputProfile"
+            android:id="@+id/txtDueDate"
+            android:hint="@string/bhDueDate"
+            android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/textInputLayoutProfile"
+        android:id="@+id/txtFromDateLayout21"
+        android:layout_marginTop="1dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/lstextInputProfile"
+            android:id="@+id/txtDueDays"
+            android:hint="@string/bhDueDays"
+            android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>

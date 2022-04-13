@@ -65,6 +65,9 @@ public class FacultyDashboard extends AppCompatActivity implements View.OnClickL
                 intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdStaffLeave));
                 break;
             case R.id.fdblibrarytransactions:
+                intent = new Intent(FacultyDashboard.this, MISActivity.class);
+                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
+                WebService.METHOD_NAME = getResources().getString(R.string.wsMembersBooksinHand);
                 intent.putExtra("ClickedId",1);
                 intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdLibraryTransaction));
 

@@ -114,12 +114,31 @@
 
             </TableRow>
         </TableLayout>
+<!-- Library Transaction -->
+        <RadioGroup
+            android:id="@+id/rgLibrary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:visibility="gone">
+            <RadioButton
+                android:id="@+id/booksInHand"
+                style="@style/ToggleButton"
+                android:text="Books In Hand"
+                android:checked="true"/>
 
+            <RadioButton
+                android:id="@+id/fineHistory"
+                style="@style/ToggleButton"
+                android:text="Fine History"
+                android:checked="false"/>
+
+        </RadioGroup>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLeaveStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/layPageHeader"
             android:layout_gravity="left"
             android:background="@color/colorWhite"
             android:scrollbars="vertical"></androidx.recyclerview.widget.RecyclerView>

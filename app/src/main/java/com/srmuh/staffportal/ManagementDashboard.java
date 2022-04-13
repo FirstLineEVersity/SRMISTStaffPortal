@@ -1,6 +1,7 @@
  package com.srmuh.staffportal;
 
  import android.content.Intent;
+ import android.content.SharedPreferences;
  import android.os.Bundle;
  import android.view.View;
  import android.widget.Button;
@@ -80,7 +81,9 @@
                 intent = new Intent(ManagementDashboard.this, MISActivity.class);
                 intent.putExtra(Properties.dashboardName,getResources().getString(R.string.mdStaffAttendance));
                 intent.putExtra("ClickedId",3);
-                WebService.strParameters = new String[]{"Long", "employeeid", "0"};
+                final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
+                long lngEmployeeId = loginsession.getLong("userid", 1);
+                WebService.strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
                 WebService.METHOD_NAME = getResources().getString(R.string.wsLeaveDetails);
 
 

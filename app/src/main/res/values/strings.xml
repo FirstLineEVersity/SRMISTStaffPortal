@@ -151,6 +151,8 @@
 
     <string name="wsBitrhdayList">getTodayBirthDayListForMgmtandFaculty</string>
     <string name="wsLeaveDetails">getStaffLeaveDetails</string>
+    <string name="wsMembersBooksinHand">getMembersBooksinHand</string>
+    <string name="wsMemberFineHistory">getMemberFineHistory</string>
     <string name="wsAbsenteeCount">getStudentAbsenteeCountAbstractforFaculty</string>
     <string name="wsTodayAbsentee">getTodayAbsenteesforFaculty</string>
     <string name="aProgram">Program</string>
@@ -165,5 +167,14 @@
     <string name="aslatecnt">Late count</string>
     <string name="aspermissioncnt">Permission count</string>
     <string name="asodcnt">OD Count</string>
+
+    <string name="bhIssueDate">Issue Date</string>
+    <string name="bhAccessionNumber">Accession Number</string>
+    <string name="bhTitle">Title</string>
+    <string name="bhDueDate">Due Date</string>
+    <string name="bhDueDays">Due Days</string>
+    <string name="fhReturnDate">Return Date</string>
+    <string name="fhStatus">Status</string>
+    <string name="fhSFine">Fine</string>
 
 </resources>

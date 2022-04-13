@@ -10,6 +10,7 @@ package com.srmuh.staffportal;
     import androidx.recyclerview.widget.LinearLayoutManager;
     import androidx.recyclerview.widget.RecyclerView;
 
+    import android.util.Log;
     import android.view.View;
     import android.widget.Button;
     import android.widget.TextView;
@@ -101,7 +102,7 @@ public class InternalMarkEntryMain extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result){
-            //Log.i(TAG, "onPostExecute");
+            Log.i("TAG", ResultString.toString());
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
