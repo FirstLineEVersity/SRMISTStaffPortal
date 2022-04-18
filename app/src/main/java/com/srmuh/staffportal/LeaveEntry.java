@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import webservice.WebService;
 
@@ -350,7 +351,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         Collection<String> FromSessioncollection=FromSession_data.values();
         String[] FromSessionArray= FromSessioncollection.toArray(new String[FromSessioncollection.size()]);
-        ArrayAdapter<String> FSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, FromSessionArray);
+        List llFrom = new ArrayList<String>();
+        for (String item : FromSessionArray) {
+            llFrom.add(item);
+        }
+        SpinnerListAdapter FSA = new SpinnerListAdapter(this, R.layout.activity_leaveentry, R.id.txtLeavePeriod, llFrom);
+
+        // ArrayAdapter<String> FSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, FromSessionArray);
         txtEditFromSession.setThreshold(1000);
         txtEditFromSession.setAdapter(FSA);
 
@@ -358,7 +365,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         txtToSessionId = (TextView) findViewById(R.id.hdnToSessionId);
         Collection<String> ToSessioncollection=ToSession_data.values();
         String[] ToSessionArray= ToSessioncollection.toArray(new String[ToSessioncollection.size()]);
-        ArrayAdapter<String> TSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, ToSessionArray);
+        List llTo = new ArrayList<String>();
+        for (String item : ToSessionArray) {
+            llTo.add(item);
+        }
+        SpinnerListAdapter TSA = new SpinnerListAdapter(this, R.layout.activity_leaveentry, R.id.txtLeavePeriod, llTo);
+
+        //        ArrayAdapter<String> TSA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, ToSessionArray);
         txtEditToSession.setThreshold(1000);
         txtEditToSession.setAdapter(TSA);
 
@@ -471,7 +484,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
             }
             String[] arrayLeavePeriod = LeavePeriodcollection.toArray(new String[LeavePeriodcollection.size()]);
-            ArrayAdapter<String> LPA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeavePeriod);
+            List ll = new ArrayList<String>();
+            for (String item : arrayLeavePeriod) {
+                ll.add(item);
+            }
+            SpinnerListAdapter LPA = new SpinnerListAdapter(this, R.layout.activity_leaveentry, R.id.txtLeavePeriod, ll);
+
+            // ArrayAdapter<String> LPA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeavePeriod);
 
             txtEditLeavePeriod.setAdapter(LPA);
             txtEditLeavePeriod.showDropDown();
@@ -491,7 +510,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
             Collection<String> LeaveTypecollection=leavetype_data.values();
             String[] arrayLeaveType = LeaveTypecollection.toArray(new String[LeaveTypecollection.size()]);
            // System.out.println(arrayLeaveType);
-            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
+            //ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
+            List ll = new ArrayList<String>();
+            for (String item : arrayLeaveType) {
+                ll.add(item);
+            }
+            SpinnerListAdapter LTA = new SpinnerListAdapter(this, R.layout.activity_leaveentry, R.id.txtLeaveType, ll);
+
             txtEditLeaveType.setAdapter(LTA);
             txtEditLeaveType.setThreshold(2000);
             txtEditLeaveType.showDropDown();
@@ -817,7 +842,6 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         @Override
         protected void onPostExecute(Void result){
-            Log.i("TAG", ResultString.toString());
             if(dialog != null && dialog.isShowing()){
                 dialog.dismiss();
             }

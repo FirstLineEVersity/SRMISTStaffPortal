@@ -37,6 +37,7 @@ package com.srmuh.staffportal;
     import java.util.Collection;
     import java.util.Date;
     import java.util.LinkedHashMap;
+    import java.util.List;
 
     import webservice.WebService;
 
@@ -326,8 +327,14 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
             txtEditLeaveType = (AutoCompleteTextView) findViewById(R.id.txtLeaveType);
             Collection<String> LeaveTypecollection=leavetype_data.values();
             String[] arrayLeaveType = LeaveTypecollection.toArray(new String[LeaveTypecollection.size()]);
-            System.out.println(arrayLeaveType);
-            ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
+            //System.out.println(arrayLeaveType);
+            //ArrayAdapter<String> LTA = new ArrayAdapter<String>(this, R.layout.dropdownlistitem, arrayLeaveType);
+            List ll = new ArrayList<String>();
+            for (String item : arrayLeaveType) {
+                ll.add(item);
+            }
+            SpinnerListAdapter LTA = new SpinnerListAdapter(this, R.layout.permissionentry, R.id.txtLeaveType, ll);
+
             txtEditLeaveType.setAdapter(LTA);
             txtEditLeaveType.setThreshold(2000);
             txtEditLeaveType.showDropDown();
