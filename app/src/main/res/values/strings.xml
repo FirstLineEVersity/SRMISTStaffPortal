@@ -177,4 +177,6 @@
     <string name="fhStatus">Status</string>
     <string name="fhSFine">Fine</string>
 
+    <string name="test">Testing Entry Value</string>
+
 </resources>
