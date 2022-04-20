@@ -103,15 +103,7 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View view)
             {
-                Intent intent;
-                if (intFlag == 1){
-                    intent = new Intent(LeaveEntry.this, HomeScreenCategory.class);
-                    startActivity(intent);
-                }
-                if (intFlag == 2){
-                    intent = new Intent(LeaveEntry.this, HomePageGridViewLayout.class);
-                    startActivity(intent);
-                }
+              onBackPressed();
             }
         });
         FromSession_data.put("2","Full Day");
