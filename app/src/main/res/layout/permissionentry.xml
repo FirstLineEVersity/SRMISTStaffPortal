@@ -9,8 +9,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <include layout="@layout/pageheaderwithoutrefresh"/>
-
-
         <ScrollView xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/ScrollView1"
             android:layout_width="match_parent"
@@ -38,42 +36,27 @@
                     style="@style/textInputLayoutLeaveEntry"
                     android:id="@+id/txtLeavePeriodLayout"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/txtApprovalOfficer"
-
-                    >
-
+                    android:layout_below="@+id/txtApprovalOfficer">
                     <AutoCompleteTextView
                         style="@style/textInputLeaveEntry"
                         android:id="@+id/txtLeavePeriod"
                         android:drawableRight="@drawable/ic_baseline_expand_circle_down_24"
-                        android:hint="@string/lPeriod"
-                        >
-
+                        android:hint="@string/lPeriod">
                     </AutoCompleteTextView>
-
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/textInputLayoutLeaveEntry"
                     android:id="@+id/txtLeaveTypeLayout"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/txtLeavePeriodLayout"
-
-                    >
-
-
-
+                    android:layout_below="@+id/txtLeavePeriodLayout">
                     <AutoCompleteTextView
                         style="@style/textInputLeaveEntry"
                         android:id="@+id/txtLeaveType"
                         android:drawableRight="@drawable/ic_baseline_search_24"
-                        android:hint="@string/lType"
-                        >
-
+                        android:hint="@string/lType">
                     </AutoCompleteTextView>
-
                 </com.google.android.material.textfield.TextInputLayout>
-
 
                 <TextView
                     android:id="@+id/txtLeaveAvailability"
@@ -92,42 +75,28 @@
                     android:layout_width="match_parent"
                     android:id="@+id/FromDateLayout"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/txtLeaveAvailability"
-
-                    >
-
+                    android:layout_below="@+id/txtLeaveAvailability">
                     <AutoCompleteTextView
                         style="@style/textInputLeaveEntry"
                         android:id="@+id/FromDate"
                         android:drawableRight="@drawable/ic_baseline_calendar_month_24"
                         android:inputType="date"
-                        android:hint="@string/lfromDate"
-                        >
-
+                        android:hint="@string/lfromDate">
                     </AutoCompleteTextView>
-
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/textInputLayoutLeaveEntry"
                     android:layout_width="150dp"
-                    android:id="@+id/ToDateLayout"
+                    android:id="@+id/FromTimeLayout"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/FromDateLayout"
-
-                    >
-
+                    android:layout_below="@+id/FromDateLayout">
                     <AutoCompleteTextView
                         style="@style/textInputLeaveEntry"
                         android:id="@+id/txtFromSession"
                         android:drawableRight="@drawable/ic_baseline_access_time_24"
                         android:hint="@string/lfromTime"
-                        android:imeOptions="flagNoExtractUi|actionSearch"
-
-                        >
-
+                        android:imeOptions="flagNoExtractUi|actionSearch">
                     </AutoCompleteTextView>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -135,37 +104,26 @@
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/textInputLayoutLeaveEntry"
                     android:layout_width="200dp"
-                    android:id="@+id/ToDateLayoutSession"
+                    android:id="@+id/ToTimeLayout"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/ToDateLayout"
-                    android:layout_alignBottom="@+id/ToDateLayout"
-
-
-                    >
-
+                    android:layout_toRightOf="@+id/FromTimeLayout"
+                    android:layout_alignBottom="@+id/FromTimeLayout">
                     <AutoCompleteTextView
                         style="@style/textInputLeaveEntry"
                         android:layout_width="fill_parent"
-
                         android:id="@+id/txtToSession"
                         android:drawableRight="@drawable/ic_baseline_access_time_24"
                         android:hint="@string/ltoTime"
-                        android:imeOptions="flagNoExtractUi|actionSearch"
-
-                        >
-
+                        android:imeOptions="flagNoExtractUi|actionSearch">
                     </AutoCompleteTextView>
-
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
                 <LinearLayout
                     android:id="@+id/LLButton"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_below="@+id/ToDateLayout"
+                    android:layout_below="@+id/FromTimeLayout"
                     android:weightSum="6"
                     android:layout_width="match_parent">
                     <com.google.android.material.textfield.TextInputLayout
@@ -174,8 +132,7 @@
                         android:layout_weight="6"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        passwordToggleTint="@color/appColor"
-                        >
+                        passwordToggleTint="@color/appColor">
 
                         <AutoCompleteTextView
                             style="@style/textInputLeaveEntryWithKeyBoard"
@@ -186,12 +143,9 @@
                             android:maxLines="3"
                             android:lines="2"
                             android:overScrollMode="always"
-                            android:scrollbarStyle="insideInset"
-                            >
+                            android:scrollbarStyle="insideInset">
                         </AutoCompleteTextView>
-
                     </com.google.android.material.textfield.TextInputLayout>
-
 
                     <TextView
                         android:id="@+id/hdnLeavePeriodId"
@@ -225,9 +179,24 @@
                     style="@style/appButton"
                     android:layout_centerHorizontal="true"
                     android:text="Apply"/>
-
-
             </RelativeLayout>
         </ScrollView>
     </LinearLayout>
 </LinearLayout>
+    <!--<LinearLayout-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:orientation="vertical"-->
+    <!--    xmlns:android="http://schemas.android.com/apk/res/android">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical">-->
+    <!--        <include layout="@layout/pageheaderwithoutrefresh"/>-->
+
+    <!--        <im.delight.android.webview.AdvancedWebView-->
+    <!--            android:id="@+id/wvPermissionentry"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent" />-->
+    <!--    </LinearLayout>-->
+    <!--</LinearLayout>-->

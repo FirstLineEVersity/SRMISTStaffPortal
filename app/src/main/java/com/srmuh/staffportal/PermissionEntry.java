@@ -28,6 +28,8 @@ package com.srmuh.staffportal;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.core.content.ContextCompat;
 
+    import com.google.android.material.textfield.TextInputLayout;
+
     import org.json.JSONArray;
     import org.json.JSONObject;
 
@@ -44,6 +46,7 @@ package com.srmuh.staffportal;
 public class PermissionEntry extends AppCompatActivity implements View.OnClickListener{
 
     private AutoCompleteTextView txtEditLeavePeriod, txtEditLeaveType, txtEditFromSession, txtEditToSession, txtFromDate, edRemarks;
+    TextInputLayout txtLeavePeriodLayout,txtLeaveTypeLayout,FromDateLayout,FromTimeLayout,ToTimeLayout,edRemarksLayout;
 
     private static String strParameters[];
     private static String ResultString1 = "";
@@ -71,6 +74,12 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
 
         txtApprovalOfficer = (TextView) findViewById(R.id.txtApprovalOfficer);
+        txtLeavePeriodLayout = findViewById(R.id.txtLeavePeriodLayout);
+        txtLeaveTypeLayout = findViewById(R.id.txtLeaveTypeLayout);
+        FromDateLayout = findViewById(R.id.FromDateLayout);
+        FromTimeLayout = findViewById(R.id.FromTimeLayout);
+        ToTimeLayout = findViewById(R.id.ToTimeLayout);
+        edRemarksLayout = findViewById(R.id.edRemarksLayout);
 
         intFlag=getIntent().getIntExtra("Flag",1);
         final SharedPreferences loginsession = getApplicationContext().getSharedPreferences("SessionLogin", 0);
@@ -368,49 +377,40 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                     return;
                 }else {
 
-                    
-                if (! Utility.isNotNull(txtLeavePeriodId.getText().toString().trim())){
-                    txtEditLeavePeriod.setError("Leave Period required");
-                    txtEditLeavePeriod.requestFocus();
-                    showDialog("Leave Period required");
-                    return;
-                }
-                else{
-                    txtEditLeavePeriod.setError(null);
-                }
-                if (! Utility.isNotNull(txtLeaveTypeId.getText().toString().trim())){
-                    txtEditLeaveType.setError("Leave Type required");
-                    txtEditLeaveType.requestFocus();
-                    showDialog("Leave Type required");
 
-                    return;
-                }
-                if (! Utility.isNotNull(txtFromDate.getText().toString().trim())){
-                    txtFromDate.setError("From Date required");
-                    showDialog("From Date required");
+                 if (!Utility.isNotNull(txtLeavePeriodId.getText().toString().trim())) {
+                     txtLeavePeriodLayout.setError("Leave Period required");
+                     txtLeavePeriodLayout.requestFocus();
+                     return;
+                 } else {
+                     txtLeavePeriodLayout.setError(null);
+                 }
+                 if (!Utility.isNotNull(txtLeaveTypeId.getText().toString().trim())) {
+                     txtLeaveTypeLayout.setError("Leave Type required");
+                     txtLeaveTypeLayout.requestFocus();
+                     return;
+                 }
+                 if (!Utility.isNotNull(txtFromDate.getText().toString().trim())) {
+                     FromDateLayout.setError("From Date required");
+                     return;
+                 }
+                 if (!Utility.isNotNull(txtEditFromSession.getText().toString().trim())) {
+                     FromTimeLayout.setError("From Time required");
+                     FromTimeLayout.requestFocus();
 
-                    return;
-                }
-                if (! Utility.isNotNull(txtEditFromSession.getText().toString().trim())){
-                    txtEditFromSession.setError("From Time required");
-                    showDialog("From Time required");
-                    txtEditFromSession.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(txtEditToSession.getText().toString().trim())){
-                    txtEditToSession.setError("To Time required");
-                    showDialog("To Time required");
+                     return;
+                 }
+                 if (!Utility.isNotNull(txtEditToSession.getText().toString().trim())) {
+                     ToTimeLayout.setError("To Time required");
+                     ToTimeLayout.requestFocus();
 
-                    txtEditToSession.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(edRemarks.getText().toString().trim())){
-                    edRemarks.setError("Reason is required!");
-                    showDialog("Reason is required!");
-
-                    return;
-                }
-                intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
+                     return;
+                 }
+                 if (!Utility.isNotNull(edRemarks.getText().toString().trim())) {
+                     edRemarksLayout.setError("Reason is required!");
+                     return;
+                 }
+                 intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
                 intLeaveTypeId = Integer.parseInt(txtLeaveTypeId.getText().toString());
                 String d1 = hdnFromDate.getText().toString() + " "+txtEditFromSession.getText().toString();
                 String d2 = hdnFromDate.getText().toString()+" "+txtEditToSession.getText().toString();
@@ -419,7 +419,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
                     Date dtTodate = sdf.parse(d2);
                     if (dtFromdate.compareTo(dtTodate) > 0){
                         //System.out.println("Please ensure that the To Date is greater than or equal to the From Date.");
-                        txtEditToSession.setError("'To Date Time' should be greater than 'From Date Time'.");
+                        ToTimeLayout.setError("'To Date Time' should be greater than 'From Date Time'.");
                         return;
                     }
 
@@ -492,7 +492,7 @@ public class PermissionEntry extends AppCompatActivity implements View.OnClickLi
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
-            Log.d("TEST", ResultString1.toString());
+          //  Log.d("TEST", ResultString1.toString());
             if (ResultString1.toString().equals("")){
                 Toast.makeText(PermissionEntry.this, "No Data Found", Toast.LENGTH_LONG).show();
 

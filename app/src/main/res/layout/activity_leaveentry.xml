@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_leavestatushtml"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
     <include
         android:id="@+id/pageHeader"
         layout="@layout/pageheaderwithoutrefresh"/>
@@ -32,6 +33,12 @@
                 android:textStyle="bold|italic"
                 android:textColor="@color/colorblue"
                 android:textSize="16dp"/>
+            <TextView
+                android:id="@+id/hdnApprovalOfficerId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To approve by"
+                android:visibility="gone"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/textInputLayoutLeaveEntry"
@@ -230,14 +237,6 @@
                     android:layout_gravity="end|center_vertical"
                     android:background="@drawable/btnselector"
                     android:text="Apply"/>
-
-                <TextView
-                    android:id="@+id/hdnApprovalOfficerId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/edRemarks"
-                    android:visibility="gone"/>
-
                 <TextView
                     android:id="@+id/hdnLeavePeriodId"
                     android:layout_width="wrap_content"

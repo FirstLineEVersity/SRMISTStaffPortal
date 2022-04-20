@@ -27,6 +27,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -43,6 +45,8 @@ import webservice.WebService;
 public class LeaveEntry extends AppCompatActivity implements View.OnClickListener{
 
     private AutoCompleteTextView txtEditLeavePeriod, txtEditLeaveType, txtEditFromSession, txtEditToSession, txtFromDate, txtToDate,edRemarks;
+    TextInputLayout txtLeavePeriodLayout,txtLeaveTypeLayout,FromDateLayout,FromDateLayoutSession,ToDateLayout,ToDateLayoutSession,edRemarksLayout;
+
     private static String strParameters[];
     private static String ResultString1 = "";
     private long lngEmpId=0, lngApprovalOfficerId=0;
@@ -69,6 +73,13 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
         tvPageTitle = (TextView) findViewById(R.id.pageTitle);
         tvPageTitle.setText("Leave Entry");
         StatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorblue));
+        txtLeavePeriodLayout = findViewById(R.id.txtLeavePeriodLayout);
+        txtLeaveTypeLayout = findViewById(R.id.txtLeaveTypeLayout);
+        FromDateLayout = findViewById(R.id.FromDateLayout);
+        FromDateLayoutSession = findViewById(R.id.FromDateLayoutSession);
+        ToDateLayout = findViewById(R.id.ToDateLayout);
+        ToDateLayoutSession = findViewById(R.id.ToDateLayoutSession);
+        edRemarksLayout = findViewById(R.id.edRemarksLayout);
 
         txtApprovalOfficer = (TextView) findViewById(R.id.txtApprovalOfficer);
         hdnApprovalOfficerId = (TextView) findViewById(R.id.hdnApprovalOfficerId);
@@ -541,112 +552,117 @@ public class LeaveEntry extends AppCompatActivity implements View.OnClickListene
 
         switch (v.getId()){
             case R.id.btn_SaveEntries:
-                if (! Utility.isNotNull(txtLeavePeriodId.getText().toString().trim())){
-                    txtEditLeavePeriod.setError("Leave Period required");
-                    txtEditLeavePeriod.requestFocus();
+                if (!CheckNetwork.isInternetAvailable(LeaveEntry.this)) {
+                    Toast.makeText(LeaveEntry.this,v.getContext().getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
                     return;
-                }
-                else{
-                    txtEditLeavePeriod.setError(null);
-                }
-                if (! Utility.isNotNull(txtLeaveTypeId.getText().toString().trim())){
-                    txtEditLeaveType.setError("Leave Type required");
-                    txtEditLeaveType.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(txtFromDate.getText().toString().trim())){
-                    txtFromDate.setError("From Date required");
-                    return;
-                }
-                if (! Utility.isNotNull(txtFromSessionId.getText().toString().trim())){
-                    txtEditFromSession.setError("From Session required");
-                    txtEditFromSession.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(txtToDate.getText().toString().trim())){
-                    txtToDate.setError("To Date required");
-                    return;
-                }
-                if (! Utility.isNotNull(txtToSessionId.getText().toString().trim())){
-                    txtEditToSession.setError("To Session required");
-                    txtEditToSession.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(hdnApprovalOfficerId.getText().toString().trim())){
-                    txtEditLeavePeriod.setError("Approval Officer required");
-                    txtEditLeavePeriod.requestFocus();
-                    return;
-                }
-                if (! Utility.isNotNull(edRemarks.getText().toString().trim())){
-                    edRemarks.setError("Reason is required!");
-                    return;
-                }
-                intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
-                intLeaveTypeId = Integer.parseInt(txtLeaveTypeId.getText().toString());
-                intFromSessId = Integer.parseInt(txtFromSessionId.getText().toString());
-                intToSessId = Integer.parseInt(txtToSessionId.getText().toString());
-                lngApprovalOfficerId = Long.parseLong(hdnApprovalOfficerId.getText().toString());
-                String d1 = hdnFromDate.getText().toString();
-                String d2 = hdnToDate.getText().toString();
-                try {
-                    Date dtFromdate = sdf.parse(d1);
-                    Date dtTodate = sdf.parse(d2);
-                    long diff =  dtTodate.getTime() - dtFromdate.getTime();
-                    float numOfDays = (float) (diff / (1000 * 60 * 60 * 24));
-                    if(numOfDays > availableDays){
-                        showDialog("Number of Available days for this Leave type is "+availableDays+", Please select days with in the limit ");
-                        txtToDate.setError("Number of Available days for this Leave type is "+availableDays+" Please select days with in the limit ");
+                }else {
+                    if (!Utility.isNotNull(txtLeavePeriodId.getText().toString().trim())) {
+                        txtLeavePeriodLayout.setError("Leave Period required");
+                        txtLeavePeriodLayout.requestFocus();
                         return;
-                    }else  if (dtFromdate.compareTo(dtTodate) > 0) {
-                        //System.out.println("Please ensure that the To Date is greater than or equal to the From Date.");
-                        showDialog("'To Date' should be greater than 'From Date'.");
-                        txtToDate.setError("'To Date' should be greater than 'From Date'.");
-                        return;
-                    } else if (dtFromdate.compareTo(dtTodate) < 0) { // Multiple days leave
-                        if (intFromSessId == 3) { // sessionId= "2","Full Day";       "3","ForeNoon";      "4","AfterNoon"
-                            //Morning session not allowed (instead use fullday)
-                            showDialog("Instead of ForeNoon, use Full Day");
-                            txtEditFromSession.setError("Instead of ForeNoon, use Full Day");
-                            return;
-                        }
-                        if (intToSessId == 4) {
-                            //Evening session not allowed (instead use fullday)
-                            showDialog("Instead of AfterNoon, use Full Day");
-
-                            txtEditFromSession.setError("Instead of AfterNoon, use Full Day");
-                            return;
-                        }
-                        // System.out.println("Date1 is before Date2");
-                    } else if (dtFromdate.compareTo(dtTodate) == 0) { // single day leave
-                        if (intFromSessId != intToSessId) {
-                            showDialog("Same session expected for one day leave");
-                            txtEditToSession.setError("Same session expected for one day leave");
-                            return;
-                        }
-                        //System.out.println("Date1 is equal to Date2");
+                    } else {
+                        txtLeavePeriodLayout.setError(null);
                     }
+                    if (!Utility.isNotNull(txtLeaveTypeId.getText().toString().trim())) {
+                        txtLeaveTypeLayout.setError("Leave Type required");
+                        txtLeavePeriodLayout.requestFocus();
+                        return;
+                    }
+                    if (!Utility.isNotNull(txtFromDate.getText().toString().trim())) {
+                        FromDateLayout.setError("From Date required");
+                        return;
+                    }
+                    if (!Utility.isNotNull(txtFromSessionId.getText().toString().trim())) {
+                        FromDateLayoutSession.setError("From Session required");
+                        FromDateLayoutSession.requestFocus();
+                        return;
+                    }
+                    if (!Utility.isNotNull(txtToDate.getText().toString().trim())) {
+                        ToDateLayout.setError("To Date required");
+                        return;
+                    }
+                    if (!Utility.isNotNull(txtToSessionId.getText().toString().trim())) {
+                        ToDateLayoutSession.setError("To Session required");
+                        ToDateLayoutSession.requestFocus();
+                        return;
+                    }
+                    if (!Utility.isNotNull(hdnApprovalOfficerId.getText().toString().trim())) {
+                        txtEditLeavePeriod.setError("Approval Officer required");
+                        txtEditLeavePeriod.requestFocus();
+                        return;
+                    }
+                    if (!Utility.isNotNull(edRemarks.getText().toString().trim())) {
+                        edRemarksLayout.setError("Reason is required!");
+                        return;
+                    }
+                    intLeavePeriodId = Integer.parseInt(txtLeavePeriodId.getText().toString());
+                    intLeaveTypeId = Integer.parseInt(txtLeaveTypeId.getText().toString());
+                    intFromSessId = Integer.parseInt(txtFromSessionId.getText().toString());
+                    intToSessId = Integer.parseInt(txtToSessionId.getText().toString());
+                    lngApprovalOfficerId = Long.parseLong(hdnApprovalOfficerId.getText().toString());
+                    String d1 = hdnFromDate.getText().toString();
+                    String d2 = hdnToDate.getText().toString();
+                    try {
+                        Date dtFromdate = sdf.parse(d1);
+                        Date dtTodate = sdf.parse(d2);
+                        long diff = dtTodate.getTime() - dtFromdate.getTime();
+                        float numOfDays = (float) (diff / (1000 * 60 * 60 * 24));
+                        if (numOfDays > availableDays) {
+                            showDialog("Number of Available days for this Leave type is " + availableDays + ", Please select days with in the limit ");
+                            ToDateLayout.setError("Number of Available days for this Leave type is " + availableDays + " Please select days with in the limit ");
+                            return;
+                        } else if (dtFromdate.compareTo(dtTodate) > 0) {
+                            //System.out.println("Please ensure that the To Date is greater than or equal to the From Date.");
+                            showDialog("'To Date' should be greater than 'From Date'.");
+                            ToDateLayout.setError("'To Date' should be greater than 'From Date'.");
+                            return;
+                        } else if (dtFromdate.compareTo(dtTodate) < 0) { // Multiple days leave
+                            if (intFromSessId == 3) { // sessionId= "2","Full Day";       "3","ForeNoon";      "4","AfterNoon"
+                                //Morning session not allowed (instead use fullday)
+                                showDialog("Instead of ForeNoon, use Full Day");
+                                FromDateLayoutSession.setError("Instead of ForeNoon, use Full Day");
+                                return;
+                            }
+                            if (intToSessId == 4) {
+                                //Evening session not allowed (instead use fullday)
+                                showDialog("Instead of AfterNoon, use Full Day");
+
+                                FromDateLayoutSession.setError("Instead of AfterNoon, use Full Day");
+                                return;
+                            }
+                            // System.out.println("Date1 is before Date2");
+                        } else if (dtFromdate.compareTo(dtTodate) == 0) { // single day leave
+                            if (intFromSessId != intToSessId) {
+                                showDialog("Same session expected for one day leave");
+                                ToDateLayoutSession.setError("Same session expected for one day leave");
+                                return;
+                            }
+                            //System.out.println("Date1 is equal to Date2");
+                        }
 //                    if(!isDateAfter(d1,d2)){
 //                        txtToDate.setError("Please ensure that the End Date is greater than or equal to the Start Date.");
 //                        break;
 //                    }
-                } catch (Exception e) {
-                }strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId),
-                        "Long","approvalempid", String.valueOf(lngApprovalOfficerId),
-                        "int","officeid", String.valueOf(lngOfficeId),
-                        "int", "leaveperiodid", String.valueOf(intLeavePeriodId),
-                        "int", "leavetypeid", String.valueOf(intLeaveTypeId),
-                        "String", "fromdate", String.valueOf(d1),
-                        "String", "todate", String.valueOf(d2),
-                        "int", "fromsession", String.valueOf(intFromSessId),
-                        "int", "tosession", String.valueOf(intToSessId),
-                        "String", "reason", edRemarks.getText().toString().trim(),
-                        "float", "leaveapplieddays", "0"};
+                    } catch (Exception e) {
+                    }
+                    strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmpId),
+                            "Long", "approvalempid", String.valueOf(lngApprovalOfficerId),
+                            "int", "officeid", String.valueOf(lngOfficeId),
+                            "int", "leaveperiodid", String.valueOf(intLeavePeriodId),
+                            "int", "leavetypeid", String.valueOf(intLeaveTypeId),
+                            "String", "fromdate", String.valueOf(d1),
+                            "String", "todate", String.valueOf(d2),
+                            "int", "fromsession", String.valueOf(intFromSessId),
+                            "int", "tosession", String.valueOf(intToSessId),
+                            "String", "reason", edRemarks.getText().toString().trim(),
+                            "float", "leaveapplieddays", "0"};
 
-                WebService.strParameters = strParameters;
-                WebService.METHOD_NAME = "saveEmployeeLeaveDetailsJson";
-                AsyncCallSaveWS task = new AsyncCallSaveWS();
-                task.execute();
-                break;
+                    WebService.strParameters = strParameters;
+                    WebService.METHOD_NAME = "saveEmployeeLeaveDetailsJson";
+                    AsyncCallSaveWS task = new AsyncCallSaveWS();
+                    task.execute();
+                    break;
+                }
         }
     }
 
