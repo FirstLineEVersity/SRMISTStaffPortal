@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -106,6 +106,13 @@ public class StaffBiometricLog extends AppCompatActivity {
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
+            ResultString =   "[{\"attendancedate\":\"30/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"29/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"28/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"27/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"26/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"23/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"},\n" +
+                    "{\"attendancedate\":\"22/07/2022\",\"firstin\":\"08:15\",\"lastout\":\"16:30\",\"totalhours\":\"8.15\",\"late\":\"-\"}]";
             try{
                 JSONObject jsonObject = new JSONObject(ResultString.toString());
                 if (jsonObject.getString("Status").equals("Error"))

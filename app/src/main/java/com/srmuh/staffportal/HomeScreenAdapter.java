@@ -16,6 +16,10 @@ import webservice.SqlliteController;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import com.srmuh.staffportal.location.LOCLandingPage;
+import com.srmuh.staffportal.location.LOCMainActivity;
+import com.srmuh.staffportal.location.LOCPunchDetails;
+
 public class HomeScreenAdapter extends RecyclerView.Adapter<HomeScreenAdapter.ViewHolder> {
     // IF the view under inflation and population is header or Item
     private static final int TYPE_ITEM = 1;
@@ -83,7 +87,10 @@ public class HomeScreenAdapter extends RecyclerView.Adapter<HomeScreenAdapter.Vi
                             v.getContext().startActivity(intent);
                             break;
                         case 8:
-                            intent = new Intent(v.getContext(), StaffBiometricLog.class);
+                            //TODO
+                            intent = new Intent(v.getContext(), ViewPaySlipPayPeriod.class);
+
+                            // intent = new Intent(v.getContext(), StaffBiometricLog.class);
                             v.getContext().startActivity(intent);
                             break;
                         case 9:
@@ -145,6 +152,16 @@ public class HomeScreenAdapter extends RecyclerView.Adapter<HomeScreenAdapter.Vi
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             v.getContext().startActivity(intent);
                             break;
+                        case 23:
+                            intent = new Intent(v.getContext(), LOCMainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
+                        case 24:
+                            intent = new Intent(v.getContext(), LOCPunchDetails.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            v.getContext().startActivity(intent);
+                            break;
                         case 50:
                             SharedPreferences myPrefs = v.getContext().getSharedPreferences("SessionLogin", MODE_PRIVATE);
                             SharedPreferences.Editor editor = myPrefs.edit();
@@ -152,7 +169,7 @@ public class HomeScreenAdapter extends RecyclerView.Adapter<HomeScreenAdapter.Vi
                             editor.commit();
                             SqlliteController sc = new SqlliteController(v.getContext());
                             sc.deleteLoginStaffDetails();
-                            intent = new Intent(v.getContext(), MainActivity.class);
+                            intent = new Intent(v.getContext(), LoginsrmActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             v.getContext().startActivity(intent);
                             break;

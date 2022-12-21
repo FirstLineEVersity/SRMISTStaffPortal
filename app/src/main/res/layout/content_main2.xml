@@ -114,12 +114,32 @@ android:fitsSystemWindows="true"
 
                         <ImageView
                             style="@style/StyleHomeGridImage"
-                            android:src="@drawable/icon_leavemanagement" />
+                            android:src="@drawable/icon_attendancepunch" />
+
+                            <TextView
+                                style="@style/StyleHomeGridText"
+                                android:text="@string/hattendance"
+                                 />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- COLUMN 2  -->
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/StyleHomeGridCardView"
+                        >
+                        <LinearLayout
+                            style="@style/StyleHomeGridLayout"
+                            >
+
+                            <ImageView
+                                style="@style/StyleHomeGridImage"
+                                android:src="@drawable/icon_leavemanagement" />
 
                             <TextView
                                 style="@style/StyleHomeGridText"
                                 android:text="@string/hLeave"
-                                 />
+                                />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -166,7 +186,7 @@ android:fitsSystemWindows="true"
                                  />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
+<!--
                     <androidx.cardview.widget.CardView
                         style="@style/StyleHomeGridCardView"
                        >
@@ -185,7 +205,7 @@ android:fitsSystemWindows="true"
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <!-- COLUMN 2  -->
+
 
                     <androidx.cardview.widget.CardView
                         style="@style/StyleHomeGridCardView"
@@ -205,6 +225,7 @@ android:fitsSystemWindows="true"
                         </LinearLayout>
 
                     </androidx.cardview.widget.CardView>
+                    -->
                     <!-- COLUMN 2  -->
                     <androidx.cardview.widget.CardView
                         style="@style/StyleHomeGridCardView"

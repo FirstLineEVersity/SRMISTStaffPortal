@@ -136,10 +136,32 @@
         <entry key="..\:/EVersityFirstLine/SRMH/StaffPortal/staffportal/app/src/main/res/layout/managementdashboard.xml" value="0.18072916666666666" />
         <entry key="..\:/EVersityFirstLine/SRMH/StaffPortal/staffportal/app/src/main/res/layout/notificationforstaffcategorylist.xml" value="0.1" />
         <entry key="..\:/EVersityFirstLine/SRMH/StaffPortal/staffportal/app/src/main/res/layout/stafftimetable.xml" value="0.11302083333333333" />
+        <entry key="..\:/EversityProjects/SRMH/StaffPortalSRMH/app/src/main/res/layout/activity_login.xml" value="0.17074275362318841" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/StaffPortalSRM/app/src/main/res/drawable/spinner_background.xml" value="0.1" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/StaffPortalSRM/app/src/main/res/layout/activity_login.xml" value="0.17074275362318841" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/drawable/border.xml" value="0.1" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_attendance_punch.xml" value="0.14479166666666668" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_login.xml" value="0.134375" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_login_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_main.xml" value="0.14583333333333334" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_main_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/activity_maps_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/content_main2.xml" value="0.13229166666666667" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/facerecognition_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/fragment_resultdialog_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/gridlayout_cardview_home_page.xml" value="0.13229166666666667" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/homescreencategory.xml" value="0.13229166666666667" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/landingpage_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/loginform_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/loginmain_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/punchreport_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/viewpayslippayperiod.xml" value="0.14583333333333334" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/layout/viewpunchlistitem_loc.xml" value="0.16893115942028986" />
+        <entry key="..\:/EversityProjects/SRMKattankulathur/staffportal/StaffPortalSRM/app/src/main/res/menu/main_menu.xml" value="0.103125" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

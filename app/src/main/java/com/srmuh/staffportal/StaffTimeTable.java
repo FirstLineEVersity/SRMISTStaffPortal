@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,9 @@ public class StaffTimeTable extends AppCompatActivity {
     private void displayTimeTable(){
         db = controllerdb.getReadableDatabase();
         try {
+            Log.i("QUERy: ", "SELECT strftime('%d-%m-%Y %H:%M:%S', lastupdatedate) as lastupdated,strftime('%H:%M', fromtime)||' - '||strftime('%H:%M', totime) as hourdesc FROM stafftimetable " +
+                    " WHERE employeeid=" + lngEmployeeId + " AND dayordertemplateid=" + intTemplateId +
+                            " GROUP BY fromtime,totime");
             Cursor cursor = db.rawQuery("SELECT strftime('%d-%m-%Y %H:%M:%S', lastupdatedate) as lastupdated,strftime('%H:%M', fromtime)||' - '||strftime('%H:%M', totime) as hourdesc FROM stafftimetable " +
                     " WHERE employeeid=" + lngEmployeeId + " AND dayordertemplateid=" + intTemplateId +
                     " GROUP BY fromtime,totime", null);
@@ -114,6 +118,7 @@ public class StaffTimeTable extends AppCompatActivity {
 
                 cursor = db.rawQuery("SELECT dayorderdesc,GROUP_CONCAT(subjectcode,'##') AS subject FROM stafftimetable WHERE employeeid = " +
                         lngEmployeeId + " AND dayordertemplateid = " + intTemplateId + " GROUP BY dayorderdesc ORDER BY dayorderid", null);
+                Log.i("Query 2" ,"SELECT dayorderdesc,GROUP_CONCAT(subjectcode,'##') AS subject FROM stafftimetable WHERE employeeid = "+ lngEmployeeId + " AND dayordertemplateid = "+ intTemplateId + "GROUP BY dayorderdesc ORDER BY dayorderid");
                 if (cursor.moveToFirst()){
                     String strDayOrder="", strOldDayOrder="";
                     strRow="";
@@ -133,7 +138,8 @@ public class StaffTimeTable extends AppCompatActivity {
                     addData(strColumns);
                 }
                 cursor.close();
-
+Log.i("Query 3: ","SELECT GROUP_CONCAT(distinct subjectdesc) AS subject FROM stafftimetable WHERE subjectcode not in ('-') AND employeeid = \" +\n" +
+        "                        lngEmployeeId + \" AND dayordertemplateid = \" + intTemplateId + \" GROUP BY subjectdesc");
                 cursor = db.rawQuery("SELECT GROUP_CONCAT(distinct subjectdesc) AS subject FROM stafftimetable WHERE subjectcode not in ('-') AND employeeid = " +
                         lngEmployeeId + " AND dayordertemplateid = " + intTemplateId + " GROUP BY subjectdesc", null);
                 if (cursor.moveToFirst()){
@@ -198,7 +204,12 @@ public class StaffTimeTable extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result){
-            //Log.i(TAG, "onPostExecute");
+            ResultString  = "[{\"dayorderdesc\":\"1\",\"dayorderid\":\"12\",\"hourid\":\"1\",\"fromtime\":\"08:00:00\",\"subjectcode\":\"DON204\",\"totime\":\"09:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-DON204-POST BASIC DIPLOMA IN OPERATION ROOM NURSING\"},{\"dayorderdesc\":\"1\",\"dayorderid\":\"12\",\"hourid\":\"2\",\"fromtime\":\"09:00:00\",\"subjectcode\":\"PBOR1911\",\"totime\":\"10:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-PBOR1911-OPERATION ROOM NURSING - I ( INCLUSIVE OF FOUNDATION COURSES )\"},{\"dayorderdesc\":\"1\",\"dayorderid\":\"12\",\"hourid\":\"3\",\"fromtime\":\"10:00:00\",\"subjectcode\":\"-\",\"totime\":\"11:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"1\",\"dayorderid\":\"12\",\"hourid\":\"4\",\"fromtime\":\"11:00:00\",\"subjectcode\":\"-\",\"totime\":\"12:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"1\",\"dayorderid\":\"12\",\"hourid\":\"5\",\"fromtime\":\"12:00:00\",\"subjectcode\":\"-\",\"totime\":\"13:00:00\",\"subjectdesc\":\"-\"},\n" +
+                    "{\"dayorderdesc\":\"2\",\"dayorderid\":\"12\",\"hourid\":\"1\",\"fromtime\":\"08:00:00\",\"subjectcode\":\"DON204\",\"totime\":\"09:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-DON204-POST BASIC DIPLOMA IN OPERATION ROOM NURSING\"},{\"dayorderdesc\":\"2\",\"dayorderid\":\"12\",\"hourid\":\"2\",\"fromtime\":\"09:00:00\",\"subjectcode\":\"PBOR1911\",\"totime\":\"10:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-PBOR1911-OPERATION ROOM NURSING - I ( INCLUSIVE OF FOUNDATION COURSES )\"},{\"dayorderdesc\":\"2\",\"dayorderid\":\"12\",\"hourid\":\"3\",\"fromtime\":\"10:00:00\",\"subjectcode\":\"-\",\"totime\":\"11:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"2\",\"dayorderid\":\"12\",\"hourid\":\"4\",\"fromtime\":\"11:00:00\",\"subjectcode\":\"-\",\"totime\":\"12:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"2\",\"dayorderid\":\"12\",\"hourid\":\"5\",\"fromtime\":\"12:00:00\",\"subjectcode\":\"-\",\"totime\":\"13:00:00\",\"subjectdesc\":\"-\"},\n" +
+                    "{\"dayorderdesc\":\"3\",\"dayorderid\":\"12\",\"hourid\":\"1\",\"fromtime\":\"08:00:00\",\"subjectcode\":\"DON204\",\"totime\":\"09:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-DON204-POST BASIC DIPLOMA IN OPERATION ROOM NURSING\"},{\"dayorderdesc\":\"3\",\"dayorderid\":\"12\",\"hourid\":\"2\",\"fromtime\":\"09:00:00\",\"subjectcode\":\"PBOR1911\",\"totime\":\"10:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-PBOR1911-OPERATION ROOM NURSING - I ( INCLUSIVE OF FOUNDATION COURSES )\"},{\"dayorderdesc\":\"3\",\"dayorderid\":\"12\",\"hourid\":\"3\",\"fromtime\":\"10:00:00\",\"subjectcode\":\"-\",\"totime\":\"11:00:00\",\"subjectdesc\":\"\"},{\"dayorderdesc\":\"3\",\"dayorderid\":\"12\",\"hourid\":\"4\",\"fromtime\":\"11:00:00\",\"subjectcode\":\"-\",\"totime\":\"12:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"3\",\"dayorderid\":\"12\",\"hourid\":\"5\",\"fromtime\":\"12:00:00\",\"subjectcode\":\"-\",\"totime\":\"13:00:00\",\"subjectdesc\":\"-\"},\n" +
+                    "{\"dayorderdesc\":\"4\",\"dayorderid\":\"12\",\"hourid\":\"1\",\"fromtime\":\"08:00:00\",\"subjectcode\":\"DON204\",\"totime\":\"09:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-DON204-POST BASIC DIPLOMA IN OPERATION ROOM NURSING\"},{\"dayorderdesc\":\"4\",\"dayorderid\":\"12\",\"hourid\":\"2\",\"fromtime\":\"09:00:00\",\"subjectcode\":\"PBOR1911\",\"totime\":\"10:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-PBOR1911-OPERATION ROOM NURSING - I ( INCLUSIVE OF FOUNDATION COURSES )\"},{\"dayorderdesc\":\"4\",\"dayorderid\":\"12\",\"hourid\":\"3\",\"fromtime\":\"10:00:00\",\"subjectcode\":\"-\",\"totime\":\"11:00:00\",\"subjectdesc\":\"\"},{\"dayorderdesc\":\"4\",\"dayorderid\":\"12\",\"hourid\":\"4\",\"fromtime\":\"11:00:00\",\"subjectcode\":\"-\",\"totime\":\"12:00:00\",\"subjectdesc\":\"\"},{\"dayorderdesc\":\"4\",\"dayorderid\":\"12\",\"hourid\":\"5\",\"fromtime\":\"12:00:00\",\"subjectcode\":\"-\",\"totime\":\"13:00:00\",\"subjectdesc\":\"-\"},\n" +
+                    "{\"dayorderdesc\":\"5\",\"dayorderid\":\"12\",\"hourid\":\"1\",\"fromtime\":\"08:00:00\",\"subjectcode\":\"DON204\",\"totime\":\"09:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-DON204-POST BASIC DIPLOMA IN OPERATION ROOM NURSING\"},{\"dayorderdesc\":\"5\",\"dayorderid\":\"12\",\"hourid\":\"2\",\"fromtime\":\"09:00:00\",\"subjectcode\":\"PBOR1911\",\"totime\":\"10:00:00\",\"subjectdesc\":\"P.B.Diploma - Operation Room Nursing [ Diploma - Academic ] - SRM Regulation 2019-1YEAR-A-PBOR1911-OPERATION ROOM NURSING - I ( INCLUSIVE OF FOUNDATION COURSES )\"},{\"dayorderdesc\":\"5\",\"dayorderid\":\"12\",\"hourid\":\"3\",\"fromtime\":\"10:00:00\",\"subjectcode\":\"-\",\"totime\":\"11:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"5\",\"dayorderid\":\"12\",\"hourid\":\"4\",\"fromtime\":\"11:00:00\",\"subjectcode\":\"-\",\"totime\":\"12:00:00\",\"subjectdesc\":\"-\"},{\"dayorderdesc\":\"5\",\"dayorderid\":\"12\",\"hourid\":\"5\",\"fromtime\":\"12:00:00\",\"subjectcode\":\"-\",\"totime\":\"13:00:00\",\"subjectdesc\":\"-\"}]\n";
+            Log.i("TAG", ResultString);
             if(dialog != null && dialog.isShowing()){
                 dialog.dismiss();
             }

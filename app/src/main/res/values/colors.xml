@@ -3,6 +3,7 @@
     <color name="appBackGroundWhite">#FFFFFF</color>
     <color name="colorGreen">#00574a</color>
 
+    <color name="colorPrimary">#0268B1</color>
     <color name="appColor">#0268B1</color>
     <color name="appColorButton">#0268B1</color>
     <color name="appColorText">#000000</color>

@@ -93,6 +93,7 @@
     <!-- Home -->
     <string name="hProfile">Profile</string>
     <string name="hLeave">Leave</string>
+    <string name="hattendance">Attendance</string>
     <string name="hWorkForce">Workforce</string>
     <string name="hAcademic">Academic</string>
     <string name="hNotification">Notification</string>
@@ -102,6 +103,9 @@
     <string name="hLogout">Logout</string>
 
     <!-- Menu -->
+    <string name="mAttendance">Attendance</string>
+    <string name="mAttendancePunch">Punch Attendance</string>
+    <string name="mAttendanceReort">Punch Report</string>
     <string name="mLeaveManagement">Leave Management</string>
     <string name="mlStatus">Leave Status</string>
     <string name="mlEntry">Leave Entry</string>
@@ -179,4 +183,5 @@
 
     <string name="test">Testing Entry Value</string>
 
+    <string name="todo">TODO</string>
 </resources>

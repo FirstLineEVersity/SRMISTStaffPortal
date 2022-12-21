@@ -29,6 +29,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.srmuh.staffportal.location.LOCMainActivity;
+import com.srmuh.staffportal.location.LOCPunchDetails;
 
 import webservice.SqlliteController;
 
@@ -102,14 +104,14 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
                        // Intent intent = new Intent(getApplicationContext(), UploadFiles.class);
                         startActivity(intent);
                         finish();
-                    } else if (finalI == 6){ //Logout
+                    } else if (finalI == 5){ //Logout
                         SharedPreferences myPrefs = getApplicationContext().getSharedPreferences("SessionLogin", MODE_PRIVATE);
                         SharedPreferences.Editor editor = myPrefs.edit();
                         editor.clear();
                         editor.commit();
                         SqlliteController sc = new SqlliteController(getApplicationContext());
                         sc.deleteLoginStaffDetails();
-                        Intent intent = new Intent(HomePageGridViewLayout.this, MainActivity.class);
+                        Intent intent = new Intent(HomePageGridViewLayout.this, LoginsrmActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
@@ -197,6 +199,12 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
                 if (lngMenuId == 20) {
                     nav_Menu.findItem(R.id.nav_permissionentry).setVisible(true);
                 }
+                if (lngMenuId == 23) {
+                    nav_Menu.findItem(R.id.nav_punch).setVisible(true);
+                }
+                if (lngMenuId == 24) {
+                    nav_Menu.findItem(R.id.nav_punch_report).setVisible(true);
+                }
                 i++;
             } while (cursor.moveToNext());
         }
@@ -257,6 +265,18 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
         }else if (id == R.id.nav_payslip){
             toolbar.setTitle(getResources().getString(R.string.mPaySlip));
             Intent intent = new Intent(HomePageGridViewLayout.this,ViewPaySlipPayPeriod.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Flag",2);
+            startActivity(intent);
+        }else if (id == R.id.nav_punch){
+            toolbar.setTitle(getResources().getString(R.string.mPaySlip));
+            Intent intent = new Intent(HomePageGridViewLayout.this, LOCMainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("Flag",2);
+            startActivity(intent);
+        }else if (id == R.id.nav_punch_report){
+            toolbar.setTitle(getResources().getString(R.string.mPaySlip));
+            Intent intent = new Intent(HomePageGridViewLayout.this, LOCPunchDetails.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("Flag",2);
             startActivity(intent);
@@ -347,7 +367,7 @@ public class HomePageGridViewLayout extends AppCompatActivity implements Navigat
             editor.commit();
             SqlliteController sc = new SqlliteController(getApplicationContext());
             sc.deleteLoginStaffDetails();
-            Intent intent = new Intent(HomePageGridViewLayout.this, MainActivity.class);
+            Intent intent = new Intent(HomePageGridViewLayout.this, LoginsrmActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

@@ -8,15 +8,18 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 //import android.util.Log;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,21 +29,29 @@ import android.widget.Toast;
 
 //import com.google.android.gms.tasks.OnCompleteListener;
 //import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+//import com.google.android.gms.tasks.OnCompleteListener;
+//import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.conn.util.InetAddressUtils;
+import com.srmuh.staffportal.location.LOCStatusColor;
+//import com.google.firebase.iid.FirebaseInstanceId;
+//import com.google.firebase.iid.InstanceIdResult;
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
+
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
 import webservice.EncryptDecrypt;
 import webservice.SqlliteController;
 import webservice.WebService;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginsrmActivity extends AppCompatActivity implements View.OnClickListener{
     Button butLogin;
     ImageButton btnInfo;
     TextInputEditText etUsername, etPassword;
@@ -51,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static String ResultString = "";
     SQLiteDatabase db;
     private String imeiNumber="";
+    private String strDeviceModel = "";
+    private String strIpAddress = "";
+    private String strDeviceBrand = "";
+    private String strGpsCoordinates = "";
     private String token="";
     TelephonyManager telephonyManager;
     SqlliteController controllerdb = new SqlliteController(this);
@@ -60,8 +75,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-         dialog = new ProgressDialog(MainActivity.this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+        LOCStatusColor.SetStatusColor(getWindow(), ContextCompat.getColor(this, R.color.colorPrimary));
 
+        dialog = new ProgressDialog(LoginsrmActivity.this);
+/*
         FirebaseMessaging.getInstance().subscribeToTopic("evarsity");
 
         FirebaseInstanceId.getInstance().getInstanceId()
@@ -72,8 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //Log.w(TAG, "getInstanceId failed", task.getException());
                     return;
                 }
-                token = task.getResult().getToken();
-              //  Log.e("Token Test : ", token);
+               //  Log.e("Token Test : ", token);
                }
         });
         /*
@@ -105,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ed.commit();
                 } while (cursor.moveToNext());
                // Intent intent = new Intent(MainActivity.this, HomePageGridViewLayout.class);
-                Intent intent = new Intent(MainActivity.this, HomePageGridViewLayout.class);
+                Intent intent = new Intent(LoginsrmActivity.this, HomePageGridViewLayout.class);
                 startActivity(intent);
                 finish();
             }
@@ -113,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (Exception e){
 
         }
-        if(CheckNetwork.isInternetAvailable(MainActivity.this)) {
+        if(CheckNetwork.isInternetAvailable(LoginsrmActivity.this)) {
             butLogin = (Button) findViewById(R.id.loginButton);
             butLogin.setOnClickListener(this);
             btnInfo = (ImageButton) findViewById(R.id.btnInfo);
@@ -121,11 +141,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             hideKeyboard();
         }
         else {
-            Toast.makeText(MainActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginsrmActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
         }
     }
 
 
+    public static String getMobileIPAddress(boolean useIPv4) {
+        try {
+            List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface intf : interfaces) {
+                List<InetAddress> addrs = Collections.list(intf.getInetAddresses());
+                for (InetAddress addr : addrs) {
+                    if(!addr.isLoopbackAddress() && addr instanceof Inet4Address) {
+                        if (!addr.isLoopbackAddress()) {
+                            String sAddr = addr.getHostAddress().toUpperCase();
+
+                            boolean isIPv4 = InetAddressUtils.isIPv4Address(sAddr);
+                            if (useIPv4) {
+                                if (isIPv4)
+                                    return sAddr;
+                            } else {
+                                if (!isIPv4) {
+                                    // drop ip6 port suffix
+                                    int delim = sAddr.indexOf('%');
+                                    return delim < 0 ? sAddr : sAddr.substring(0, delim);
+                                }
+                            }
+
+
+                        }
+                    }
+                }
+            }
+        } catch (Exception ex) { } // for now eat exceptions
+        return "";
+    }
 
     @Override
     public void onClick(View v){
@@ -145,8 +195,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.loginButton:
-                if (!CheckNetwork.isInternetAvailable(MainActivity.this)) {
-                    Toast.makeText(MainActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
+                if (!CheckNetwork.isInternetAvailable(LoginsrmActivity.this)) {
+                    Toast.makeText(LoginsrmActivity.this,getResources().getString(R.string.loginNoInterNet), Toast.LENGTH_LONG).show();
                     return;
                 }else {
 
@@ -157,10 +207,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         // etPassword.setError("password is required!");
                         passwordInputLayout.setError("password is required!");
                     }
+                    WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+                    String strIpAddress = Formatter.formatIpAddress(wifiManager.getConnectionInfo().getIpAddress());
+                    if (strIpAddress.equals("")){
+                        strIpAddress = getMobileIPAddress(true);
+                    }
+                    strDeviceModel = Build.MODEL;
+                    strDeviceBrand = Build.BRAND;
                     deviceId();
+                   // public static String URL = "https://firstlineinfotech.com/srmistEmployeeAndroid/EmployeeAndroid?wsdl";
                     if (Utility.isNotNull(editTextPassword) && Utility.isNotNull(editTextUsername)) {
-                        strParameters = new String[]{"String", "userid", editTextUsername, "String", "password", editTextPassword,
+                        Log.i("TEST RADHA TEST",imeiNumber);
+
+                        strParameters = new String[]{"String", "netid", editTextUsername, "String", "password", editTextPassword,
+                                "String","mobilemodel",strDeviceModel + " " + strDeviceBrand,
+                                "String","ipaddress",strIpAddress,"String","gpscoordinates",strGpsCoordinates,
+                                "String", "deviceUID", imeiNumber, "String", "acesstoken", token};
+                       /* strParameters = new String[]{"String", "userid", editTextUsername, "String", "password", editTextPassword,
                                 "String", "deviceid", imeiNumber, "String", "acesstoken", token};
+                        strParameters = new String[]{"String", "netid", editTextUsername, "String", "password", editTextPassword,
+                                "String","mobilemodel",strDeviceModel + " " + strDeviceBrand,
+                                "String","ipaddress",strIpAddress,"String","gpscoordinates",strGpsCoordinates,
+                                "String","deviceUID",imeiNumber};
+
+                        */
                         new Thread(new Runnable() {
                             public void run() {
                                 WebService.strParameters = strParameters;
@@ -179,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnInfo:
-                Toast.makeText(MainActivity.this, getResources().getString(R.string.loginCredentials), Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginsrmActivity.this, getResources().getString(R.string.loginCredentials), Toast.LENGTH_LONG).show();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
@@ -190,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             telephonyManager = (TelephonyManager) getSystemService(this.TELEPHONY_SERVICE);
              imeiNumber = telephonyManager.getDeviceId();
+
         }catch(SecurityException e){
             imeiNumber = Settings.Secure.getString(getContentResolver(),
                     Settings.Secure.ANDROID_ID);
@@ -206,10 +277,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         return;
                     }
                     imeiNumber = telephonyManager.getDeviceId();
-//                    Log.d(TAG, imeiNumber);
+                   Log.d("TAG", imeiNumber);
 //                    Toast.makeText(MainActivity.this,imeiNumber,Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(MainActivity.this,getResources().getString(R.string.loginPermission),Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginsrmActivity.this,getResources().getString(R.string.loginPermission),Toast.LENGTH_LONG).show();
                 }
                 break;
             default:
@@ -246,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             SharedPreferences.Editor ed = loginsession.edit();
             try{
                // String strResultString = crypt.getDecryptedData(ResultString.toString());
+                Log.i("TEST : ",ResultString.toString());
                 JSONObject object = new JSONObject(ResultString.toString());
                 if (!object.isNull("employeeid")){
                     ed.putLong("userid", object.getLong("employeeid"));
@@ -254,21 +326,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ed.putString("employeename", object.getString("employeename"));
                     ed.putString("department", object.getString("department"));
                     ed.putString("designation", object.getString("designation"));
+
+                    ed.putString("netid",editTextUsername);
+                    ed.putString("pwd",editTextPassword);
+
 //                    ed.putString("school", object.getString("officename"));
 //                    ed.putLong("courseid", object.getLong("courseid"));
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.loginSuccess), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginsrmActivity.this, getResources().getString(R.string.loginSuccess), Toast.LENGTH_LONG).show();
                     ed.commit();
-                    SqlliteController sc = new SqlliteController(MainActivity.this);
+                    SqlliteController sc = new SqlliteController(LoginsrmActivity.this);
                     sc.deleteLoginStaffDetails();
-
-                   
-                    sc.insertLoginStaffDetails(object.getLong("employeeid"),object.getString("employeename"),
-                            object.getString("department"),object.getString("designation"),object.getString("menuids"));
+                    Log.e("RADHA TEST","LOG ERROR 1");
+               sc.insertLoginStaffDetails(object.getLong("employeeid"),object.getString("employeename"),
+                            object.getString("department"),object.getString("designation"),object.getString("menuids"),editTextUsername,editTextPassword);
+                    Log.e("RADHA TEST","LOG ERROR 2");
                     if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
 
-                    Intent intent = new Intent(MainActivity.this, HomePageGridViewLayout.class);
+                    Intent intent = new Intent(LoginsrmActivity.this, HomePageGridViewLayout.class);
                     startActivity(intent);
                     finish();
                 }
@@ -277,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         dialog.dismiss();
                     }
                     butLogin.setEnabled(true);
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.loginFailed), Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginsrmActivity.this, getResources().getString(R.string.loginFailed), Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e){
                 System.out.println("Error in Login Activity:"+e.getMessage());

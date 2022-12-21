@@ -51,18 +51,20 @@ public class HomeScreenCategory extends AppCompatActivity {
         intCategoryId = loginsession.getInt("categoryid", 0);
 //        intCategoryId = getIntent().getIntExtra("CategoryId", 0);
         if (intCategoryId == 2){// Leave Management
+            tvPageTitle.setText(getResources().getString(R.string.hattendance));
+        }else if (intCategoryId == 3){// Leave Management
             tvPageTitle.setText(getResources().getString(R.string.mLeaveManagement));
-        }else if (intCategoryId == 3){//Workforce
+        }else if (intCategoryId == 4){//Workforce
             tvPageTitle.setText(getResources().getString(R.string.hWorkForce));
-        }else if (intCategoryId == 4){//Academic
+        }else if (intCategoryId == 5){//Academic
             tvPageTitle.setText(getResources().getString(R.string.hAcademic));
-        }else if (intCategoryId == 5){//Communication
+        }else if (intCategoryId == 6){//Communication
             tvPageTitle.setText(getResources().getString(R.string.hNotification));
-        }else if (intCategoryId == 6){//Dashboard
+        }else if (intCategoryId == 7){//Dashboard
             tvPageTitle.setText(getResources().getString(R.string.hDashboard));
-        }else if (intCategoryId == 7){//Canteen
+        }else if (intCategoryId == 8){//Canteen
             tvPageTitle.setText(getResources().getString(R.string.hCanteen));
-        }else if (intCategoryId == 8){//Others
+        }else if (intCategoryId == 9){//Others
             tvPageTitle.setText(getResources().getString(R.string.hOthers));
         }
         getMenuValues();
@@ -88,21 +90,23 @@ public class HomeScreenCategory extends AppCompatActivity {
         try {
             if (intCategoryId == 1){ // Profile
                 strMenuId = "1";
-            }else if (intCategoryId == 2){// Leave Management
+            }else  if (intCategoryId == 2){ // Profile
+                strMenuId = "23,24";
+            }else if (intCategoryId == 3){// Leave Management
                 strMenuId = "3,4,5,20";
-            }else if (intCategoryId == 3){//Workforce
+            }else if (intCategoryId == 4){//Workforce
                 strMenuId = "8,9";
-            }else if (intCategoryId == 4){//Academic
+            }else if (intCategoryId == 5){//Academic
                 strMenuId = "2,6,7,19";
-            }else if (intCategoryId == 5){//Communication
+            }else if (intCategoryId == 6){//Communication
                 strMenuId = "10,11,13,16";  //,12 atpresent Notificationtoall hided
-            }else if (intCategoryId == 6){//Dashboard
+            }else if (intCategoryId == 7){//Dashboard
                 strMenuId = "17,18";
-            }else if (intCategoryId == 7){//Canteen
+            }else if (intCategoryId == 8){//Canteen
                 strMenuId = "14";
-            }else if (intCategoryId == 8){//Others
+            }else if (intCategoryId == 9){//Others
                 strMenuId = "15";
-            }else if (intCategoryId == 9){//Logout
+            }else if (intCategoryId == 10){//Logout
                 strMenuId = "50";
             }
             Cursor cursor = db.rawQuery("SELECT * FROM userwisemenuaccessrights WHERE employeeid =" + lngEmployeeId + " AND menuid in ("+strMenuId +")  ORDER BY  menusortnumber", null );
@@ -156,6 +160,10 @@ public class HomeScreenCategory extends AppCompatActivity {
                         ICONS[i] = R.drawable.icon_lms; //LMS Index
                     }else if (lngMenuId == 20){
                         ICONS[i] = R.drawable.icon_permissionentry; //Permission Entry
+                    }else if (lngMenuId == 23){
+                        ICONS[i] = R.drawable.icon_attendancepunch; //Punch Entry
+                    }else if (lngMenuId == 24){
+                        ICONS[i] = R.drawable.icon_punchreport; //Punch Entry
                     }else if (lngMenuId == 50){
                         ICONS[i] = R.drawable.icon_logout;
                     }

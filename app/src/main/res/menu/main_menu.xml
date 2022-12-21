@@ -12,6 +12,23 @@
             android:icon="@drawable/icon_profile"
             app:showAsAction="always"
             android:title="@string/hProfile" />
+        <item android:id="@+id/nav_attendance"
+            android:title="@string/mAttendance">
+            <menu>
+                <item
+                    android:id="@+id/nav_punch"
+                    android:visible="false"
+                    android:icon="@drawable/icon_attendancepunch"
+                    android:title="@string/mAttendancePunch" />
+                <item
+                    android:id="@+id/nav_punch_report"
+                    android:icon="@drawable/icon_punchreport"
+                    android:title="@string/mAttendanceReort"
+                    android:visible="false"/>
+
+            </menu>
+        </item>
+
 
         <item android:id="@+id/nav_leavemanagement"
             android:title="@string/mLeaveManagement">

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@color/appBackGroundWhite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity">
+    tools:context=".LoginsrmActivity">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -55,13 +55,15 @@
                         style="@style/textInput"
                         android:id="@+id/usernameInput"
                         android:hint="@string/loginUserName"
-                        android:text=""
+                        android:text="C60021"
                         android:drawableLeft="@drawable/ic_user_person_24"
 
                         />
 
                 </com.google.android.material.textfield.TextInputLayout>
 <!--
+C60021,Test@1234
+deepikat Dawnson@18
  android:text="41010006"
   android:text="Luck@1234"
 
@@ -80,7 +82,7 @@
                         android:id="@+id/passwordInput"
                         style="@style/textInput"
                         android:hint="@string/loginPassword"
-                        android:text=""
+                        android:text="Test@1234"
                         android:drawableLeft="@drawable/ic_password_24"
                         android:drawableStart="@drawable/ic_password_24"
                         android:inputType="textPassword" />

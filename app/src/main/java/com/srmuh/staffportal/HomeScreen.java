@@ -51,7 +51,7 @@ public class HomeScreen extends AppCompatActivity {
                 editor.commit();
                 SqlliteController sc = new SqlliteController(view.getContext());
                 sc.deleteLoginStaffDetails();
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                Intent intent = new Intent(view.getContext(), LoginsrmActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 view.getContext().startActivity(intent);
             }

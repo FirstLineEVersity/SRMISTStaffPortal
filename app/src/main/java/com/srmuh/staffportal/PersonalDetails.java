@@ -208,6 +208,7 @@ public class PersonalDetails extends AppCompatActivity {
                     strParameters = new String[]{"Long", "employeeid", String.valueOf(lngEmployeeId)};
                     strParameters = strParameters;
                     WebService.METHOD_NAME = "employeePersonalDetailsJson";
+
                     AsyncCallWS task = new AsyncCallWS();
                     task.execute();
                 }
@@ -266,7 +267,7 @@ public class PersonalDetails extends AppCompatActivity {
                             object.getString("Division"), object.getString("Designation"),
                             object.getString("DOB"), object.getString("DOJ"),
                             object.getString("Mobile"), object.getString("Email"),
-                            object.getString("Qualification"), object.getString("Address"));
+                            object.getString("Address"), object.getString("Address"));
                     if(object.has("staffphoto")) {
 
                         String base64 = object.getString("staffphoto");

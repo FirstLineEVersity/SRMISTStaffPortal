@@ -58,12 +58,15 @@ public class SqlliteController extends SQLiteOpenHelper {
         }
     }
 
-    public void insertLoginStaffDetails(long lngEmployeeId,String strStaffName,String strDepartment,String strDesignation,String strMenuIds){
+    public void insertLoginStaffDetails(long lngEmployeeId,String strStaffName,String strDepartment,String strDesignation,String strMenuIds,String strNetId,String strPwd){
+        Log.e("RADHA TEST","LOG ERROR 3");
         SQLiteDatabase database = this.getWritableDatabase();
         String query= "CREATE TABLE IF NOT EXISTS stafflogindetails (employeeid INTEGER," +
                 "employeename VARCHAR(75)," +
                 "department VARCHAR(30)," +
                 "designation VARCHAR(100)," +
+                "netid VARCHAR(100)," +
+                "password  VARCHAR(100),"+
                 "lastupdatedate DATETIME DEFAULT (datetime('now','localtime'))," +
                 "lastloggedin DATETIME DEFAULT (datetime('now','localtime')))";
         database.execSQL(query);
@@ -76,13 +79,18 @@ public class SqlliteController extends SQLiteOpenHelper {
                 "iconname VARCHAR(100)," +
                 "lastupdatedate DATETIME DEFAULT (datetime('now','localtime')))";
         database.execSQL(query);
-
+        Log.e("RADHA TEST","LOG ERROR 4");
         ContentValues values = new ContentValues();
         values.put("employeeid",lngEmployeeId);
         values.put("employeename",strStaffName);
         values.put("department",strDepartment);
         values.put("designation",strDesignation);
+        values.put("netid",strNetId);
+        values.put("password",strPwd);
+
         database.insert("stafflogindetails", null, values);
+        Log.e("RADHA TEST","LOG ERROR 5");
+        Log.e("RADHA TEST","LOG ERROR 5 "+ strMenuIds);
         values = new ContentValues();
         StringTokenizer strMenuId = new StringTokenizer(strMenuIds,",");
         long lngMenuId=0;
@@ -117,6 +125,7 @@ public class SqlliteController extends SQLiteOpenHelper {
             }
             values.put("menusortnumber",lngMenuId);
             database.insert("userwisemenuaccessrights", null, values);
+            Log.e("RADHA TEST","LOG ERROR 6");
         }
         database.close();
     }

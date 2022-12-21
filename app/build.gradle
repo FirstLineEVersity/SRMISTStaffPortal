@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId 'com.srmuh.staffportal'
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -35,8 +35,11 @@ dependencies {
     implementation files('libs/android-async-http-1.4.6.jar')
     implementation files('libs/commons-io-2.6.jar')
     implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+   // implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.0'
+
 //    implementation 'com.google.firebase:firebase-inappmessaging-display:17.0.4'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
